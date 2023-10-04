@@ -12,6 +12,9 @@ python manage.py startapp company
 python manage.py startapp enquiry
 python manage.py startapp service
 python manage.py startapp staff
+python manage.py startapp project
+python manage.py startapp faq
+
 
 pip uninstall jupyter_client==8.3.1 jupyter_core==5.3.1 jupyter_server==2.7.3 jupyter_server_terminals==0.4.4 jupyterlab==4.0.5 jupyterlab-pygments==0.2.2 jupyterlab-widgets==3.0.8 jupyterlab_server==2.24.0
 
@@ -24,11 +27,32 @@ python manage.py migrate
 python manage.py runserver #To run server
 python manage.py createsuperuser #To create admin user
 python manage.py collectstatic # Collects and prepares static files for production deployment.
+python manage.py test # To test project
+python manage.py check
+python manage.py reset_db  # To erase all data in your database
+
+docker-compose up   # To start the container
+#retain the existing containers and only restart the services
+docker-compose restart  
+docker-compose down  # This will stop and remove the containers.
+docker-compose up -d  # This will recreate and start the containers with the updated configuration.
+docker compose up --build
+docker-compose up --build -d
+docker-compose logs db   # To check the logs
+docker-compose exec app pip install django
+docker-compose exec app pip install --upgrade pip
+docker-compose exec app pip install --upgrade -r requirements.txt
+docker-compose down --volumes # Pull down volumes
+docker-compose exec app python manage.py startapp faq
+docker-compose exec app pip install django
+docker-compose run --rm app # django docker test
+
+
 
 SUPERUSER LOGIN
-Username: 
-Email address: 
-Password: 
+Username: goldridge
+Email address: goldridgeweb@gmail.com
+Password: goldridge
 
 # GENERAL COMMANDS
 rm -rf goldridge/ #to remove folder
@@ -49,6 +73,7 @@ echo "# goldridge" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
+git commit -m "1:15PM 4-10-2023 COMMIT"
 git branch -M main
 git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
 git push -u origin main
@@ -57,6 +82,4 @@ push an existing repository from the command line
 git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
 git branch -M main
 git push -u origin main
-
-
 

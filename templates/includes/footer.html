@@ -1,0 +1,115 @@
+{% load static %}
+<!--<section class="section-orange-2 section-less-padding">-->
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class="col-md-9">-->
+        <!--<h3 class="text-white">Beautiful Masonry Portfolio Styles</h3>-->
+        <!--<p class="text-white">Lorem ipsum dolor sit amet consectetuer adipiscing elit Suspendisse et justo Praesent mattis commodo augue Aliquam ornare hendrerit augue Cras tellus In pulvinar lectus a est Curabitur eget orci.</p>-->
+      <!--</div>-->
+      <!--<div class="col-md-3">-->
+        <!--<div class="margin-top2"></div>-->
+        <!--<a class="btn btn-border white-2 btn-large pull-right" href="#">Read more</a></div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</section>-->
+<!--&lt;!&ndash;end section&ndash;&gt;-->
+<div class="clearfix"></div>
+
+<section class="section-light sec-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-12 colmargin clearfix">
+        <div class="footer-logo"><img src="{% static 'images/webstacka_logo.jpg' %}" width="140px" height="48px" alt=""/></div>
+        <ul class="address-info no-border">
+          <li>{{ company_links.address }} {{ company_links.province }}</li>
+
+          <li><i class="fa fa-phone"></i> Mobile: +234 {{ company_links.phone }}</li>
+          <li class="last"><i class="fa fa-envelope"></i> Email: {{ company_links.email }} </li>
+          <li><a class="btn btn-red-2" href="{% url 'contact_us' %}">Contact Us</a></li>
+        </ul>
+      </div>
+      <!--end item-->
+
+      <div class="col-md-3 col-sm-12 colmargin clearfix">
+        <h4 class="uppercase footer-title less-mar3">Recent Articles</h4>
+        <div class="footer-title-bottomstrip"></div>
+        {% for article in articles_links %}
+        <div class="image-left">
+          <div class="fo-postimg-inner overflow-hidden"><img src="{{ article.image.url }}" alt="" class="img-responsive"/>/></div>
+        </div>
+
+        <div class="text-box-right">
+          <h5 class="text-black less-mar3"><a href="{{ article.get_url }}">{{ article.article_title }}</a></h5>
+          <span>{{ article.article_title }}</span>
+          <div class="footer-post-info"> <span>
+            By
+            {% for author in article.article_author.all %}
+              {% if forloop.first %}
+                {{ author.first_name }}
+              {% endif %}
+            {% endfor %}
+          </span> </div>
+        </div>
+        <div class="divider-line solid dark margin opacity-5"></div>
+        {% endfor %}
+        <!-- <div class="image-left">
+          <div class="fo-postimg-inner overflow-hidden"><img src="http://placehold.it/80x80" alt=""/></div>
+        </div>
+        <div class="text-box-right">
+          <h5 class="text-white less-mar3"><a href="#">Clean And Modern</a></h5>
+          <span>Lorem ipsum dolor sit</span>
+          <div class="footer-post-info"> <span>By John Doe</span><span> May 20</span> </div>
+        </div> -->
+      </div>
+      <!--end item-->
+
+      <div class="col-md-3 col-sm-12 colmargin clearfix">
+        <h4 class="uppercase footer-title less-mar3">Tags</h4>
+        <div class="footer-title-bottomstrip"></div>
+        <ul class="footer-tags">
+          <li><a href="{% url 'blog_by_keyword' keyword='Data Science' %}">Data Science</a></li>
+          <li><a href="{% url 'blog_by_keyword' keyword='website' %}">Website</a></li>
+          <li><a href="{% url 'blog_by_keyword' keyword='Classification' %}"">Classification</a></li>
+          <li><a class="active" href="{% url 'blog_by_keyword' keyword='machine learning' %}">machine learning</a></li>
+          <li><a href="{% url 'blog_by_keyword' keyword='digital marketing' %}">digital marketing</a></li>
+          <li><a href="{% url 'blog_by_keyword' keyword='SEO' %}">SEO</a></li>
+          <li><a href="{% url 'blog_by_keyword' keyword='SWOT' %}">SWOT</a></li>
+        </ul>
+      </div>
+      <!--end item-->
+
+      <div class="col-md-3 col-sm-12 colmargin tex-left clearfix">
+        <h4 class="uppercase footer-title less-mar3">useful links</h4>
+        <div class="footer-title-bottomstrip"></div>
+        <div class="clearfix"></div>
+        <ul class="usefull-links tex-left no-border">
+          <li><a href="{% url 'home' %}"><i class="fa fa-angle-right"></i> Home</a></li>
+          <li><a href="{% url 'company' %}"><i class="fa fa-angle-right"></i> About Us</a></li>
+          <li><a href="{% url 'blog' %}"><i class="fa fa-angle-right"></i> Blog</a></li>
+          <li><a href="{% url 'contact_us' %}"><i class="fa fa-angle-right"></i> Contact Us</a></li>
+        </ul>
+      </div>
+      <!--end item-->
+
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+
+<section class="section-copyrights section-less-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class=" social-icons-3">
+        <li><a href="https://www.instagram.com/webstacka_group/"><i class="fa fa-instagram"></i></a></li>
+        <li><a href="https://www.tiktok.com/@webstackagroup"><i class="fa fa-facebook"></i></a></li>
+        <li class="last"><a href="https://www.linkedin.com/company/webstacka-group/?viewAsMember=true"><i class="fa fa-linkedin"></i></a></li>
+        </ul>
+        <div class="clearfix"></div>
+        <br/>
+        <span>Copyright © {% now "Y"%} powered By <a href="https://www.webstacka.com">webstacka</a> | All rights reserved.</span></div>
+    </div>
+  </div>
+</section>
+<div class="clearfix"></div>

@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from decouple import config
+from decouple import Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7m=&d!%1gldxa8m5&=qky3c4x1xf7ap=tt0y&vq7)@98b8h(0+'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -39,12 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Django Apps
+    'smart_selects',
     'accounts',
-    'blog',
     'company',
-    'enquiry',
     'service',
+    'blog',
+    'enquiry',
     'staff',
+    'faq',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +67,7 @@ ROOT_URLCONF = 'goldridge.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +75,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'company.context_processors.menu_links',
+                'service.context_processors.menu_links',
+                'blog.context_processors.menu_links',
             ],
         },
     },
@@ -77,16 +85,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'goldridge.wsgi.application'
 
+AUTH_USER_MODEL = 'accounts.Account'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': config('DB_ENGINE'),
+#         'NAME': BASE_DIR / config('DB_NAME'),
+#     }
+# }
+
+from decouple import config
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': config('DB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD', default=''),  # Provide a default value
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', default=''),  # Provide a default value
     }
 }
+
 
 
 # Password validation
@@ -124,8 +148,77 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR /'static'
+STATICFILES_DIRS = [
+    'goldridge/static',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR /'media'
+
+# For files
+FILE_UPLOAD_PERMISSIONS = 0o755 #or whatever fits to your needs
+# For directories
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
+# # If you need to switch it from /temp
+# FILE_UPLOAD_TEMP_DIR = /path/to/dir
+
+
+# # USE_DJANGO_JQUERY = True
+# SMART_SELECTS_JQUERY_URL = True
+# JQUERY_URL = False
+USE_DJANGO_JQUERY = True
+
+# Message tags
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
+# SMTP configuration
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = config('EMAIL_HOST')
+# EMAIL_PORT = config('EMAIL_PORT')
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = True
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+USE_THOUSAND_SEPARATOR = True
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': './logs/debug.log',
+#             'formatter': 'simpleRe',
+#         },
+#         'console': {
+#             'level': 'INFO',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simpleRe',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file', 'console'],
+#             'level': 'INFO',
+#         },
+#     },
+#     'formatters':{
+#         'simpleRe':{
+#             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+#             'style': '{',
+#         }
+#     }
+# }

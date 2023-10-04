@@ -1,0 +1,336 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- masterslider -->
+  <div class="master-slider margintop ms-skin-default" id="masterslider">
+
+    <!-- slide 1 -->
+    <div class="ms-slide slide-1" data-delay="27">
+      <div class="slide-pattern"></div>
+      <img src="{% static 'js/masterslider/target.jpg' %}" alt=""/>
+
+      <h3 class="ms-layer text8 font-style1"
+			style="top: 280px; right: 280px;"
+			data-type="text"
+			data-delay="500"
+		 	data-duration="2000"
+		 	data-ease="easeOutExpo"
+		 	data-effect="rotatefront(-40,900,tr)">Do you have a Business OR Idea?</h3>
+
+      <h3 class="ms-layer text5 font-style1"
+			style="top: 350px; right: 280px;"
+			data-type="text"
+			data-delay="1000"
+		 	data-duration="2000"
+		 	data-ease="easeOutExpo"
+		 	data-effect="rotate3dright(10,50,0,100)">
+			Get a <span class="text-orange-2">WEB/MOBILE</span> App</h3>
+
+      <h3 class="ms-layer text6"
+        	style="top: 410px; right: 280px;"
+            data-type="text"
+            data-effect="top(45)"
+            data-duration="2000"
+            data-delay="1500"
+            data-ease="easeOutExpo"> We help you be better with digital <br />
+        <span class="text-orange-2">Be Better Be Digital</span> </h3>
+
+      <a href="{% url 'company' %}" class="ms-layer sbut5 orange"
+			style="left: 550px; top: 520px;"
+			data-type="text"
+			data-delay="2500"
+			data-ease="easeOutExpo"
+			data-duration="1200"
+			data-effect="scale(1.5,1.6)"> About Us </a>
+
+      <a href="{% url 'contact_us' %}" class="ms-layer sbut1 orange glow-btn"
+			style="left: 360px; top: 520px;"
+			data-type="text"
+			data-delay="2500"
+			data-ease="easeOutExpo"
+			data-duration="1200"
+			data-effect="scale(1.5,1.6)"> Contact Us </a>
+
+
+    </div>
+    <!-- end slide 1 -->
+
+     <!-- slide 2 -->
+    <div class="ms-slide slide-2" data-delay="27">
+      <div class="slide-pattern"></div>
+      <img src="{% static 'js/masterslider/rocket.jpg' %}" alt=""/>
+
+      <h3 class="ms-layer text8 font-style1"
+			style="top: 280px; right: 280px;"
+			data-type="text"
+			data-delay="500"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="scale(1.5,1.6)"> Do you have or need data?</h3>
+
+      <h3 class="ms-layer text5 font-style1"
+			style="top: 350px; right: 280px;"
+			data-type="text"
+			data-delay="1000"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="scale(1.5,1.6)"> We <span class="text-orange-2">COLLECT, ANALYZE & INTERPRET</span> Data </h3>
+
+      <h3 class="ms-layer text6"
+        	style="top: 410px; right: 280px;"
+            data-type="text"
+            data-effect="top(45)"
+            data-duration="2000"
+            data-delay="1500"
+            data-ease="easeOutExpo"> We help you be better with digital <br />
+        <span class="text-orange-2">Be Better Be Digital</span></h3>
+
+      <a href="{% url 'company' %}" class="ms-layer sbut5 orange"
+			style="left: 540px; top: 520px;"
+			data-type="text"
+			data-delay="2500"
+			data-ease="easeOutExpo"
+			data-duration="1200"
+			data-effect="scale(1.5,1.6)"> About Us </a>
+
+      <a href="{% url 'contact_us' %}" class="glow-btn ms-layer sbut1 orange"
+			style="left: 360px; top: 520px;"
+			data-type="text"
+			data-delay="2500"
+			data-ease="easeOutExpo"
+			data-duration="1200"
+			data-effect="scale(1.5,1.6)"> Contact Us </a>
+
+
+    </div>
+    <!-- end slide 2 -->
+
+
+  </div>
+  <!-- end of masterslider -->
+  <div class="clearfix"></div>
+
+  <section class="sec-padding">
+    <div class="container">
+      <div class="col-md-6">
+        <div class="item-holder"><img src="{% static 'images/about_us.jpg' %}" alt="" class="img-responsive"/></div>
+      </div>
+      <div class="col-md-6">
+        <div class="item-holder">
+          <h2 class="section-title droid-serif">What We Are</h2>
+          <p class="sub-title-left">{{ company_overview.business_overview }}</p>
+          <p>{{ company_overview.mission_statement }} </p>
+          <br/>
+          <p>{{ company_overview.competive_advantage }}</p>
+          <br/>
+          {% comment %} <img src="{% static 'images/site-img36.jpg' %}" alt=""/> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end section -->
+  <div class="clearfix"></div>
+
+  <section>
+  <div class="container">
+  <div class="divider-line solid light opacity-7"></div>
+    <div class="row sec-padding">
+
+      <div class="col-xs-12 text-center">
+        <h6 class="nopadding lspace-1">What We Do</h6>
+        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Our Servi<span class="text-orange-2">ces</span></h1>
+        <div class="title-line-4 align-center"></div>
+      </div>
+
+      {% for service in services %}
+      <div class="col-md-4 col-sm-6 col-xs-12 bmargin">
+          <a href="#"><img src="{{ service.image.url }}" alt="" class="img-responsive"/></a>
+          <br/>
+          <h4 class="uppercase font-weight-3"><a href="#">{{service.service_name}}</a></h4>
+          <p>{{ service.service_description }}</p>
+          <br/>
+          <a class="btn btn-warning dark btn-round btn-small" href="{{ service.service_url }}">find out more..</a>
+      </div>
+      <!--end item-->
+      {% endfor %}
+
+
+    </div>
+  </div>
+</section>
+<div class="clearfix"></div>
+<!-- end section -->
+
+{% include 'includes/CTA_2.html' %}
+
+<section>
+  <div class="container">
+    <div class="divider-line solid light opacity-7"></div>
+    <div class="row sec-padding">
+      <div class="col-xs-12 text-center">
+        <h6 class="nopadding lspace-1">Who We Are</h6>
+        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Meet Our Te<span class="text-orange-2">am</span></h1>
+        <div class="title-line-4 align-center"></div>
+      </div>
+      <div class="clearfix"></div>
+      {% for employee in staff %}
+      <div class="col-md-4 col-sm-6">
+        <div class="team-holder15 two bmargin">
+          <div class="team-member"><img src="{{ employee.photo.url }}" alt="http://placehold.it/500x450" class="img-responsive"/></div>
+          <div class="info-box text-center">
+            <h5 class="uppercase less-mar2">{{ employee.full_name }}</h5>
+            <span class="text-orange-2">{{ employee.job_title }}</span> <br/>
+            <br/>
+            <p>{{ employee.about }}</p>
+          </div>
+        </div>
+      </div>
+      <!--end item-->
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+
+{% if projects %}
+<section class="sec-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h6 class="nopadding lspace-1">What We've Done</h6>
+        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Our proje<span class="text-orange-2">cts</span></h1>
+        <div class="title-line-4 align-center"></div>
+      </div>
+      <div class="clearfix"></div>
+
+      {% comment %} <div class="col-xs-12 demo-full-width"> {% endcomment %}
+        <div id="grid-container" class="cbp">
+
+        </div>
+      {% comment %} </div> {% endcomment %}
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+{% endif %}
+
+{% include 'includes/CTA_1.html' %}
+
+<section class="sec-padding">
+
+  <div class="container">
+    <div class="row ">
+      <div class="col-xs-12 text-center">
+        <h6 class="nopadding lspace-1">What We Blog</h6>
+        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Our Arti<span class="text-orange-2">cle</span></h1>
+        <div class="title-line-4 align-center"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      {% for article in articles %}
+        <div class="col-md-4">
+          <div class="blog-holder1 bmargin">
+            <div class="image-holder">
+              {% for author in article.article_author.all %}
+                {% if forloop.first %}
+                <div class="post-author-image round overflow-hidden"><img src="{{ author.photo.url }}" alt=""/></div>
+                {% endif %}
+              {% endfor %}
+              <img src="{{ article.image.url }}" alt="" class="img-responsive"/> </div>
+            <div class="content-box">
+              <h4 class="less-mar2 droid-serif"><a href="{{ article.get_url }}">{{ article.article_title }}</a></h4>
+              <div class="blog-post-info">
+                <span><i class="fa fa-user"></i>
+                  By
+                  {% for author in article.article_author.all %}
+                    {% if forloop.first %}
+                      {{ author.first_name }}
+                    {% endif %}
+                  {% endfor %}
+                </span>
+                <span><i class="fa fa-comments-o"></i> 15 Comments</span> </div>
+              <br/>
+              {% for key, value in dispaly_paragraph.items %}
+                {% if key == article.id %}
+                  <p>{{ value }}</p>
+                {% endif %}
+              {% endfor %}
+              <!-- {% for paragraph in article.paragraph_set.all %}
+              {% if forloop.first %}
+                <p>{{paragraph.paragraph_content|slice:"0:120"}}...</p>
+              {% endif %}
+            {% endfor %} -->
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        <!--end item-->
+
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class=" clearfix"></div>
+
+<section class="parallax-section69">
+  <div class="section-overlay bg-opacity-7">
+    <div class="container sec-tpadding-3 sec-bpadding-3">
+      <div class="row slide-controls-color-13">
+        <div class="col-md-8 col-centered">
+          <div class="col-xs-12 text-center">
+            <h6 class="nopadding lspace-1 text-white">What Clients Say</h6>
+            <h1 class="paddtop1 dosis font-weight-5 text-white lspace-sm">Testimon<span class="text-orange-2">ials</span></h1>
+            <div class="title-line-4 white align-center"></div>
+          </div>
+          <div class="clearfix"></div>
+          <div id="owl-demo3" class="owl-carousel">
+            {% for project in projects %}
+            <div class="item">
+              <blockquote class="style1"><span class="text-white less-mar1">{{ project.testimonial }}</span> </blockquote>
+              <br/>
+              <h5 class="text-white less-mar1">{{ project.contact_full_name }}</h5>
+              <span class="text-orange-2">{{ project.client_company }}</span>
+            </div>
+            <!--end slide item-->
+            {% endfor %}
+          </div>
+          <!--end carousel -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+
+<!-- <section class="section-less-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="clientlogo-list">
+          <li><img src="http://placehold.it/170x80" alt=""/></li>
+          <li><img src="http://placehold.it/170x80" alt=""/></li>
+          <li><img src="http://placehold.it/170x80" alt=""/></li>
+          <li><img src="http://placehold.it/170x80" alt=""/></li>
+          <li><img src="http://placehold.it/170x80" alt=""/></li>
+          <li><img src="http://placehold.it/170x80" alt=""/></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!--end section -->
+<!-- <div class="clearfix"></div>  -->
+{% endblock %}

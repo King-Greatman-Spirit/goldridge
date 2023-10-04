@@ -1,0 +1,63 @@
+<div class="modal" id="newsletter" tabindex="-1" role="dialog" style="top: 15%;">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="background: #fc0;">
+        <h4 class="modal-title">Join Our Newsletter </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="smart-forms bmargin">
+          <h3>Subscribe to get latest content by email</h3>
+          <h5>Get 10% Off first Purchase</h5>
+
+          <form method="POST" action="{% url 'subscribe' %}">
+            {% csrf_token %}
+            <div>
+              <div class="section">
+                <label  for="{{ form.full_name.id_for_label }}" class="field prepend-icon">
+                  <!-- <input type="text" name="full_name" id="full_name" class="gui-input" placeholder="Enter Fullname"> -->
+                  {{ form.full_name }}
+                  <span class="field-icon"><i class="fa fa-user"></i></span> </label>
+                  {% for err in form.full_name.errors %}
+                    <small class="text-danger">{{ err }}</small>
+                  {% endfor %}
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="{{ form.email.id_for_label }}" class="field prepend-icon">
+                  <!-- <input type="email" name="email" id="email" class="gui-input" placeholder="Email address"> -->
+                  {{ form.email }}
+                  <span class="field-icon"><i class="fa fa-envelope"></i></span> </label>
+                  {% for err in form.email.errors %}
+                    <small class="text-danger">{{ err }}</small>
+                  {% endfor %}
+              </div>
+              <!-- end section -->
+
+              <div class="section colm colm6">
+                <label class="field prepend-icon">
+                  <!-- <input type="text" name="job_title" id="job_title" class="gui-input" placeholder="Job Title"> -->
+                  {{ form.phone_number }}
+                  <span class="field-icon"><i class="fa fa-phone"></i></span> </label>
+              </div>
+              <!-- end section -->
+            <div class="modal-footer">
+              <button type="submit" class="button btn-primary orange-2">Submit</button>
+              <button type="reset" class="button" data-dismiss="modal"> Cancel </button>
+            </div>
+            <!-- end .form-footer section -->
+          </form>
+        </div>
+        <!-- end .smart-forms section -->
+      </div>
+      {% comment %} <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div> {% endcomment %}
+    </div>
+  </div>
+</div>
+<!--end modal-->

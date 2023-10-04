@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section>
+  <div class="header-inner two">
+    <div class="inner text-center">
+      <h4 class="title text-white uppercase">{{ services.service_name }}</h4>
+      <h5 class="text-white uppercase">Be digital be better</h5>
+    </div>
+    <div class="overlay bg-opacity-5"></div>
+    <img src="{% static 'images/servers.jpg' %}" alt="" class="img-responsive"/> </div>
+</section>
+<!-- end header inner -->
+<div class="clearfix"></div>
+
+<section>
+  <div class="pagenation-holder">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>{{ services.service_name }}</h3>
+        </div>
+        <div class="col-md-6 text-right">
+          <div class="pagenation_links"><a href="{% url 'home' %}">Home</a><i> / </i> {{ services.service_name }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+
+<section class="sec-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h2 class="section-title">Our {{ services.service_name }} Process</h2>
+        <!-- <p class="sub-title">Lorem ipsum dolor sit amet consectetuer adipiscing elit Suspendisse et justo Praesent <span class="text-orange-2">mattis commodo</span> augue .</p> -->
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="col-md-6">
+        <!-- <img src="http://placehold.it/800x600" alt="" class="img-responsive"/> <br/> -->
+        <!-- <h3 class="text-orange-2">Why Choose Us</h3> -->
+        <h5 style="font-size: 20px;">{{ services.service_name }}</h5>
+        <p style="font-size: 18px;">{{ services.service_description }}</p>
+        <div class="video-wrapper">
+          <a href="#"><img src="{{ services.image.url }}" alt="http://placehold.it/1600x900" class="img-responsive"/></a>
+          <!-- <video controls poster="http://placehold.it/1600x900">
+            <source type="video/webm" src="https://codelayers.net/videos/Applead.webm">
+            <source type="video/mp4" src="https://codelayers.net/videos/Applead.mp4">
+            <source type="video/ogg" src="https://codelayers.net/videos/Applead.ogv">
+          </video> -->
+        </div>
+      </div>
+      <!--end item-->
+
+      <div class="col-md-6">
+        {% for process in service_process %}
+        <h5>– {{ process.process_name }}</h5>
+        <p>{{ process.process_description }}</p>
+        {% endfor %}
+
+      </div>
+      <!--end item-->
+
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+{% if categories|length > 1 %}
+<section class="sec-bpadding-2">
+  <div class="container">
+    <div class="row no-gutter">
+      {% for category in categories %}
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="pricetable{% if category|first == 'Standard' %}-active{% else %}-top{% endif %}-bg-strip" ></div>
+        <div class="pricetable-holder5{% if category|first == 'Standard' %} active {% else %} {% endif %}" >
+          <div class="price-circle">
+            <div class="price">
+              ₦{{ category|last }}
+              <br/>
+            </div>
+          </div>
+          <br/>
+          <h3 class="title font-weight-5">{{category|first}}</h3>
+          <ul class="features-list">
+           
+          </ul>
+          <div class="clearfix"></div>
+          <br/>
+          <br/>
+          <a class="btn btn-green-4 btn-round" href="{% url 'contact_us' %}">Request Proposal!</a> </div>
+        </div>
+      <!--end item-->
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- end section -->
+<div class="clearfix"></div>
+{% endif %}
+
+{% include 'includes/CTA_1.html' %}
+
+{% if projects %}
+<section class="sec-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h6 class="nopadding lspace-1">What We've Done</h6>
+        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Our proje<span class="text-orange-2">cts</span></h1>
+        <div class="title-line-4 align-center"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+{% endif %}
+
+{% endblock %}

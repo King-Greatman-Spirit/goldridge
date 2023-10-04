@@ -1,0 +1,84 @@
+{% load static %}
+
+{% url 'home' as home %}
+{% url 'company' as company %}
+{% url 'blog' as blog %}
+{% url 'contact_us' as contact_us %}
+
+
+<div class="topbar orange2 topbar-padding">
+  <div class="container">
+    <div class="topbar-left-items">
+      <ul class="toplist toppadding pull-left paddtop1" style="font-weight: bolder;">
+        <li class="rightl">Call Us Now</li>
+        <li>+234 {{ company_links.phone }}</li>
+      </ul>
+    </div>
+    <!--end left-->
+
+    <div class="topbar-right-items pull-right">
+      {% if user.id is None %}
+      <ul class="toplist toppadding">
+        {% comment %} <li class="lineright"><a href="{% url 'login' %}">Login</a></li>
+        <li class="lineright"><a href="{% url 'register' %}">Register</a></li> {% endcomment %}
+        <li><a href="https://www.instagram.com/webstacka_group/"><i class="fa fa-instagram"></i></a></li>
+        <li><a href="https://www.tiktok.com/@webstackagroup"><i class="fa fa-facebook"></i></a></li>
+        <li class="last"><a href="https://www.linkedin.com/company/webstacka-group/?viewAsMember=true"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+      {% else %}
+      <ul class="toplist toppadding">
+        <li>Welcome {{user.first_name}}!</li>
+        <li class="lineright"><a href="{% url 'client_dashboard' %}">Dashboard</a></li>
+        <li class="lineright"><a href="{% url 'logout' %}">Logout</a></li>
+        <li><a href="https://www.instagram.com/webstacka_group/"><i class="fa fa-instagram"></i></a></li>
+        <li><a href="https://www.tiktok.com/@webstackagroup"><i class="fa fa-facebook"></i></a></li>
+        <li class="last"><a href="https://www.linkedin.com/company/webstacka-group/?viewAsMember=true"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="menu-main">
+<div id="header2">
+<div class="container">
+<div class="navbar navbar-default orange2 yamm dark">
+
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target="#navbar-collapse-grid" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+          <a href="index.html" class="navbar-brand"><img src="{% static 'images/webstacka_logo.jpg' %}" width="140px" height="48px" alt=""/></a>
+        </div>
+
+        <div id="navbar-collapse-grid" class="navbar-collapse collapse pull-right">
+          <ul class="nav orange2 navbar-nav">
+          <li class="dropdown"> <a href="{% url 'home' %}" class="dropdown-toggle {% if request.path == home %} active {% endif %}">Home</a></li>
+          <li class="dropdown"><a href="{% url 'company' %}" class="dropdown-toggle {% if request.path == company %} active {% endif %}">About Us</a></li>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle">Our Services</a>
+            <ul class="dropdown-menu" role="menu">
+              {% for service in service_links %}
+                <li><a href="{{ service.service_url }}">{{ service.service_name }}</a> </li>
+              {% endfor %}
+            </ul>
+          </li>
+
+          <li class="dropdown"> <a href="#" class="dropdown-toggle">Portfolio</a>
+            <ul class="dropdown-menu" role="menu">
+              {% for service in project_links %}
+                <li><a href="{{ service.project_url }}">{{ service.service_name }} Projects</a> </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% comment %} <li class="dropdown yamm-fw"> <a href="message-boxes.html" class="dropdown-toggle">Testimonials</a></li> {% endcomment %}
+          <li class="dropdown"> <a href="{% url 'blog' %}" class="dropdown-toggle {% if request.path == blog %} active {% endif %}">Blog</a>
+          </li>
+          <li class=""> <a style="font-weight: bolder;" href="{% url 'contact_us' %}" class="dropdown-toggle {% if request.path == contact_us %} active {% endif %}">Contact Us</a>
+          </li>
+        </ul>
+        </div>
+      </div>
+</div>
+</div>
+</div>
+<!--end menu-->
+<div class="clearfix"></div>

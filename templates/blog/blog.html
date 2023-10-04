@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<section>
+  <div class="header-inner two">
+    <div class="inner text-center">
+      <h4 class="title text-white uppercase">Webstacka</h4>
+      <h5 class="text-white uppercase">be digital be better</h5>
+    </div>
+    <div class="overlay bg-opacity-5"></div>
+    <img src="{% static 'images/servers.jpg' %}" alt="" class="img-responsive"/> </div>
+</section>
+  <!-- end header inner -->
+  <div class="clearfix"></div>
+
+  <section>
+    <div class="pagenation-holder">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            {% if 'keyword' in request.path %}
+              <h3 class="capitalize">Search Results</h3>
+            {% else %}
+              <h3 class="capitalize">blog</h3>
+            {% endif %}
+
+          </div>
+          <div class="col-md-6 text-right">
+            <div class="pagenation_links"><a href="{% url 'home' %}">Home</a><i> / </i> <a href="{% url 'blog' %}">Blog</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--end section-->
+  <div class="clearfix"></div>
+
+  <section class="sec-padding">
+    <div class="container">
+      <div class="row">
+
+
+      <div class="col-md-8 col-sm-12 col-xs-12 bmargin">
+      {% if articles  %}
+      {% for article in articles  %}
+      <div class="col-md-12 bmargin">
+          <div class="blog-holder-12">
+            <div class="image-holder">
+              <div class="overlay bg-opacity-1">
+                <div class="post-date-box three">{{ article.created_date|date:"d" }} <span>{{ article.created_date|date:"M, Y" }}</span> </div>
+
+              </div>
+              <img class="img-responsive" alt="" src="{{article.image.url}}" style="width: 700px;height: 400px;"> </div>
+          </div>
+          <div class="clearfix"></div>
+          <br/>
+          <a href="{{ article.get_url }}">
+          <h4 class="less-mar1">{{ article.article_title }}</h4>
+          </a>
+          <div class="blog-post-info capitalize">
+            <span><i class="fa fa-user"></i>
+            By
+            {% for author in article.article_author.all %}
+                {% if not forloop.first %}, {% endif %}
+                {{ author.full_name }}
+            {% endfor %}
+            </span>
+            <span><i class="fa fa-comments-o"></i> 15 Comments</span>
+          </div>
+          <br/>
+          {% for key, value in dispaly_paragraph.items %}
+            {% if key == article.id %}
+              <p>{{ value }}</p>
+            {% endif %}
+          {% endfor %}
+          <br/>
+          <a class="btn btn-border light btn-round btn-small" href="{{ article.get_url }}">Read more</a>
+        </div>
+        <!--end item-->
+        {% endfor %}
+        {% else %}
+        <div class="col-md-12 bmargin">
+          <h2>No result found. Please try again.</h2>
+        </div>
+        {% endif %}
+        <div class="clearfix"></div>
+        <div class="col-divider-margin-4"></div>
+
+
+
+        {% comment %} <div class="col-md-12">
+
+          <ul class="blog-pagenation">
+            <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+            <li><a href="#">1</a></li>
+            <li><a class="active" href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+          </ul>
+
+        </div> {% endcomment %}
+
+        </div>
+        <!--end left column-->
+
+
+
+        <div class="col-md-4 col-sm-12 col-xs-12 bmargin">
+          <div class="col-md-12 col-sm-12 col-xs-12 nopadding bmargin">
+            <h5>Categories</h5>
+            <ul class="category-links orange-2">
+              <li><a href="#">Business</a></li>
+              <li><a class="active" href="#">Education</a></li>
+              <li><a href="#">Medical</a></li>
+              <li><a href="#">Travel</a></li>
+              <li><a href="#">Photogreaphy</a></li>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+          <br/>
+          <div class="col-md-12 col-sm-12 col-xs-12 nopadding bmargin">
+            <h5>Search</h5>
+            <div class="clearfix"></div>
+            <form class="" action="{% url 'search' %}" method="GET">
+              {% csrf_token %}
+              <input class="blog1-sidebar-serch_input" type="search" name="keyword" placeholder="Keyword">
+              <input name="" value="Submit" class="blog1-sidebar-serch-submit" type="submit">
+            </form>
+          </div>
+          <div class="clearfix"></div>
+          <br/>
+
+          <div class="col-md-12 col-sm-12 col-xs-12 nopadding bmargin">
+            <h5>Latest Posts</h5>
+            <div class="clearfix"></div>
+            {% for latest in latest_articles %}
+            <div class="sidebar-posts">
+              <div class="image-left"><img src="{{ latest.image.url }}" alt="" style="width: 80px; height:80px"/></div>
+              <div class="text-box-right">
+                <h6 class="less-mar3 nopadding"><a href="{{ latest.get_url }}">{{ latest.article_title }}</a></h6>
+                <p>{{ latest.article_subtitle }}</p>
+                <div class="post-info capitalize">
+                  <span>
+                  By
+                  {% for author in latest.article_author.all %}
+                  {% if forloop.first %}
+                    {{ author.first_name }}
+                  {% endif %}
+                  {% endfor %}
+                  </span>
+                  <span>{{ latest.created_date|date:"M d" }}</span>
+                </div>
+              </div>
+            </div>
+            <!--end item-->
+            {% endfor %}
+          </div>
+          <!--end sidebar box-->
+
+          <div class="clearfix"></div>
+          <br/>
+
+          <div class="clearfix"></div>
+          <br/>
+
+          <!--end sidebar box-->
+
+        </div>
+        <!--end right column-->
+      </div>
+    </div>
+  </section>
+  <!-- end section -->
+  <div class="clearfix"></div>
+
+
+
+{% endblock %}

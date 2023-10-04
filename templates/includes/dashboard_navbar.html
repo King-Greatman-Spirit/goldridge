@@ -1,0 +1,39 @@
+{% load static %}
+
+{% url 'client_dashboard' as client_dashboard %}
+
+{% url 'company_dashboard' as c_dashboard %}
+{% url 'update_company' updated_company.id as u_company %}
+
+{% url 'business_overview' as BO %}
+{% url 'update_business_overview' updated_overview.company_id as UBO %}
+
+{% url 'staff_dashboard' as SD %}
+{% url 'update_staff' updated_staff.id as US %}
+
+{% url 'service_dashboard' as ServeD %}
+{% url 'update_service' updated_service.id as UServe %}
+
+{% url 'service_process_dashboard' as SPD %}
+{% url 'update_service_process' updated_sp.id as USP %}
+
+
+<section>
+     <div class="container">
+       <div class="row">
+
+         <div id="filters-container" class="cbp-l-filters-button two three">
+           <div class="{% if request.path == client_dashboard %} cbp-filter-item-active {% endif %} cbp-filter-item"> <a href="{% url 'client_dashboard' %}">Client Profile</a></div>
+           <div class="{% if request.path == c_dashboard or request.path == u_company %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'company_dashboard' %}">Company</a></div>
+           <div class="{% if request.path == BO or request.path == UBO %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'business_overview' %}"> Business Overview</a></div>
+           <div class="{% if request.path == SD or request.path == US %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'staff_dashboard' %}"> Staff</a></div>
+           <div class="{% if request.path == ServeD or request.path == UServe %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'service_dashboard' %}"> Services</a></div>
+           <div class="{% if request.path == SPD or request.path == USP %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'service_process_dashboard' %}"> Service processes</a></div>
+         </div>
+
+       </div>
+     </div>
+
+
+ </section>
+ <!--end section-->

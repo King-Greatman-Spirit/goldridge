@@ -1,0 +1,16 @@
+<!-- faq/faq_list.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>FAQ Categories</h1>
+
+  <ul>
+    {% for category in categories %}
+      <li>{{ category.name }}</li>
+    {% endfor %}
+  </ul>
+  
+  <!-- Add any additional content or styling here -->
+  
+{% endblock %}
