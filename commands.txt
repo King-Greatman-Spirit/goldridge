@@ -72,14 +72,15 @@ create a new repository on the command line
 echo "# goldridge" >> README.md
 git init
 git add README.md
+git add .
 git commit -m "first commit"
 git commit -m "1:15PM 4-10-2023 COMMIT"
-git branch -M main
+git branch -M dev
 git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
-git push -u origin main
+git push -u origin dev
 
 push an existing repository from the command line
 git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
-git branch -M main
-git push -u origin main
+git branch -M dev
+git push -u origin dev
 

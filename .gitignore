@@ -5,3 +5,4 @@ static
 venv
 .env
 .dockerignore
+.gitignore
