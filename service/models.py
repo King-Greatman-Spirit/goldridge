@@ -61,3 +61,27 @@ class ServiceProcess(models.Model):
 
     def __str__(self):
         return self.process_name
+
+
+class Testimonial(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    service = ChainedForeignKey(
+        Service,
+        chained_field="company",
+        chained_model_field="company",
+        show_all = False,
+        auto_choose=True,
+        default=None)
+    description = models.TextField(max_length=100)
+    client_full_name = models.CharField(max_length=100, default=True)
+    client_location = models.CharField(max_length=50, default=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = 'Testimonial'
+        verbose_name_plural = 'Testimonials'
+
+    def __str__(self):
+        return self.description

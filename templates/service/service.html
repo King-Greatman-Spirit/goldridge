@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load mypro_tags %}
 {% block content %}
 
 <section>
@@ -87,7 +88,13 @@
           <br/>
           <h3 class="title font-weight-5">{{category|first}}</h3>
           <ul class="features-list">
-           
+            {% for item in category|slice:"1:-1" %}
+            <li>
+              <span>{{ item|lookup:'quantity' }}</span>
+              {{ item|lookup:'feature' }}
+              <span>₦{{ item|lookup:'f_total' }}</span>
+            </li>
+            {% endfor %}
           </ul>
           <div class="clearfix"></div>
           <br/>
@@ -115,6 +122,34 @@
         <div class="title-line-4 align-center"></div>
       </div>
 
+      <div class="col-xs-12 demo-full-width">
+        <div id="grid-container" class="cbp">
+
+          {% for project in projects %}
+                  <div class="col-md-4 col-md-6 col-md-12 cbp-item identity logos">
+                    <a href="{{ display_images|lookup:project.id }}" class="cbp-caption cbp-lightbox" data-title="{{ project.project_title }}<br>by {{ project.company }}">
+                      <div class="cbp-caption-defaultWrap">
+                        <img src="{{ display_images|lookup:project.id  }}" alt="">
+                      </div>
+
+                      <div class="cbp-caption-activeWrap">
+                        <div class="cbp-l-caption-alignLeft">
+                          <div class="cbp-l-caption-body">
+                            <div class="cbp-l-caption-title">{{ project.project_title }} </div>
+                            <div class="cbp-l-caption-desc">by {{ project.company }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="col-md-3">
+                      <div class="margin-top2"></div>
+                      <a class="btn btn-warning dark btn-round btn-small" href="{{ project.get_url }}">Read more</a>
+                    </div>
+                  </div>
+            {% endfor %}
+
+        </div>
+      </div>
     </div>
   </div>
 </section>

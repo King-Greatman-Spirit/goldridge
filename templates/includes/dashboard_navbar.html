@@ -17,6 +17,12 @@
 {% url 'service_process_dashboard' as SPD %}
 {% url 'update_service_process' updated_sp.id as USP %}
 
+{% url 'project_dashboard' as PD %}
+{% url 'update_project' updated_project.id as UP %}
+
+{% url 'project_image_dashboard' as PID %}
+{% url 'update_project_image' updated_project_image.id as UPI %}
+
 
 <section>
      <div class="container">
@@ -29,6 +35,8 @@
            <div class="{% if request.path == SD or request.path == US %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'staff_dashboard' %}"> Staff</a></div>
            <div class="{% if request.path == ServeD or request.path == UServe %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'service_dashboard' %}"> Services</a></div>
            <div class="{% if request.path == SPD or request.path == USP %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'service_process_dashboard' %}"> Service processes</a></div>
+           <div class="{% if request.path == PD or request.path == UP %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'project_dashboard' %}"> Projects</a></div>
+           <div class="{% if request.path == PID or request.path == UPI %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'project_image_dashboard' %}"> Projects Images</a></div>
          </div>
 
        </div>

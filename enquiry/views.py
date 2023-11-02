@@ -21,7 +21,6 @@ def contact_us(request):
             data.email = form.cleaned_data['email']
             data.company_name = form.cleaned_data['company_name']
             data.phone_number = form.cleaned_data['phone_number']
-            data.no_of_employees = form.cleaned_data['no_of_employees']
             data.service = form.cleaned_data['service']
             data.message = form.cleaned_data['message']
             data.channel = form.cleaned_data['channel']
@@ -31,7 +30,7 @@ def contact_us(request):
             try:
                 current_time = datetime.now()
                 mail_subject = 'New Contact Alert'
-                message = '{} contacted webstacka at {}'.format(
+                message = '{} contacted goldridge at {}'.format(
                     form.cleaned_data['full_name'],
                     current_time
                 )
@@ -41,7 +40,7 @@ def contact_us(request):
             except:
                 pass
 
-            messages.success(request, 'Thank you! Your enquiry has been submitted.')
+            messages.success(request, 'Thanks for getting in touch with us! Your inquiry has been received')
             return redirect('contact_us')
 
     else:
@@ -52,7 +51,7 @@ def contact_us(request):
         'form': form,
         'title': title,
     }
-    return render(request, 'enquiry/contact.html', context)
+    return render(request, 'enquiry/contact_us.html', context)
 
 def subscribe(request):
 
@@ -60,17 +59,15 @@ def subscribe(request):
         form = LeadForm(request.POST)
         if form.is_valid():
             data = Newsletter()
-            data.full_name = form.cleaned_data['full_name']
             data.email = form.cleaned_data['email']
-            data.phone_number = form.cleaned_data['phone_number']
             data.save()
 
             # USER ACTIVATION EMAIL
             try:
                 current_time = datetime.now()
-                mail_subject = 'New Subscription Alert'
-                message = '{} subscribed with webstacka {}'.format(
-                    form.cleaned_data['full_name'],
+                mail_subject = 'Newsletter Subscription Alert'
+                message = '{} subscribed with goldridge {}'.format(
+                    form.cleaned_data['email'],
                     current_time
                 )
                 to_email = config('EMAIL_HOST_USER')
@@ -79,7 +76,7 @@ def subscribe(request):
             except:
                 pass
 
-            messages.success(request, 'Thank you for subscribing to our newsletter.')
+            messages.success(request, "You're officially part of our newsletter community!.")
             return redirect(request.META.get('HTTP_REFERER'))
 
     return redirect(request.META.get('HTTP_REFERER'))

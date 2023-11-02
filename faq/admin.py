@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import FAQ, FAQCategory
+from .models import FAQQuestion, FAQCategory
 
 # Register your models here.
 class FAQCategoryAdmin(admin.ModelAdmin):
@@ -8,7 +8,7 @@ class FAQCategoryAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
-class FAQAdmin(admin.ModelAdmin):
+class FAQQuestionAdmin(admin.ModelAdmin):
     list_display = ('category', 'question', 'answer')
     list_filter = ('category',)
     search_fields = ('question', 'answer')
@@ -17,4 +17,4 @@ class FAQAdmin(admin.ModelAdmin):
     
 
 admin.site.register(FAQCategory, FAQCategoryAdmin)
-admin.site.register(FAQ, FAQAdmin)
+admin.site.register(FAQQuestion, FAQQuestionAdmin)

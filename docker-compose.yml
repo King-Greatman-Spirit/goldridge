@@ -3,7 +3,7 @@ version: "3.9"
 services:
   app:
     volumes:
-      - ./static:/static
+      - ./static/:/static/
       - .:/app
     env_file:
       - .env

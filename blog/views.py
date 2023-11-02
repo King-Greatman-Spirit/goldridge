@@ -38,15 +38,15 @@ def blog(request, keyword=None):
         articles = Article.objects.filter().order_by('-id')
         latest_articles = articles[:3]
 
-    dispaly_paragraph = {}
+    display_paragraph = {}
     for article in articles:
         for paragraph in Paragraph.objects.filter(article=article):
-            dispaly_paragraph[article.id] = ' '.join(paragraph.paragraph_content.split(' ')[:60]) + '...'
+            display_paragraph[article.id] = ' '.join(paragraph.paragraph_content.split(' ')[:60]) + '...'
             break
 
     context = {
         'articles': articles,
-        'dispaly_paragraph': dispaly_paragraph,
+        'display_paragraph': display_paragraph,
         'latest_articles': latest_articles,
         'title': title,
 
@@ -69,17 +69,17 @@ def search(request):
 
             articles = Article.objects.filter(id__in=article_ids).order_by('-id')
 
-            dispaly_paragraph = {}
+            display_paragraph = {}
             for article in articles:
                 for paragraph in Paragraph.objects.filter(article=article):
-                    dispaly_paragraph[article.id] = ' '.join(paragraph.paragraph_content.split(' ')[:60]) + '...'
+                    display_paragraph[article.id] = ' '.join(paragraph.paragraph_content.split(' ')[:60]) + '...'
                     break
 
             latest_articles = Article.objects.filter().order_by('-id')[:3]
 
             context = {
                 'articles': articles,
-                'dispaly_paragraph': dispaly_paragraph,
+                'display_paragraph': display_paragraph,
                 'latest_articles': latest_articles,
                 'title': title,
             }

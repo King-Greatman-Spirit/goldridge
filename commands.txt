@@ -12,7 +12,6 @@ python manage.py startapp company
 python manage.py startapp enquiry
 python manage.py startapp service
 python manage.py startapp staff
-python manage.py startapp project
 python manage.py startapp faq
 
 
@@ -46,13 +45,36 @@ docker-compose down --volumes # Pull down volumes
 docker-compose exec app python manage.py startapp faq
 docker-compose exec app pip install django
 docker-compose run --rm app # django docker test
+docker-compose run app python manage.py migrate
+docker-compose run app  python manage.py collectstatic
+docker-compose run app  python manage.py createsuperuser --no-input
+python manage.py collectstatic --no-input --ignore admin
+docker-compose run app python manage.py makemigrations --fake
 
 
+In order to prevent this error try to disable docker buildkit before running any docker related command:
 
-SUPERUSER LOGIN
-Username: goldridge
-Email address: goldridgeweb@gmail.com
-Password: goldridge
+#Traditional Docker Builds
+export DOCKER_BUILDKIT=0
+export COMPOSE_DOCKER_CLI_BUILD=0
+
+#Enable Docker BuildKit
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+Reset Database
+docker-compose down
+rm -rf ./volumes/db 
+docker-compose build
+docker-compose up -d
+
+python manage.py shell
+
+from accounts.models import MyAccountManager
+
+obj = MyAccountManager.objects.all().delete()
+obj.delete()
+
 
 # GENERAL COMMANDS
 rm -rf goldridge/ #to remove folder
@@ -69,6 +91,7 @@ Note that the tilde (~) represents your home directory.
 mv <source_file> ~ <destination_folder>  #to move a file to another folder 
 
 create a new repository on the command line
+git checkout Dev
 echo "# goldridge" >> README.md
 git init
 git add README.md
@@ -76,11 +99,14 @@ git add .
 git commit -m "first commit"
 git commit -m "1:15PM 4-10-2023 COMMIT"
 git branch -M dev
-git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
+git remote add origin git@github.com:King-Greatman-Spirit/GoldRidgeCoop.git
 git push -u origin dev
 
 push an existing repository from the command line
-git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
+git remote add origin git@github.com:King-Greatman-Spirit/GoldRidgeCoop.git
 git branch -M dev
 git push -u origin dev
+
+
+
 

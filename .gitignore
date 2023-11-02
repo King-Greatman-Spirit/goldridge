@@ -1,8 +1,7 @@
 __pycache__/
 .DS_Store
 *.sqlite3
-static
+commands.txt
 venv
 .env
 .dockerignore
-.gitignore

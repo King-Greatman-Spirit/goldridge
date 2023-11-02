@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Account
+# from accounts.models import Account
 from django.urls import reverse
 
 # Create your models here.
@@ -47,11 +47,11 @@ class CompanyOverview(models.Model):
         on_delete=models.CASCADE,
         unique=True,
     )
+    mission = models.TextField(max_length=500, blank=True)
+    vision = models.TextField(max_length=500, blank=True)
+    goal = models.TextField(max_length=500, blank=True)
     business_overview = models.TextField(max_length=500, blank=True)
     competive_advantage = models.TextField(max_length=500, blank=True)
-    mission_statement = models.TextField(max_length=500, blank=True)
-    vision = models.TextField(max_length=500, blank=True)
-    philosophy = models.TextField(max_length=500, blank=True)
     id = models.AutoField(primary_key=True, default=None)
 
     def update_url(self):

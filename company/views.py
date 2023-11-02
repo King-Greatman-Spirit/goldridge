@@ -21,7 +21,7 @@ def company(request):
         'staff': staff,
         'title': title,
     }
-    return render(request, 'company/about.html', context)
+    return render(request, 'company/about_us.html', context)
 
 @login_required(login_url = 'login')
 def company_dashboard(request):
@@ -97,11 +97,11 @@ def business_overview(request):
         if form.is_valid():
             data = CompanyOverview()
             data.company = form.cleaned_data['company']
+            data.mission = form.cleaned_data['mission']
+            data.vision = form.cleaned_data['vision']
+            data.goal = form.cleaned_data['goal']
             data.business_overview = form.cleaned_data['business_overview']
             data.competive_advantage = form.cleaned_data['competive_advantage']
-            data.mission_statement = form.cleaned_data['mission_statement']
-            data.vision = form.cleaned_data['vision']
-            data.philosophy = form.cleaned_data['philosophy']
             data.save()
             messages.success(request, 'Thank you! Your Business Overview has been created.')
             return redirect('business_overview')

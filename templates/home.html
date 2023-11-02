@@ -3,241 +3,437 @@
 
 {% block content %}
 
-
-  <!-- masterslider -->
-  <div class="master-slider margintop ms-skin-default" id="masterslider">
-
-    <!-- slide 1 -->
-    <div class="ms-slide slide-1" data-delay="27">
-      <div class="slide-pattern"></div>
-      <img src="{% static 'js/masterslider/target.jpg' %}" alt=""/>
-
-      <h3 class="ms-layer text8 font-style1"
-			style="top: 280px; right: 280px;"
-			data-type="text"
-			data-delay="500"
-		 	data-duration="2000"
-		 	data-ease="easeOutExpo"
-		 	data-effect="rotatefront(-40,900,tr)">Do you have a Business OR Idea?</h3>
-
-      <h3 class="ms-layer text5 font-style1"
-			style="top: 350px; right: 280px;"
-			data-type="text"
-			data-delay="1000"
-		 	data-duration="2000"
-		 	data-ease="easeOutExpo"
-		 	data-effect="rotate3dright(10,50,0,100)">
-			Get a <span class="text-orange-2">WEB/MOBILE</span> App</h3>
-
-      <h3 class="ms-layer text6"
-        	style="top: 410px; right: 280px;"
-            data-type="text"
-            data-effect="top(45)"
-            data-duration="2000"
-            data-delay="1500"
-            data-ease="easeOutExpo"> We help you be better with digital <br />
-        <span class="text-orange-2">Be Better Be Digital</span> </h3>
-
-      <a href="{% url 'company' %}" class="ms-layer sbut5 orange"
-			style="left: 550px; top: 520px;"
-			data-type="text"
-			data-delay="2500"
-			data-ease="easeOutExpo"
-			data-duration="1200"
-			data-effect="scale(1.5,1.6)"> About Us </a>
-
-      <a href="{% url 'contact_us' %}" class="ms-layer sbut1 orange glow-btn"
-			style="left: 360px; top: 520px;"
-			data-type="text"
-			data-delay="2500"
-			data-ease="easeOutExpo"
-			data-duration="1200"
-			data-effect="scale(1.5,1.6)"> Contact Us </a>
-
-
-    </div>
-    <!-- end slide 1 -->
-
-     <!-- slide 2 -->
-    <div class="ms-slide slide-2" data-delay="27">
-      <div class="slide-pattern"></div>
-      <img src="{% static 'js/masterslider/rocket.jpg' %}" alt=""/>
-
-      <h3 class="ms-layer text8 font-style1"
-			style="top: 280px; right: 280px;"
-			data-type="text"
-			data-delay="500"
-			data-ease="easeOutExpo"
-			data-duration="1230"
-			data-effect="scale(1.5,1.6)"> Do you have or need data?</h3>
-
-      <h3 class="ms-layer text5 font-style1"
-			style="top: 350px; right: 280px;"
-			data-type="text"
-			data-delay="1000"
-			data-ease="easeOutExpo"
-			data-duration="1230"
-			data-effect="scale(1.5,1.6)"> We <span class="text-orange-2">COLLECT, ANALYZE & INTERPRET</span> Data </h3>
-
-      <h3 class="ms-layer text6"
-        	style="top: 410px; right: 280px;"
-            data-type="text"
-            data-effect="top(45)"
-            data-duration="2000"
-            data-delay="1500"
-            data-ease="easeOutExpo"> We help you be better with digital <br />
-        <span class="text-orange-2">Be Better Be Digital</span></h3>
-
-      <a href="{% url 'company' %}" class="ms-layer sbut5 orange"
-			style="left: 540px; top: 520px;"
-			data-type="text"
-			data-delay="2500"
-			data-ease="easeOutExpo"
-			data-duration="1200"
-			data-effect="scale(1.5,1.6)"> About Us </a>
-
-      <a href="{% url 'contact_us' %}" class="glow-btn ms-layer sbut1 orange"
-			style="left: 360px; top: 520px;"
-			data-type="text"
-			data-delay="2500"
-			data-ease="easeOutExpo"
-			data-duration="1200"
-			data-effect="scale(1.5,1.6)"> Contact Us </a>
-
-
-    </div>
-    <!-- end slide 2 -->
-
-
+    
+<!-- masterslider -->
+<div class="master-slider ms-skin-default" id="masterslider"> 
+    
+  <!-- slide 1 -->
+  <div class="ms-slide slide-1" data-delay="5"> 
+  <!-- <img src="images/slide1.png" data-src="http://placehold.it/1920x650" alt=""/> -->
+  <img src="images/slide1.png" alt="slide 1"/>
+       
+    <h3 class="ms-layer text76"
+    style="left: 400px;top: 180px;"
+    data-type="text"
+    data-delay="500"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="left(250)">Wealth </h3>
+          
+    <h3 class="ms-layer text77"
+    style="left: 200px;top: 260px;"
+    data-type="text"
+    data-delay="1000"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="right(250)">Growth </h3>
+          
+    <h3 class="ms-layer text78"
+    style="left: 250px;top: 385px;"
+    data-type="text"
+    data-delay="2000"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="right(250)">  Empowering Financial Success</h3>
+        
   </div>
-  <!-- end of masterslider -->
-  <div class="clearfix"></div>
+  <!-- end slide 1 -->
+  
+  <!-- end slide 2 -->
+  <div class="ms-slide" data-delay="8">
+    <video data-autopause="false" data-mute="true" data-loop="true" data-fill-mode="fill">
+      <source type="video/webm" src="videos/slide2.mp4">
+    </video>
+    <h3 class="ms-layer text79"
+    style="top: 210px;"
+    data-type="text"
+    data-delay="500"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="left(250)">  Innovative Real Estate & property management </h3>
+          
+    <h3 class="ms-layer text83"
+    style="left: 230px;top: 260px;"
+    data-type="text"
+    data-delay="2000"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="right(250)"><br/> Solutions</h3>
+          
+  </div>
+  
+  <!-- end slide 2 --> 
 
-  <section class="sec-padding">
+  <!-- slide 3 -->
+  <div class="ms-slide slide-2" data-delay="9">
+    
+    <img src="images/slide2.png" alt="slide 2"/>
+    
+    
+    <img src="images/slide2_one.png" alt="slide 2"
+       style="right: 260px; top: 160px;"
+       class="ms-layer"
+       data-type="image"
+       data-delay="500"
+       data-duration="2500"
+       data-ease="easeOutExpo"
+       data-effect="scalefrom(1.1,1.1,190,0)"
+   />
+       
+    <img src="images/slide2_two.png" alt="slide 2"
+       style="left: 810px; top: 200px;"
+       class="ms-layer"
+       data-type="image"
+       data-delay="1000"
+       data-duration="2500"
+       data-ease="easeOutExpo"
+       data-effect="scalefrom(1.1,1.1,190,0)"
+   />
+       
+    <h3 class="ms-layer text58"
+    style="left: 230px;top: 200px;"
+    data-type="text"
+    data-delay="1500"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="scale(1.5,1.6)"> Customer-Centric Services & </h3>
+          
+    <h3 class="ms-layer text59"
+    style="left: 230px;top: 245px;"
+    data-type="text"
+    data-delay="2000"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="scale(1.5,1.6)"> Customer-first practices </h3>
+          
+    <h3 class="ms-layer text3"
+    style="left: 230px; top: 330px;"
+      data-type="text"
+      data-effect="top(45)"
+      data-duration="2000"
+      data-delay="2500"
+      data-ease="easeOutExpo"> We are 
+      driven by the belief that financial prosperity should be accessible to all <br />
+      we invite you to join us on this journey to secure your financial future. </h3>
+      
+    <a class="ms-layer sbut1"
+    style="left: 230px; top: 420px;"
+    data-type="text"
+    data-delay="3000"
+    data-ease="easeOutExpo"
+    data-duration="1200"
+    data-effect="scale(1.5,1.6)"
+    href="{% url 'compnay' %}"> Read More </a> 
+          
+    <a class="ms-layer sbut2"
+    style="left: 390px; top: 420px;"
+    data-type="text"
+    data-delay="3000"
+    data-ease="easeOutExpo"
+    data-duration="1200"
+    data-effect="scale(1.5,1.6)"
+    href="{% url 'contact_us' %}"> Contact Us </a> 
+          
+          </div>
+  <!-- end slide 3 -->
+  
+  <!-- end slide 4 -->
+  <div class="ms-slide" data-delay="10">
+    <video data-autopause="false" data-mute="true" data-loop="true" data-fill-mode="fill">
+      <source type="video/webm" src="videos/slide1.mp4">
+            <source type="video/ogg" src="videos/slide1.mp4">
+    </video>
+    <h3 class="ms-layer text82"
+    style="left: 430px;top: 180px;"
+    data-type="text"
+    data-delay="1500"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="left(250)"> Expertise In Real Estate & Property </h3>
+          
+    <h3 class="ms-layer text83"
+    style="left: 230px;top: 260px;"
+    data-type="text"
+    data-delay="2000"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="right(250)"> Management</h3>
+          
+  </div>
+  <!-- end slide 4 --> 
+  
+  <!-- slide 5 -->
+  <div class="ms-slide slide-4" data-delay="9"> 
+  <img src="images/SLIDE6.png" alt="slide 6"/>
+          
+    <h3 class="ms-layer text82"
+    style="left: 430px;top: 180px;"
+    data-type="text"
+    data-delay="1500"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="left(250)">Building Trust-Based </h3>
+          
+    <h3 class="ms-layer text83"
+    style="left: 230px;top: 260px;"
+    data-type="text"
+    data-delay="2000"
+    data-ease="easeOutExpo"
+    data-duration="1230"
+    data-effect="right(250)">Relationships </h3>
+  </div>
+  <!-- end slide 5 -->
+</div>
+<!-- end of masterslider -->
+
+  <div class="clearfix"></div>
+  
+  <section class="sec-padd-default-page">
     <div class="container">
-      <div class="col-md-6">
-        <div class="item-holder"><img src="{% static 'images/about_us.jpg' %}" alt="" class="img-responsive"/></div>
-      </div>
-      <div class="col-md-6">
-        <div class="item-holder">
-          <h2 class="section-title droid-serif">What We Are</h2>
-          <p class="sub-title-left">{{ company_overview.business_overview }}</p>
-          <p>{{ company_overview.mission_statement }} </p>
-          <br/>
-          <p>{{ company_overview.competive_advantage }}</p>
-          <br/>
-          {% comment %} <img src="{% static 'images/site-img36.jpg' %}" alt=""/> {% endcomment %}
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <h6 class="nopadding lspace-1">Who We Are</h6>
+          <h1 class="paddtop1 dosis font-weight-5 lspace-sm">About <span class="text-orange-2">Us</span></h1>
+          <div class="title-line-4 align-center"></div>
         </div>
+        <div class="clearfix"></div>
+        <div class="col-md-6 col-sm-12 col-xs-12 bmargin" data-anim-type="fade-in-right" data-anim-delay="100">
+          <div class="col-md-6 col-sm-6 col-xs-12 nopadding">
+            <div class="feature-box-101 bmargin">
+              <div class="circle">
+                <h4 class="title text-green-2 ">Our Vision</h4>
+              </div>
+              <div class="img"><img src="{% static 'images/visi1.png' %}" alt=""></div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 padding-left-4">
+            <p>{{ company_overview.vision }}</p>
+            <br>
+            <a class="btn btn-orange-2 dark btn-xround" href="{% url 'company' %}">Read more <i class="fa fa-angle-right"></i></a> </div>
+        </div>
+        <!--end item-->
+        
+        <div class="col-md-6 col-sm-12 col-xs-12 bmargin" data-anim-type="fade-in-left" data-anim-delay="200">
+          <div class="col-md-6 col-sm-6 col-xs-12 nopadding">
+            <div class="feature-box-101 bmargin">
+              <div class="circle">
+                <h4 class="title text-green-2">Our Mission</h4>
+              </div>
+              <div class="img"><img src="{% static 'images/mission.png' %}" alt=""></div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 padding-left-4">
+            <p>{{ company_overview.mission }}</p>
+            <br>
+            <a class="btn btn-orange-2 dark btn-xround" href="{% url 'company' %}">Read more <i class="fa fa-angle-right"></i></a> </div>
+        </div>
+        <!--end item--> 
+
+        
+      </div>
+    </div>
+  </section>
+        
       </div>
     </div>
   </section>
   <!-- end section -->
   <div class="clearfix"></div>
-
-  <section>
-  <div class="container">
-  <div class="divider-line solid light opacity-7"></div>
-    <div class="row sec-padding">
-
-      <div class="col-xs-12 text-center">
-        <h6 class="nopadding lspace-1">What We Do</h6>
-        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Our Servi<span class="text-orange-2">ces</span></h1>
-        <div class="title-line-4 align-center"></div>
-      </div>
-
-      {% for service in services %}
-      <div class="col-md-4 col-sm-6 col-xs-12 bmargin">
-          <a href="#"><img src="{{ service.image.url }}" alt="" class="img-responsive"/></a>
-          <br/>
-          <h4 class="uppercase font-weight-3"><a href="#">{{service.service_name}}</a></h4>
-          <p>{{ service.service_description }}</p>
-          <br/>
-          <a class="btn btn-warning dark btn-round btn-small" href="{{ service.service_url }}">find out more..</a>
-      </div>
-      <!--end item-->
-      {% endfor %}
-
-
+  
+  <section class="section-light section-side-image clearfix">
+    <div class="img-holder col-md-6 col-sm-3 pull-left">
+      <div class="background-imgholder"> <img src="images/awe.png" alt="AWESOME_photo"/> </div>
     </div>
-  </div>
-</section>
-<div class="clearfix"></div>
-<!-- end section -->
-
-{% include 'includes/CTA_2.html' %}
-
-<section>
-  <div class="container">
-    <div class="divider-line solid light opacity-7"></div>
-    <div class="row sec-padding">
-      <div class="col-xs-12 text-center">
-        <h6 class="nopadding lspace-1">Who We Are</h6>
-        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Meet Our Te<span class="text-orange-2">am</span></h1>
-        <div class="title-line-4 align-center"></div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-7 col-md-offset-5 col-sm-8 col-sm-offset-2 text-inner clearfix align-left">
+          <div class="text-box white padding-7">
+            <div class="col-xs-12 text-left">
+              <h6 class="nopadding lspace-1">What We Offer</h6>
+              <h2 class="paddtop1 dosis font-weight-5 lspace-sm">Gold<span class="text-orange-2">Ridge</span> Multi<span class="text-orange-2">purpose</span>
+                Coo<span class="text-orange-2">pera</span>tive So<span class="text-orange-2">cie</span>ty  Limi<span class="text-orange-2">ted</span></h2>
+              <div class="title-line-4"></div> 
+            </div>
+            <div class="clearfix"></div>
+            <ul class="iconlist orange">
+              {% for service in service_links %}
+              <h4><li><i class="fa fa-check"></i> {{ service.service_name }} </li></h4>
+              {% endfor %}
+            </ul>
+            <br/>
+            <br/>
+            <a href="#" class="btn btn-orange-2 dark btn-xround">Read more</a> </div>
+        </div>
       </div>
-      <div class="clearfix"></div>
-      {% for employee in staff %}
-      <div class="col-md-4 col-sm-6">
-        <div class="team-holder15 two bmargin">
-          <div class="team-member"><img src="{{ employee.photo.url }}" alt="http://placehold.it/500x450" class="img-responsive"/></div>
-          <div class="info-box text-center">
+    </div>
+  </section>
+  <!--end section-->
+  <div class=" clearfix"></div>
+  
+  <section class="sec-padding">
+  <div class="container">
+  <div class="row">
+  
+  <div class="col-md-5 screens-top-padding bmargin">
+    <h1 class="font-weight-6 less-mar1 nopadding">Contact <span class="text-orange-2">Us</span></h1>
+    <h5>Join  
+      <span class="text-green-2">GoldRidge</span> Multipurpose 
+      <span class="text-green-2">Cooperative</span></h5>
+    <p>Make Your Money Work For You. It's free.</p>
+    <br>
+    <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-youtube"></i></div>
+    <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-facebook"></i></div>
+    <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-twitter"></i></div>
+    <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-instagram"></i></div>
+    
+    <div class="clearfix"></div>
+    <br>
+    <a class="btn btn-orange-2 dark btn-xround" href="{% url 'contact_us' %}">Click Here</a>
+    
+    </div>
+  <!--end item-->
+  
+  <div class="col-md-7 bmargin">
+  <img src="images/hast.png" alt="Contact_Photo" class="img-responsive"/>
+  </div>
+  <!--end item-->
+
+  </div>
+  </div>
+  </section>
+  <!-- end section -->
+  <div class="clearfix"></div>
+  
+  <section class="sec-padd-default-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <h6 class="nopadding lspace-1">Who We Are</h6>
+          <h1 class="paddtop1 dosis font-weight-5 lspace-sm"><span class="text-orange-2">Me</span>et O<span class="text-orange-2">ur</span>
+            Te<span class="text-orange-2">am</span></h1>
+          <div class="title-line-4 align-center"></div>
+        </div>
+        <div class="clearfix"></div>
+        {% for employee in staff %}
+        <div class="col-md-4 col-sm-6">
+          <div class="team-holder15 two bmargin">
+            <div class="team-member"><img src="{{ employee.photo.url }}" alt="http://placehold.it/500x450" class="img-responsive"/></div>
+            <div class="info-box text-center">
             <h5 class="uppercase less-mar2">{{ employee.full_name }}</h5>
             <span class="text-orange-2">{{ employee.job_title }}</span> <br/>
             <br/>
-            <p>{{ employee.about }}</p>
+              <p>{{ employee.about }}</p>
+            </div>
           </div>
         </div>
+        <!--end item-->
+        {% endfor %}
+        
       </div>
-      <!--end item-->
-      {% endfor %}
-
     </div>
-  </div>
-</section>
-<!--end section-->
-<div class="clearfix"></div>
-
-{% if projects %}
-<section class="sec-padding">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 text-center">
-        <h6 class="nopadding lspace-1">What We've Done</h6>
-        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Our proje<span class="text-orange-2">cts</span></h1>
-        <div class="title-line-4 align-center"></div>
+  </section>
+  <div class="clearfix"></div>
+  <!--end section-->
+  
+  <section class="section-light section-side-image clearfix">
+    <div class="img-holder col-md-6 col-sm-3 pull-left">
+      <div class="background-imgholder">
+        <img src="images/home_services.png" alt="Home Service Pic"/>
       </div>
-      <div class="clearfix"></div>
-
-      {% comment %} <div class="col-xs-12 demo-full-width"> {% endcomment %}
-        <div id="grid-container" class="cbp">
-
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-7 col-md-offset-5 col-sm-8 col-sm-offset-4 text-inner clearfix align-left">
+          <div class="text-box white padding-7">
+            <div class="col-xs-12 text-left">
+              <h6 class="nopadding lspace-1">What We Do</h6>
+              <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Our Servic<span class="text-orange-2">es</span></h1>
+              <div class="title-line-4"></div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-4">
+              <div class="feature-box-103 text-center bmargin">
+                <div class="iconbox-medium round grayoutline2"><span class="icon-lightbulb"></span></div>
+                <br/>
+                <h4>Transportation</h4>
+              </div>
+            </div>
+            <!--end item-->
+            
+            <div class="col-md-4">
+              <div class="feature-box-103 text-center bmargin active">
+                <div class="iconbox-medium round grayoutline2"><span class="icon-basket"></span></div>
+                <br/>
+                <h4>Property Management</h4>
+              </div>
+            </div>
+            <!--end item-->
+            
+            <div class="col-md-4">
+              <div class="feature-box-103 text-center bmargin">
+                <div class="iconbox-medium round grayoutline2"><span class="icon-layers"></span></div>
+                <br/>
+                <h4>Savings</h4>
+              </div>
+            </div>
+            <!--end item-->
+            <div class="clearfix"></div>
+            <br/>
+            <br/>
+            <a href="#" class="btn btn-orange-2 dark btn-xround">Read more</a> </div>
         </div>
-      {% comment %} </div> {% endcomment %}
-    </div>
-  </div>
-</section>
-<!--end section-->
-<div class="clearfix"></div>
-{% endif %}
-
-{% include 'includes/CTA_1.html' %}
-
-<section class="sec-padding">
-
-  <div class="container">
-    <div class="row ">
-      <div class="col-xs-12 text-center">
-        <h6 class="nopadding lspace-1">What We Blog</h6>
-        <h1 class="paddtop1 dosis font-weight-5 lspace-sm">Our Arti<span class="text-orange-2">cle</span></h1>
-        <div class="title-line-4 align-center"></div>
       </div>
     </div>
-  </div>
+  </section>
+  <!--end section-->
+  <div class=" clearfix"></div>
+  
+  
+  <section class="sec-padding section-orange-2">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <h1 class="dosis text-white lspace-sm text-orange-2">Join Our Newsletter</h1>
+          <p class="sub-title text-white">Subscribe to get latest content by email</p>
+        </div>
+        <div class="clearfix"></div>
 
-  <div class="container">
-    <div class="row">
+        <form method="POST" action="{% url 'subscribe' %}">
+            {% csrf_token %}
+            <div>
+              <div class="section">
+                <label for="{{ form.email.id_for_label }}" class="field prepend-icon">
+                  <!-- <input type="email" name="email" id="email" class="gui-input" placeholder="Email address"> -->
+                  {{ form.email }}
+                  <span class="field-icon"><i class="fa fa-envelope"></i></span> </label>
+                  {% for err in form.email.errors %}
+                    <small class="text-danger">{{ err }}</small>
+                  {% endfor %}
+              </div>
+              <!-- end section -->
+            <div class="modal-footer">
+              <button type="submit" class="email_submit">Submit</button>
+            </div>
+            <!-- end .form-footer section -->
+          </form>
 
-      {% for article in articles %}
+      </div>
+    </div>
+  </section>
+  <!--end section-->
+  <div class="clearfix"></div>
+  
+  <section>
+    <div class="container">
+    <div class="divider-line solid light opacity-5"></div>
+      <div class="row sec-padd-default-page">
+        <div class="col-xs-12 text-center">
+          <h6 class="nopadding lspace-1">Latest News</h6>
+          <h1 class="paddtop1 dosis font-weight-5 lspace-sm">From the Bl<span class="text-orange-2">og</span></h1>
+          <div class="title-line-4 align-center"></div>
+        </div>
+
+        <div class="clearfix"></div>
+        {% for article in articles %}
         <div class="col-md-4">
           <div class="blog-holder1 bmargin">
             <div class="image-holder">
@@ -260,7 +456,7 @@
                 </span>
                 <span><i class="fa fa-comments-o"></i> 15 Comments</span> </div>
               <br/>
-              {% for key, value in dispaly_paragraph.items %}
+              {% for key, value in display_paragraph.items %}
                 {% if key == article.id %}
                   <p>{{ value }}</p>
                 {% endif %}
@@ -279,58 +475,117 @@
 
     </div>
   </div>
-</section>
-<!--end section-->
-<div class=" clearfix"></div>
-
-<section class="parallax-section69">
-  <div class="section-overlay bg-opacity-7">
-    <div class="container sec-tpadding-3 sec-bpadding-3">
-      <div class="row slide-controls-color-13">
-        <div class="col-md-8 col-centered">
-          <div class="col-xs-12 text-center">
-            <h6 class="nopadding lspace-1 text-white">What Clients Say</h6>
-            <h1 class="paddtop1 dosis font-weight-5 text-white lspace-sm">Testimon<span class="text-orange-2">ials</span></h1>
-            <div class="title-line-4 white align-center"></div>
-          </div>
-          <div class="clearfix"></div>
-          <div id="owl-demo3" class="owl-carousel">
-            {% for project in projects %}
-            <div class="item">
-              <blockquote class="style1"><span class="text-white less-mar1">{{ project.testimonial }}</span> </blockquote>
-              <br/>
-              <h5 class="text-white less-mar1">{{ project.contact_full_name }}</h5>
-              <span class="text-orange-2">{{ project.client_company }}</span>
-            </div>
-            <!--end slide item-->
-            {% endfor %}
-          </div>
-          <!--end carousel -->
-
+  </section>
+  <!-- end section -->
+  <div class="clearfix"></div>
+  
+  <section class="parallax-section68">
+    <div class="section-overlay bg-opacity-4">
+      <div class="container sec-tpadding-3 sec-bpadding-3">
+        <div class="row">
+          <div class="col-md-8 col-centered">
+            <h1 class="text-uppercase text-white text-bold ">
+              <b><span class="text-orange-2">GoldRidge</span> <span class="text-green-2">MultiPurpose</span> 
+                <span class="text-orange-2">Coorperative</span> <span class="text-green-2">Society</span> 
+                <span class="text-orange-2">Limited</span></b>
+            </h1>
+            <br/>
+            <br/>
+            <a class="btn btn-orange-2 btn-xround" href="{% url 'company' %}">Read more</a></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!--end section-->
-<div class="clearfix"></div>
-
-<!-- <section class="section-less-padding">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="clientlogo-list">
-          <li><img src="http://placehold.it/170x80" alt=""/></li>
-          <li><img src="http://placehold.it/170x80" alt=""/></li>
-          <li><img src="http://placehold.it/170x80" alt=""/></li>
-          <li><img src="http://placehold.it/170x80" alt=""/></li>
-          <li><img src="http://placehold.it/170x80" alt=""/></li>
-          <li><img src="http://placehold.it/170x80" alt=""/></li>
-        </ul>
+  </section>
+  <!--end section-->
+  <div class="clearfix"></div>
+  
+  
+  <section class="parallax-section69">
+    <div class="section-overlay bg-opacity-7">
+      <div class="container sec-tpadding-3 sec-bpadding-3">
+        <div class="row slide-controls-color-13">
+          <div class="col-md-8 col-centered">
+            <div class="col-xs-12 text-center">
+              <h6 class="nopadding lspace-1 text-white">Our Clients</h6>
+              <h1 class="paddtop1 dosis font-weight-5 text-white lspace-sm">People Sa<span class="text-orange-2">ys</span></h1>
+              <div class="title-line-4 white align-center"></div>
+            </div>
+            <div class="clearfix"></div>
+            <div id="owl-demo3" class="owl-carousel text-white">
+              {% for test in testimonials %}
+              <div class="item">
+                <blockquote class="style1"><span>{{ test.description }}</span> </blockquote>
+                <br/>
+                <h5 class="text-white less-mar1">{{ test.client_full_name }}</h5>
+                <span class="text-orange-2">{{ test.client_location }}</span> 
+              </div>
+              <!--end slide item-->
+              {% endfor %}
+            </div>
+            <!--end carousel --> 
+            
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<!--end section -->
-<!-- <div class="clearfix"></div>  -->
+  </section>
+  <!--end section-->
+  <div class="clearfix"></div>
+  
+  <section class="section-orange-2 section-less-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <h3 class="text-orange-2">Frequently Asked Questions</h3>
+          <p class="text-white">
+            Have questions about GoldRidge? You're not alone! Check out our FAQ page for answers to common inquiries. 
+            We've got you covered on topics ranging from investment strategies to account security. 
+            Still can't find what you're looking for? Feel free to contact us, and our dedicated team will be happy to assist you.
+
+            Got questions about GoldRidge? Visit our FAQ page for answers on investments, security, and more. Can't find what you need? 
+            Contact us, and our team will help. Explore your financial journey now!
+
+            {{ FAQCategory.home_note }}</p>
+        </div>
+        <div class="col-md-3">
+          <div class="margin-top2"></div>
+          <a class="btn btn-border white-2 btn-large pull-right" href="{% url 'faq' %}">Read more</a></div>
+      </div>
+    </div>
+  </section>
+  <!--end section-->
+  
 {% endblock %}
+
+<!-- Certainly, here are some common FAQs and their answers for user registration, login, logout, and forgot password processes:
+
+**User Registration:**
+
+1. **How do I create an account with GoldRidge?**
+   - **Answer:** To create an account, click on the "Sign Up" or "Register" button on our homepage. Fill in your details, including your name, email, and password, and then follow the steps to complete the registration process.
+
+2. **What information is required for registration?**
+   - **Answer:** You'll need to provide your full name, a valid email address, and a secure password. Some additional details may be requested based on the account type you choose.
+
+**User Login:**
+
+1. **How do I log in to my GoldRidge account?**
+   - **Answer:** Visit our homepage and click on "Login" or "Sign In." Enter your registered email address and password. Click "Log In," and you're all set.
+
+2. **I forgot my password. What should I do?**
+   - **Answer:** If you've forgotten your password, click on the "Forgot Password" link on the login page. You'll receive instructions on how to reset your password via your registered email.
+
+**User Logout:**
+
+1. **How do I log out of my GoldRidge account?**
+   - **Answer:** To log out, simply click on the "Log Out" or "Sign Out" option, usually found in the account or profile menu.
+
+**Forgot Password:**
+
+1. **I requested a password reset but didn't receive an email. What should I do?**
+   - **Answer:** Check your spam folder; sometimes password reset emails can end up there. If you still can't find it, ensure you entered the correct email during the process. If the issue persists, contact our support team for assistance.
+
+2. **Can I use the same password after resetting it?**
+   - **Answer:** We recommend creating a new, unique password for security reasons. Choose a combination of letters, numbers, and symbols to enhance your account's safety.
+
+These are general FAQs, and you can adapt them to suit your website's specific procedures and features. -->

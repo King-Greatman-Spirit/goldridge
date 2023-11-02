@@ -3,6 +3,7 @@ from django.db import models
 from service.models import Service, ServiceProcess  # Import Service and ServiceProcess models
 
 class FAQCategory(models.Model):
+    home_note = models.TextField(max_length=500, blank=True, null=True)
     name = models.CharField(max_length=100)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -14,11 +15,9 @@ class FAQCategory(models.Model):
         verbose_name = 'FAQCategory'
         verbose_name_plural = 'FAQCategories'
 
-class FAQ(models.Model):
+class FAQQuestion(models.Model):
     category = models.ForeignKey(FAQCategory, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='faqs', blank=True, null=True)
-    service_process = models.ForeignKey(ServiceProcess, on_delete=models.CASCADE, related_name='faqs', blank=True, null=True)
-    question = models.CharField(max_length=500)
+    question = models.TextField(max_length=500)
     answer = models.TextField(max_length=500)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)

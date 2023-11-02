@@ -9,7 +9,6 @@ class EnquiryForm(forms.ModelForm):
             'email',
             'phone_number',
             'company_name',
-            'no_of_employees',
             'service',
             'message',
             'channel'
@@ -34,15 +33,10 @@ class LeadForm(forms.ModelForm):
     class Meta:
         model = Newsletter
         fields = [
-            'full_name',
-            'email',
-            'phone_number'
+            'email'
          ]
     def __init__(self, *args, **kwargs):
         super(LeadForm, self).__init__(*args, **kwargs)
-        self.fields['full_name'].widget.attrs['placeholder'] = 'Enter Full Name'
         self.fields['email'].widget.attrs['placeholder'] = 'Enter Email Address'
-        self.fields['phone_number'].widget.attrs['placeholder'] = 'Enter Phone Number'
-
-        for field in ('full_name', 'email', 'phone_number'):
-            self.fields[field].widget.attrs['class'] = 'gui-input'
+        
+        self.fields['email'].widget.attrs['class'] = 'gui-input'

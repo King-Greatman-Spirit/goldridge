@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from company.models import Company, CompanyOverview
 from service.models import Service, ServiceProcess
 from staff.models import Staff
@@ -36,5 +36,4 @@ def home(request):
     }
 
     return render(request, 'home.html', context)
-
 

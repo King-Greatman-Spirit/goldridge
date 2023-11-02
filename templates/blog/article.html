@@ -1,23 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load myapp_tags %}
 
 {% block content %}
 
 {% comment %} {% include 'includes/newsletter.html' %} {% endcomment %}
-
+  
   <section>
     <div class="header-inner two">
       <div class="inner text-center">
-        <h4 class="title text-white uppercase">Webstacka</h4>
-        <h5 class="text-white uppercase">be digital be better</h5>
+        <h4 class="title text-white uppercase">Elevate with GoldRidge</h4>
+        <h5 class="text-white uppercase">Invest Wisely, Save Securely, Travel Freely, Live Lavishly</h5>
       </div>
       <div class="overlay bg-opacity-5"></div>
-      <img src="{% static 'images/servers.jpg' %}" alt="" class="img-responsive"/> </div>
+      <img src="http://placehold.it/1920x800" alt="" class="img-responsive"/> </div>
   </section>
   <!-- end header inner -->
   <div class="clearfix"></div>
-
+  
   <section>
     <div class="pagenation-holder">
       <div class="container">
@@ -34,11 +33,11 @@
   </section>
   <!--end section-->
   <div class="clearfix"></div>
-
+  
   <section class="sec-padding">
     <div class="container">
       <div class="row">
-        <div class="col-md-9 col-sm-12 col-xs-12 bmargin">
+        <div class="col-md-8 col-sm-12 col-xs-12 bmargin">
           <div class="col-md-12 bmargin">
             <div class="blog-holder-12">
               <div class="image-holder">
@@ -95,39 +94,36 @@
             <h4 class="less-mar3"><a href="#">Share this Article</a></h4>
             <br/>
             <ul class="social-icons-2">
-              <li><a href="https://twitter.com/codelayers"><i class="fa fa-twitter"></i></a></li>
-              <li><a href="https://www.facebook.com/codelayers"><i class="fa fa-facebook"></i></a></li>
-
+              <li><a href="https://twitter.com/goldridge"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="https://www.facebook.com/goldridge"><i class="fa fa-facebook"></i></a></li>
+              
               <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
               <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
             </ul>
             <div class="clearfix"></div>
             <br/>
             <div class="blog1-post-info-box">
-              <h4>About the author{% if article.article_author.all|length > 1 %}s{% endif %}</h4>
-              {% for author in article.article_author.all %}
-              <div class="text-box padding-1">
-                <div class="iconbox-medium left round overflow-hidden"><img src="{{ author.photo.url }}" alt="" class="img-responsive" style="width: 100px;"/></div>
-                <div class="text-box-right more-padding-2 capitalize">
-                  <div class="blog-post-info">
-                    <span><i class="fa fa-user" style="color: black;"></i> {{ author.full_name }}</span>
-                  </div>
-                  <div class="blog-post-info">
-                    <span><i class="fa fa-briefcase" style="color: black;"></i> {{ author.job_title }}</span>
-                  </div>
-                  <div class="blog-post-info">
-                    <span><i class="fa fa-building" style="color: black;"></i> {{ author.company_name }}</span>
-                    <span><i class="fa fa-link" style="color: black;"></i> {{ author.company_url }}</span>
-                  </div>
-              </div>
-            </div>
-            {% endfor %}
-            </div>
+              {% for paragraph in paragraphs %}
+                {% if forloop.counter|divisibleby:4 %}
+                  <div class="clearfix"></div>
+                  {% include 'includes/CTA_1.html' %}
+                {% elif forloop.counter|divisibleby:6 %}
+                  <div class="clearfix"></div>
+                  {% include 'includes/CTA_2.html' %}
+                {% endif %}
+                <h5 class="less-mar3"><a href="#">{{ paragraph.paragraph_title }}</a></h5>
+                {% with paragraph.paragraph_content|split:'/n/n' as phrases %}
+                {% for phrase in phrases %}
+                <p class="less-mar3">{{ phrase }}</p>
+                {% endfor %}
+                {% endwith %}
+                <br/>
+              {% endfor %}
             <!--end item-->
             <div class="clearfix"></div>
             <br/>
             <br/>
-            <h4 class="less-mar3"><a href="#">Latest Posts</a></h4>{% comment %} Related Posts {% endcomment %}
+            <h4 class="less-mar3"><a href="#">Latest Posts</a></h4>
             <br/>
             {% for latest in articles %}
             <div class="col-md-4 bmargin">
@@ -147,7 +143,7 @@
             </div>
             <!--end item-->
             {% endfor %}
-
+            
             {% comment %} <div class="col-md-4 bmargin">
               <div class="image-holder"><a href="#"><img src="http://placehold.it/1000x800" alt="" class="img-responsive"/></a></div>
               <div class="clearfix"></div>
@@ -155,7 +151,7 @@
               <div class="blog1-post-info"> <span>By John Doe</span><span> May 20</span> </div>
             </div>
             <!--end item-->
-
+            
             <div class="col-md-4 bmargin">
               <div class="image-holder"><a href="#"><img src="{{ latest.image.url }}" alt="" class="img-responsive"/></a></div>
               <div class="clearfix"></div>
@@ -163,19 +159,19 @@
               <div class="blog1-post-info"> <span>By John Doe</span><span> May 20</span> </div>
             </div>
             <!--end item--> {% endcomment %}
-
+            
             <div class="clearfix"></div>
 
-
+            
           </div>
-          <!--end item-->
-
+          <!--end item--> 
+          
         </div>
         <!--end left column-->
+        
+        <div class="col-md-4 col-sm-12 col-xs-12 bmargin">
 
-        <div class="col-md-3 col-sm-12 col-xs-12 bmargin">
-
-          <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="col-md-12 col-sm-12 col-xs-12 ">
             <h5>Search</h5>
             <div class="clearfix"></div>
             <form class="" action="{% url 'search' %}" method="GET">
@@ -213,24 +209,7 @@
             {% endfor %}
           </div>
           <!--end sidebar box-->
-
-          <div class="col-md-12 col-sm-12 col-xs-12 nopadding bmargin">
-            <h5 class="uppercase font-weight-3">Services</h5>
-            <div class="clearfix"></div>
-            {% for service in article.article_service.all %}
-              <div class="col-md-12 col-sm-12 col-xs-12 bmargin">
-                <a href="#"><img src="{{ service.image.url }}" alt="" class="img-responsive"/></a>
-                <br/>
-                <h4 class="uppercase less-mar3"><a href="#">{{service.service_name}}</a></h4>
-                <p>{{ service.service_description }}</p>
-                <br/>
-                <a class="btn btn-warning dark btn-round btn-small" href="{{ service.service_url }}">find out more..</a>
-              </div>
-            <!--end item-->
-            {% endfor %}
-          </div>
-          <!--end sidebar box-->
-
+          
           <div class="clearfix"></div>
           <br/>
           <div class="col-md-12 col-sm-12 col-xs-12 nopadding bmargin">
@@ -245,18 +224,18 @@
             </ul>
           </div>
           <!--end sidebar box-->
-
+          
           <div class="clearfix"></div>
           <br/>
-
-
+          
+          
         </div>
-        <!--end right column-->
+        <!--end right column--> 
       </div>
     </div>
   </section>
   <!-- end section -->
   <div class="clearfix"></div>
-
+  
 
 {% endblock %}
