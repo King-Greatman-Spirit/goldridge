@@ -15,18 +15,31 @@
       </ul>
     </div>
     <!--end left-->
-    
+
     <div class="topbar-right-items pull-right">
+      {% if user.id is None %}
       <ul class="toplist toppadding">
-        <li class="lineright"><a href="#">Login</a></li>
-        <li class="lineright"><a href="#">Register</a></li>
+        <li class="lineright"><a href="{% url 'login' %}">Login</a></li>
+        <li class="lineright"><a href="{% url 'register' %}">Register</a></li>
         <li><a href="https://www.facebook.com/codelayers"><i class="fa fa-facebook"></i></a></li>
         <li><a href="https://twitter.com/codelayers"><i class="fa fa-twitter"></i></a></li>
         <li><a href="https://www.instagram.com/codelayers"><i class="fa fa-instagram"></i></a></li>
         <li><a href="https://whatsapp.com/codelayers"><i class="fa fa-whatsapp"></i></a></li>
-        
+
         <li class="last"><a href="#"><i class="fa fa-linkedin"></i></a></li>
       </ul>
+      {% else %}
+      <ul class="toplist toppadding">
+        <li class="lineright"><a href="{% url 'client_dashboard' %}">Dashboard</a></li>
+        <li class="lineright"><a href="{% url 'logout' %}">Logout</a></li>
+        <li><a href="https://www.facebook.com/codelayers"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://twitter.com/codelayers"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="https://www.instagram.com/codelayers"><i class="fa fa-instagram"></i></a></li>
+        <li><a href="https://whatsapp.com/codelayers"><i class="fa fa-whatsapp"></i></a></li>
+
+        <li class="last"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+      {% endif %}
     </div>
   </div>
 </div>

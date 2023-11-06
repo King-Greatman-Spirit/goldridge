@@ -3,7 +3,7 @@ from enquiry.forms import EnquiryForm, LeadForm
 from accounts.models import Account
 from company.models import Company
 from service.models import Service
-from enquiry.models import Lead, no_of_employees_chioce, channel_chioce
+from enquiry.models import Lead, channel_chioce
 
 
 class TestForms(TestCase):
@@ -42,7 +42,6 @@ class TestForms(TestCase):
             'email': 'test@testlead.com',
             'phone_number': '2348176334125',
             'company_name': 'test company',
-            'no_of_employees':no_of_employees_chioce[3][0],
             'service': self.test_service,
             'message': 'my test message',
             'channel': channel_chioce[3][0]
@@ -57,7 +56,7 @@ class TestForms(TestCase):
         form = EnquiryForm(data={})
 
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 7)
+        self.assertEquals(len(form.errors), 5)
 
     def test_lead_form_valid_data(self):
         form = LeadForm(data ={
@@ -75,4 +74,4 @@ class TestForms(TestCase):
         form = LeadForm(data={})
 
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 2)
+        self.assertEquals(len(form.errors), 1)

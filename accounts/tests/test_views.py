@@ -1,6 +1,14 @@
 """
 Test for Account views
 """
+import os
+import io
+import shutil
+from django.conf import settings
+from django.core.files.base import ContentFile
+
+from PIL import Image
+
 from django.test import TestCase, Client
 from django.urls import reverse
 
@@ -10,6 +18,14 @@ from django.utils.encoding import force_bytes
 
 from accounts.models import Account
 from company.models import Company
+
+def generate_photo_file():
+    file = io.BytesIO()
+    image = Image.new('RGBA', size=(100, 100), color=(155, 0, 0))
+    image.save(file, 'png')
+    # file.name = 'test_image.png'
+    file.seek(0)
+    return file
 
 def validate_url(name, uidb64, token):
     return reverse(name, args=[uidb64, token])
@@ -24,6 +40,7 @@ class TestViews(TestCase):
         self.logout_url = reverse('logout')
         self.forgotPassword_url = reverse('forgotPassword')
         self.resetPassword_url = reverse('resetPassword')
+        self.photo_file = generate_photo_file()
         self.company = Company.objects.create(
             company_name = 'testcompany',
             website_address = 'http://testcompany.com',
@@ -34,6 +51,7 @@ class TestViews(TestCase):
             postal_code = 'test code',
             country = 'test country',
             phone = 'testphone',
+            logo = ContentFile(self.photo_file.read(), 'test_image.png')
         )
         self.user1 = Account.objects.create_user(
             first_name = 'first',
@@ -205,6 +223,13 @@ class TestViews(TestCase):
         self.assertRedirects(res, self.login_url)
 
 
+def tearDownModule():
+    images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
+    files = [i for i in os.listdir(images_path)
+             if os.path.isfile(os.path.join(images_path, i))
+             and i.startswith('test_')]
 
+    for file in files:
+        os.remove(os.path.join(images_path, file))
 
 

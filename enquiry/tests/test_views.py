@@ -1,12 +1,25 @@
+import os
+import io
+import shutil
+from django.conf import settings
+from django.core.files.base import ContentFile
+
+from PIL import Image
 from django.test import TestCase, Client
 from django.urls import reverse
 
 from accounts.models import Account
 from company.models import Company
 from service.models import Service
-from enquiry.models import Lead, no_of_employees_chioce, channel_chioce
+from enquiry.models import Lead, channel_chioce
 
-
+def generate_photo_file():
+    file = io.BytesIO()
+    image = Image.new('RGBA', size=(100, 100), color=(155, 0, 0))
+    image.save(file, 'png')
+    file.name = 'test_image.png'
+    file.seek(0)
+    return file
 
 class TestViews(TestCase):
 
@@ -14,7 +27,7 @@ class TestViews(TestCase):
         self.client = Client()
         self.contact_us_url = reverse('contact_us')
         self.subscribe_url = reverse('subscribe')
-
+        self.setUp_file = generate_photo_file()
         self.user = Account.objects.create_user(
             first_name = 'first',
             last_name = 'last',
@@ -32,7 +45,8 @@ class TestViews(TestCase):
             postal_code = '111222',
             country = 'test country',
             phone = '11122233344',
-            user = self.user
+            user = self.user,
+            logo = ContentFile(self.setUp_file.read(), 'test_image.png')
         )
 
         self.test_service = Service.objects.create(
@@ -46,7 +60,7 @@ class TestViews(TestCase):
         res = self.client.get(self.contact_us_url)
 
         self.assertEquals(res.status_code, 200)
-        self.assertTemplateUsed(res, 'enquiry/contact.html')
+        self.assertTemplateUsed(res, 'enquiry/contact_us.html')
 
     def test_contact_us_POST(self):
         res = self.client.post(self.contact_us_url, {
@@ -54,7 +68,6 @@ class TestViews(TestCase):
             'email': 'test@testlead.com',
             'phone_number': '2348176334125',
             'company_name': 'test company',
-            'no_of_employees': no_of_employees_chioce[3][0],
             'service': self.test_service.id,
             'message': 'my test message',
             'channel': channel_chioce[3][0]
@@ -82,3 +95,12 @@ class TestViews(TestCase):
         self.assertEquals(res.status_code, 302)
         # self.assertEquals(contact.email, 'test@testlead.com')
         # self.assertRedirects(res, self.contact_us_url)
+
+def tearDownModule():
+    images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
+    files = [i for i in os.listdir(images_path)
+             if os.path.isfile(os.path.join(images_path, i))
+             and i.startswith('test_')]
+
+    for file in files:
+        os.remove(os.path.join(images_path, file))

@@ -29,17 +29,17 @@ def create_company_overview(
     company,
     business_overview = 'test business overview',
     competive_advantage = 'test competitive advantage',
-    mission_statement = 'test mission statement',
+    mission = 'test mission statement',
     vision = 'test vision',
-    philosophy = 'test philosophy'
+    goal = 'test philosophy'
 ):
     return CompanyOverview.objects.create(
         company = company,
         business_overview = business_overview,
         competive_advantage = competive_advantage,
-        mission_statement = mission_statement,
+        mission = mission,
         vision = vision,
-        philosophy = philosophy
+        goal = goal
     )
 
 

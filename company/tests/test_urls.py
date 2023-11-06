@@ -42,9 +42,9 @@ class TestUrls(TestCase):
             company = self.test_company,
             business_overview = 'test business overview',
             competive_advantage = 'test competitive advantage',
-            mission_statement = 'test mission statement',
+            mission = 'test mission statement',
             vision = 'test vision',
-            philosophy = 'test philosophy'
+            goal = 'test philosophy'
         )
 
     def test_company_urls_resolves(self):

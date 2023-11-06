@@ -2,6 +2,7 @@ import os
 import io
 import shutil
 from django.conf import settings
+from django.core.files.base import ContentFile
 
 from PIL import Image
 
@@ -32,6 +33,7 @@ class TestViews(TestCase):
         self.company_dashboard_url = reverse('company_dashboard')
         self.BO_url = reverse('business_overview')
         self.login_url = reverse('login')
+        self.photo_file = generate_photo_file()
         self.user = Account.objects.create_user(
             first_name = 'first',
             last_name = 'last',
@@ -49,15 +51,16 @@ class TestViews(TestCase):
             postal_code = '111222',
             country = 'test country',
             phone = '11122233344',
-            user = self.user
+            user = self.user,
+            logo = ContentFile(self.photo_file.read(), 'test_image.png')
         )
         self.test_company_overview = CompanyOverview.objects.create(
             company = self.test_company,
             business_overview = 'test business overview',
             competive_advantage = 'test competitive advantage',
-            mission_statement = 'test mission statement',
+            mission = 'test mission statement',
             vision = 'test vision',
-            philosophy = 'test philosophy'
+            goal = 'test philosophy'
         )
 
 
@@ -65,7 +68,7 @@ class TestViews(TestCase):
         res = self.client.get(self.company_url)
 
         self.assertEquals(res.status_code, 200)
-        self.assertTemplateUsed(res, 'company/about.html')
+        self.assertTemplateUsed(res, 'company/about_us.html')
 
     def test_company_dashboard_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
@@ -242,9 +245,9 @@ class TestViews(TestCase):
             'company': company.id,
             'business_overview': 'test business overview',
             'competive_advantage': 'test competitive advantage',
-            'mission_statement': 'test mission statement',
+            'mission': 'test mission statement',
             'vision': 'test vision',
-            'philosophy': 'test philosophy'
+            'goal': 'test philosophy'
         })
 
         self.assertEquals(BO_res.status_code, 302)
@@ -280,9 +283,9 @@ class TestViews(TestCase):
             'company': self.test_company.id,
             'business_overview': 'test overview',
             'competive_advantage': 'test advantage',
-            'mission_statement': 'test mission',
+            'mission': 'test mission statement',
             'vision': 'test vision',
-            'philosophy': 'test philosophy'
+            'goal': 'test philosophy'
         }
 
         res = self.client.post(

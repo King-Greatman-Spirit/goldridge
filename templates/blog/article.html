@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load myapp_tags %}
 
 {% block content %}
 
 {% comment %} {% include 'includes/newsletter.html' %} {% endcomment %}
-  
+
   <section>
     <div class="header-inner two">
       <div class="inner text-center">
@@ -16,7 +17,7 @@
   </section>
   <!-- end header inner -->
   <div class="clearfix"></div>
-  
+
   <section>
     <div class="pagenation-holder">
       <div class="container">
@@ -33,7 +34,7 @@
   </section>
   <!--end section-->
   <div class="clearfix"></div>
-  
+
   <section class="sec-padding">
     <div class="container">
       <div class="row">
@@ -96,7 +97,7 @@
             <ul class="social-icons-2">
               <li><a href="https://twitter.com/goldridge"><i class="fa fa-twitter"></i></a></li>
               <li><a href="https://www.facebook.com/goldridge"><i class="fa fa-facebook"></i></a></li>
-              
+
               <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
               <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
             </ul>
@@ -143,7 +144,7 @@
             </div>
             <!--end item-->
             {% endfor %}
-            
+
             {% comment %} <div class="col-md-4 bmargin">
               <div class="image-holder"><a href="#"><img src="http://placehold.it/1000x800" alt="" class="img-responsive"/></a></div>
               <div class="clearfix"></div>
@@ -151,7 +152,7 @@
               <div class="blog1-post-info"> <span>By John Doe</span><span> May 20</span> </div>
             </div>
             <!--end item-->
-            
+
             <div class="col-md-4 bmargin">
               <div class="image-holder"><a href="#"><img src="{{ latest.image.url }}" alt="" class="img-responsive"/></a></div>
               <div class="clearfix"></div>
@@ -159,16 +160,16 @@
               <div class="blog1-post-info"> <span>By John Doe</span><span> May 20</span> </div>
             </div>
             <!--end item--> {% endcomment %}
-            
+
             <div class="clearfix"></div>
 
-            
+
           </div>
-          <!--end item--> 
-          
+          <!--end item-->
+
         </div>
         <!--end left column-->
-        
+
         <div class="col-md-4 col-sm-12 col-xs-12 bmargin">
 
           <div class="col-md-12 col-sm-12 col-xs-12 ">
@@ -209,7 +210,7 @@
             {% endfor %}
           </div>
           <!--end sidebar box-->
-          
+
           <div class="clearfix"></div>
           <br/>
           <div class="col-md-12 col-sm-12 col-xs-12 nopadding bmargin">
@@ -224,18 +225,18 @@
             </ul>
           </div>
           <!--end sidebar box-->
-          
+
           <div class="clearfix"></div>
           <br/>
-          
-          
+
+
         </div>
-        <!--end right column--> 
+        <!--end right column-->
       </div>
     </div>
   </section>
   <!-- end section -->
   <div class="clearfix"></div>
-  
+
 
 {% endblock %}

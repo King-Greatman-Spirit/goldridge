@@ -32,6 +32,7 @@ class TestViews(TestCase):
         self.SPD_url = reverse('service_process_dashboard')
         self.company_dashboard_url = reverse('company_dashboard')
         self.login_url = reverse('login')
+        self.setUp_file = generate_photo_file()
         self.user = Account.objects.create_user(
             first_name = 'first',
             last_name = 'last',
@@ -49,9 +50,10 @@ class TestViews(TestCase):
             postal_code = '111222',
             country = 'test country',
             phone = '11122233344',
-            user = self.user
+            user = self.user,
+            logo = ContentFile(self.setUp_file.read(), 'test_image.png')
         )
-        self.setUp_file = generate_photo_file()
+
         self.test_service = Service.objects.create(
             company             = self.test_company,
             service_name        = 'test service',
@@ -312,10 +314,10 @@ def tearDownModule():
     for file in files:
         os.remove(os.path.join(sp_images_path, file))
 
-    project_images_path = os.path.join(settings.MEDIA_ROOT, 'photos/project')
-    project_files = [i for i in os.listdir(project_images_path)
-             if os.path.isfile(os.path.join(project_images_path, i))
+    logos_images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
+    logos_files = [i for i in os.listdir(logos_images_path)
+             if os.path.isfile(os.path.join(logos_images_path, i))
              and i.startswith('test_')]
 
-    for file in project_files:
-        os.remove(os.path.join(project_images_path, file))
+    for file in logos_files:
+        os.remove(os.path.join(logos_images_path, file))

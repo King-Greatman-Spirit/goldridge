@@ -2,6 +2,7 @@ import os
 import io
 import shutil
 from django.conf import settings
+from django.core.files.base import ContentFile
 
 from PIL import Image
 
@@ -23,6 +24,8 @@ def generate_photo_file():
     file.seek(0)
     return file
 
+img = generate_photo_file()
+
 def url_with_args(name, args):
     return reverse(name, args=[args])
 
@@ -32,6 +35,7 @@ class TestViews(TestCase):
         self.client = Client()
         self.staff_dashboard_url = reverse('staff_dashboard')
         self.login_url = reverse('login')
+        self.photo_file = ContentFile(img.read(), 'test_image.png')
         self.user = Account.objects.create_user(
             first_name = 'first',
             last_name = 'last',
@@ -49,7 +53,8 @@ class TestViews(TestCase):
             postal_code = '111222',
             country = 'test country',
             phone = '11122233344',
-            user = self.user
+            user = self.user,
+            logo = self.photo_file
         )
         self.test_staff = Staff.objects.create(
             company         = self.test_company,
@@ -92,7 +97,6 @@ class TestViews(TestCase):
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
-
         photo_file = generate_photo_file()
 
         res = self.client.post(self.staff_dashboard_url, {
@@ -145,7 +149,7 @@ class TestViews(TestCase):
         photo_file = generate_photo_file()
 
         payload = {
-             'company': self.test_company.id,
+            'company': self.test_company.id,
             'first_name': 'first',
             'last_name': 'last',
             'email': 'test@teststaff.com',
@@ -214,3 +218,11 @@ def tearDownModule():
 
     for file in files:
         os.remove(os.path.join(images_path, file))
+
+    logos_images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
+    logos_files = [i for i in os.listdir(logos_images_path)
+             if os.path.isfile(os.path.join(logos_images_path, i))
+             and i.startswith('test_')]
+
+    for file in logos_files:
+        os.remove(os.path.join(logos_images_path, file))

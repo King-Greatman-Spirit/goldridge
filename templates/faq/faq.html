@@ -4,7 +4,7 @@
 {% block content %}
 
   <div class="clearfix"></div>
-  
+
   <section>
     <div class="header-inner two">
       <div class="inner text-center">
@@ -16,7 +16,7 @@
   </section>
   <!-- end header inner -->
   <div class="clearfix"></div>
-  
+
   <section>
     <div class="pagenation-holder">
       <div class="container">
@@ -25,7 +25,7 @@
             <h3>Frequently Asked Questions</h3>
           </div>
           <div class="col-md-6 text-right">
-            <div class="pagenation_links"><a href="{% url 'homee' %}">Home</a><i> / </i> <a href="{% url 'faq' %}">FAQ</a></div>
+            <div class="pagenation_links"><a href="{% url 'home' %}">Home</a><i> / </i> <a href="{% url 'faq_categories' %}">FAQ</a></div>
           </div>
         </div>
       </div>
@@ -33,16 +33,16 @@
   </section>
   <!--end section-->
   <div class="clearfix"></div>
-  
+
   <section class="sec-padding">
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-sm-12 col-xs-12 bmargin">
-        
+
           <h3>{{ category.name }}</h3>
           <div class="accordion_holder">
-              <div class="accordion_example1"> 
-                
+              <div class="accordion_example1">
+
                 <!-- Section 1 -->
                 <div class="accordion_in">
                   {% for question in questions %}
@@ -59,11 +59,11 @@
 
               </div>
             </div>
-              <!-- Accordion end --> 
+              <!-- Accordion end -->
 
           </div>
-          <!--end left column--> 
-      
+          <!--end left column-->
+
           <div class="col-md-4 col-sm-12 col-xs-12 bmargin padding-left-4">
             <div class="col-md-12 col-sm-12 col-xs-12 nopadding bmargin">
               <h5>Categories</h5>
@@ -76,11 +76,11 @@
             </div>
             <div class="clearfix"></div>
           <!--end right column-->
-        
+
       </div>
     </div>
   </section>
   <!-- end section -->
   <div class="clearfix"></div>
-  
+
 {% endblock %}

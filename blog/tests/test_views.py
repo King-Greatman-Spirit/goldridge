@@ -32,6 +32,7 @@ class TestViews(TestCase):
         self.client = Client()
         self.blog_url = reverse('blog')
         self.search_url = reverse('search')
+        self.photo_file = generate_photo_file()
         self.user = Account.objects.create_user(
             first_name = 'first',
             last_name = 'last',
@@ -49,9 +50,10 @@ class TestViews(TestCase):
             postal_code = '111222',
             country = 'test country',
             phone = '11122233344',
-            user = self.user
+            user = self.user,
+            logo = ContentFile(self.photo_file.read(), 'test_image.png'),
         )
-        self.photo_file = generate_photo_file()
+
         self.article = Article.objects.create(
             article_title = 'Test Title',
             article_subtitle = 'Test Subtitle',
@@ -98,10 +100,18 @@ class TestViews(TestCase):
 
 
 def tearDownModule():
-    images_path = os.path.join(settings.MEDIA_ROOT, 'photos/article')
-    files = [i for i in os.listdir(images_path)
-             if os.path.isfile(os.path.join(images_path, i))
+    articles_images_path = os.path.join(settings.MEDIA_ROOT, 'photos/article')
+    article_files = [i for i in os.listdir(articles_images_path)
+             if os.path.isfile(os.path.join(articles_images_path, i))
              and i.startswith('test_')]
 
-    for file in files:
-        os.remove(os.path.join(images_path, file))
+    for file in article_files:
+        os.remove(os.path.join(articles_images_path, file))
+
+    logos_images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
+    logos_files = [i for i in os.listdir(logos_images_path)
+             if os.path.isfile(os.path.join(logos_images_path, i))
+             and i.startswith('test_')]
+
+    for file in logos_files:
+        os.remove(os.path.join(logos_images_path, file))

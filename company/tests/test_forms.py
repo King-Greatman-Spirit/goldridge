@@ -75,9 +75,9 @@ class TestForms(TestCase):
             'company': self.test_company.id,
             'business_overview': 'test overview',
             'competive_advantage': 'test advantage',
-            'mission_statement': 'test mission',
+            'mission': 'test mission',
             'vision': 'test vision',
-            'philosophy': 'test philosophy'
+            'goal': 'test philosophy'
         }
 
         form = CompanyOverviewForm(self.companies, data)
