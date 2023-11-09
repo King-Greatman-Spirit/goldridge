@@ -23,10 +23,14 @@ def generate_photo_file():
     file.seek(0)
     return file
 
+def url_with_args(name, args):
+    return reverse(name, args=[args])
+
 class TestViews(TestCase):
 
     def setUp(self):
         self.client = Client()
+        self.login_url = reverse('login')
         self.photo_file = generate_photo_file()
         # Create a Account object for testing
         self.user = Account.objects.create_user(
@@ -66,8 +70,7 @@ class TestViews(TestCase):
 
         self.FAQCategory_url = reverse('faq_categories')
         self.FAQQuestion_url = reverse('faq_question', args=[self.test_FAQCategory.id])
-
-
+        self.faqcategory_dashboard_url = reverse('faqcategory_dashboard')
 
     def test_faq_categories_GET(self):
         res = self.client.get(self.FAQCategory_url)
@@ -114,6 +117,97 @@ class TestViews(TestCase):
     #     self.assertFormError(res, 'form', 'question', 'This field is required.')
     #     self.assertFormError(res, 'form', 'answer', 'This field is required.')
 
+    def test_faqcategory_dashboard_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+        res = self.client.get(self.faqcategory_dashboard_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'faq/category_dashboard.html')
+
+
+    def test_faqcategory_dashboard_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+        res = self.client.post(self.faqcategory_dashboard_url, {
+            'name': 'test category'
+        })
+
+        self.assertEquals(res.status_code, 302)
+        self.assertTrue(FAQCategory.objects.filter(name='test category').exists())
+        self.assertRedirects(res, self.faqcategory_dashboard_url)
+
+    def test_update_faqcategory_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+        res = self.client.get(url_with_args('update_faqcategory', self.test_FAQCategory.id))
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'faq/category_dashboard.html')
+
+
+    def test_update_faqcategory_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        payload = {
+            'name': 'test category'
+        }
+
+        res = self.client.post(
+            url_with_args('update_faqcategory', self.test_FAQCategory.id),
+            payload,
+        )
+
+        self.assertEquals(res.status_code, 302)
+        self.test_FAQCategory.refresh_from_db()
+        self.assertEqual(str(self.test_FAQCategory), payload['name'])
+        self.assertRedirects(res, self.faqcategory_dashboard_url)
+    
+    def test_delete_faqcategory(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        test_firm = FAQCategory.objects.create(
+            name = 'test category'
+        )
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(url_with_args('delete_faqcategory', test_firm.id))
+
+        self.assertEquals(res.status_code, 302)
+        self.assertRedirects(res, self.faqcategory_dashboard_url)
+        self.assertFalse(FAQCategory.objects.filter(name='test category').exists())
+
 def tearDownModule():
     images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
     files = [i for i in os.listdir(images_path)
@@ -122,4 +216,3 @@ def tearDownModule():
 
     for file in files:
         os.remove(os.path.join(images_path, file))
-

@@ -23,6 +23,8 @@
 {% url 'project_image_dashboard' as PID %}
 {% url 'update_project_image' updated_project_image.id as UPI %} {% endcomment %}
 
+{% url 'faqcategory_dashboard' as c_dash %}
+{% url 'update_faqcategory' updated_faqcategory.id as u_category %}
 
 <section>
      <div class="container">
@@ -37,6 +39,7 @@
            <div class="{% if request.path == SPD or request.path == USP %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'service_process_dashboard' %}"> Service processes</a></div>
            {% comment %} <div class="{% if request.path == PD or request.path == UP %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'project_dashboard' %}"> Projects</a></div>
            <div class="{% if request.path == PID or request.path == UPI %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'project_image_dashboard' %}"> Projects Images</a></div> {% endcomment %}
+           <div class="{% if request.path == c_dash or request.path == u_category %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'faqcategory_dashboard' %}">Faq Category</a></div>
          </div>
 
        </div>

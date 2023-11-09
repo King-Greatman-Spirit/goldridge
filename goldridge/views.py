@@ -10,8 +10,8 @@ def home(request):
     title = "Home"
     company = Company.objects.get(id=1, is_client=False)
     company_overview = CompanyOverview.objects.get(company=company)
-    services = Service.objects.filter(company=company)
-    staff = Staff.objects.filter(company=company)[:3]
+    # services = Service.objects.filter(company=company)
+    # staff = Staff.objects.filter(company=company)[:3]
 
 
     articles = Article.objects.all().order_by('-id')[:3]
@@ -21,18 +21,18 @@ def home(request):
             display_paragraph[article.id] = ' '.join(paragraph.paragraph_content.split(' ')[:18]) + '...'
             break
 
-    form = LeadForm()
+    # form = LeadForm()
 
 
     context = {
         'company': company,
         'company_overview': company_overview,
-        'services': services,
-        'staff': staff,
-        'articles': articles,
-        'display_paragraph': display_paragraph,
+        # 'services': services,
+        # 'staff': staff,
+        # 'articles': articles,
+        # 'display_paragraph': display_paragraph,
         'title': title,
-        'form': form,
+        # 'form': form,
     }
 
     return render(request, 'home.html', context)

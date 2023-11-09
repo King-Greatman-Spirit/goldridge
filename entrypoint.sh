@@ -16,7 +16,7 @@
 # /opt/venv/bin/python manage.py loaddata webstacka.json
 /opt/venv/bin/python manage.py collectstatic --no-input
 /opt/venv/bin/python  manage.py test --no-input
-# /opt/venv/bin/python manage.py createsuperuser
+# /opt/venv/bin/python manage.py createsuperuser --no-input
 
 
 /opt/venv/bin/gunicorn goldridge.wsgi:application --bind 0.0.0.0:8000
