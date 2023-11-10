@@ -3,7 +3,7 @@ from PIL import Image
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from django.test import TestCase
-from faq.forms import FAQCategoryForm
+from faq.forms import FAQCategoryForm, FAQQuestionForm
 from accounts.models import Account
 from company.models import Company, CompanyOverview
 from faq.models import FAQCategory, FAQQuestion
@@ -39,7 +39,6 @@ class TestForms(TestCase):
             phone = '11122233344',
             user = self.user
         )
-        self.companies = Company.objects.filter(user=self.user)
         self.test_FAQCategory = FAQCategory.objects.create(
             home_note   = 'test home note',
             name = 'test name'
@@ -68,3 +67,22 @@ class TestForms(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 1)
+
+    def test_faq_question_form_valid_data(self):
+
+        data = {
+            'category': self.test_FAQCategory.id,
+            'question': 'test question',
+            'answer': 'test answer'
+        }
+
+        form = FAQQuestionForm(data)
+
+        self.assertTrue(form.is_valid())
+        self.assertFalse(form.errors)
+
+    def test_faqquestion_form_no_data(self):
+        form = FAQQuestionForm(data={})
+
+        self.assertFalse(form.is_valid())
+        self.assertEquals(len(form.errors), 3)

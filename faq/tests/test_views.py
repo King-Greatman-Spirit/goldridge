@@ -71,6 +71,7 @@ class TestViews(TestCase):
         self.FAQCategory_url = reverse('faq_categories')
         self.FAQQuestion_url = reverse('faq_question', args=[self.test_FAQCategory.id])
         self.faqcategory_dashboard_url = reverse('faqcategory_dashboard')
+        self.faqquestion_dashboard_url = reverse('faqquestion_dashboard')
 
     def test_faq_categories_GET(self):
         res = self.client.get(self.FAQCategory_url)
@@ -207,6 +208,107 @@ class TestViews(TestCase):
         self.assertEquals(res.status_code, 302)
         self.assertRedirects(res, self.faqcategory_dashboard_url)
         self.assertFalse(FAQCategory.objects.filter(name='test category').exists())
+
+    def test_faqquestion_dashboard_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(self.faqquestion_dashboard_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'faq/questions_dashboard.html')
+
+    def test_faqquestion_dashboard_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        faqcategory_res = self.client.post(self.faqcategory_dashboard_url, {
+            'name': 'test category'
+        })
+        faqcategory = FAQCategory.objects.get(name='test category')
+
+        faqquestion_res = self.client.post(self.faqquestion_dashboard_url,{
+            'category': faqcategory.id,
+            'question': 'test question',
+            'answer': 'test asnswer'
+        })
+
+        self.assertEquals(faqquestion_res.status_code, 302)
+        self.assertTrue(FAQQuestion.objects.filter(category_id=faqcategory.id).exists())
+        self.assertRedirects(faqquestion_res, self.faqquestion_dashboard_url)
+
+    def test_delete_faqquetion(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(url_with_args(
+            'delete_faqquestion',
+            self.test_FAQQuestion.id
+        ))
+
+        self.assertEquals(res.status_code, 302)
+        self.assertRedirects(res, self.faqquestion_dashboard_url)
+        self.assertFalse(
+            FAQQuestion.objects.filter(id=self.test_FAQQuestion.id).exists()
+        )
+
+    def test_update_faqquestion_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(url_with_args('update_faqquestion', self.test_FAQQuestion.id))
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'faq/questions_dashboard.html')
+
+    def test_update_faqquestion_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        payload = {
+            'category': self.test_FAQCategory.id,
+            'question': 'test question',
+            'answer': 'test asnswer'
+        }
+
+        res = self.client.post(
+            url_with_args('update_faqquestion', self.test_FAQQuestion.id),
+            payload
+        )
+
+        self.assertEquals(res.status_code, 302)
+        self.test_FAQQuestion.refresh_from_db()
+        self.assertRedirects(res, self.faqquestion_dashboard_url)
 
 def tearDownModule():
     images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')

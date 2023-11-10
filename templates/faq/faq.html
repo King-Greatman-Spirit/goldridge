@@ -12,7 +12,7 @@
         <h5 class="text-white uppercase">Invest Wisely, Save Securely, Travel Freely, Live Lavishly</h5>
       </div>
       <div class="overlay bg-opacity-5"></div>
-      <img src="http://placehold.it/1920x800" alt="" class="img-responsive"/> </div>
+      <img src="{% static 'images/banner.png' %}" alt="goldridge banner" class="img-responsive"/> </div>
   </section>
   <!-- end header inner -->
   <div class="clearfix"></div>
@@ -50,13 +50,6 @@
                     <div class="acc_content"> {{ question.answer }} </div>
                     {% endfor %}
                 </div>
-
-                <!-- Section 2 -->
-                <div class="accordion_in acc_active">
-                  <div class="acc_head">Integer posuere tellus vitae maximus dapibus.</div>
-                  <div class="acc_content">Nullam turpis. Cras dapibus, orci rutrum adipiscing luctus, nisl magna tempus urna, id porttitor nunc arcu et mauris. Suspendisse id justo id nisi suscipit porttitor. Pellentesque aliquet, leo id vestibulum eleifend, magna sem iaculis risus, quis volutpat turpis quam in tortor. Morbi euismod nulla aliquet felis. Sed nisi neque, fermentum sit amet, vestibulum et, pretium sit amet, tortor. Nulla egestas pede. Phasellus ac enim. Vivamus risus. Aliquam lacinia ante quis nibh. Curabitur velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. </div>
-                </div>
-
               </div>
             </div>
               <!-- Accordion end -->
@@ -69,7 +62,6 @@
               <h5>Categories</h5>
               <ul class="category-links orange-2">
                 {% for category in categories %}
-                  <li><a href="#">Travel</a></li>
                   <li><a href="{% url 'faq_question' category.id %}">{{ category.name }}</a></li>
                 {% endfor %}
               </ul>

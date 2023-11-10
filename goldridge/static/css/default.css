@@ -924,12 +924,12 @@ padding-left:0;
 	border: 1px solid #727272;
 }
 .iconbox-dxlarge.grayoutline2, .iconbox-xlarge.grayoutline2, .iconbox-large.grayoutline2, .iconbox-xmedium.grayoutline2, .iconbox-medium.grayoutline2, .iconbox-smedium.grayoutline2, .iconbox-small.grayoutline2, .iconbox-tiny.grayoutline2, .iconbox-xtiny.grayoutline2 {
-	color: #165042;
-	background-color: #ffd700;
+	color: #ffd700;
+	background-color: #165042;
 	border: 1px solid #e4e4e4;
 }
 .iconbox-dxlarge.white-outline, .iconbox-xlarge.white-outline, .iconbox-large.white-outline, .iconbox-xmedium.white-outline, .iconbox-medium.white-outline, .iconbox-smedium.white-outline, .iconbox-small.white-outline, .iconbox-tiny.white-outline, .iconbox-xtiny.white-outline {
-	color: #fff;
+	color: #211c1c;
 	background-color: none;
 	border: 1px solid #fff;
 }
@@ -2252,10 +2252,11 @@ a.read-more.cyan:hover {
 /* Sticky bg
  ------------------------------ */
 #header {
-	position: relative;
-	background: #fff;
+	background: rgba(255, 255, 255, 0.7);
+	width: 874px;
+	position: fixed;
+	top: 0px;
 	padding: 0;
-	width: 100%;
 	z-index: 999;
 }
 #header2 {

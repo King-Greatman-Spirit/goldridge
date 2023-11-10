@@ -33,3 +33,13 @@ class FAQQuestion(models.Model):
 
     def get_url(self):
         return reverse('faq_detail', args=[str(self.category.id)])
+
+    def update_url(self):
+        return reverse('update_faqquestion', args=[self.id])
+    
+    def delete_url(self):
+        return reverse('delete_faqquestion', args=[self.id])
+    
+    class Meta:
+        verbose_name = 'FAQQuestion'
+        verbose_name_plural = 'FAQQuestions'

@@ -3,191 +3,185 @@
 
 {% block content %}
 
+    
+  <!-- masterslider -->
+  <div class="master-slider ms-skin-default" id="masterslider"> 
+    
+    <!-- slide 1 -->
+    <div class="ms-slide slide-1" data-delay="5"> 
+    <!-- <img src="images/slide1.png" data-src="http://placehold.it/1920x650" alt=""/> -->
+    <img src="{% static 'images/slide1.png' %}" alt="slide 1"/>
+         
+      <h3 class="ms-layer text76"
+			style="left: 400px;top: 180px;"
+			data-type="text"
+			data-delay="500"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="left(250)"><span class="text-green-2">Wealth</span></h3>
+            
+      <h3 class="ms-layer text77"
+			style="left: 200px;top: 260px;"
+			data-type="text"
+			data-delay="1000"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="right(250)"> <span class="text-orange-2">Growth</span></h3>
+            
+      <h3 class="ms-layer text78"
+			style="left: 250px;top: 385px;"
+			data-type="text"
+			data-delay="2000"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="right(250)">  Empowering Financial Success</h3>
+          
+    </div>
+    <!-- end slide 1 -->
+    
+    <!-- end slide 2 -->
+    <div class="ms-slide" data-delay="8">
+      <video data-autopause="false" data-mute="true" data-loop="true" data-fill-mode="fill">
+        <source type="video/webm" src="{% static 'videos/slide2.mp4' %}">
+      </video>
+      <h3 class="ms-layer text79"
+			style="top: 210px;"
+			data-type="text"
+			data-delay="500"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="left(250)">Innovative<span class="text-orange-2"> Real Estate & Property</span> Management </h3>
+            
+      <h3 class="ms-layer text83"
+			style="left: 230px;top: 260px;"
+			data-type="text"
+			data-delay="2000"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="right(250)"><br/> 
+      <span class="text-orange-2"> So</span>lutio<span class="text-orange-2">ns</span></h3>
+            
+    </div>
+    
+    <!-- end slide 2 --> 
 
-<!-- masterslider -->
-<div class="master-slider ms-skin-default" id="masterslider">
-
-  <!-- slide 1 -->
-  <div class="ms-slide slide-1" data-delay="5">
-  <img src="{% static 'images/slide1.png' %}" data-src="http://placehold.it/1920x650" alt=""/>
-  <img src="{% static 'images/slide1.png' %}" alt="slide 1"/>
-
-    <h3 class="ms-layer text76"
-    style="left: 400px;top: 180px;"
-    data-type="text"
-    data-delay="500"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="left(250)">Wealth </h3>
-
-    <h3 class="ms-layer text77"
-    style="left: 200px;top: 260px;"
-    data-type="text"
-    data-delay="1000"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="right(250)">Growth </h3>
-
-    <h3 class="ms-layer text78"
-    style="left: 250px;top: 385px;"
-    data-type="text"
-    data-delay="2000"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="right(250)">  Empowering Financial Success</h3>
-
-  </div>
-  <!-- end slide 1 -->
-
-  <!-- end slide 2 -->
-  <div class="ms-slide" data-delay="8">
-    <video data-autopause="false" data-mute="true" data-loop="true" data-fill-mode="fill">
-      <source type="video/webm" src="{% static 'videos/slide2.mp4' %}">
-    </video>
-    <h3 class="ms-layer text79"
-    style="top: 210px;"
-    data-type="text"
-    data-delay="500"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="left(250)">  Innovative Real Estate & property management </h3>
-
-    <h3 class="ms-layer text83"
-    style="left: 230px;top: 260px;"
-    data-type="text"
-    data-delay="2000"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="right(250)"><br/> Solutions</h3>
-
-  </div>
-
-  <!-- end slide 2 -->
-
-  <!-- slide 3 -->
-  <div class="ms-slide slide-2" data-delay="9">
-
-    <img src="{% static 'images/slide2.png' %}" alt="slide 2"/>
-
-
-    <img src="images/slide2_one.png" alt="slide 2"
-       style="right: 260px; top: 160px;"
-       class="ms-layer"
-       data-type="image"
-       data-delay="500"
-       data-duration="2500"
-       data-ease="easeOutExpo"
-       data-effect="scalefrom(1.1,1.1,190,0)"
-   />
-
-    <img src="images/slide2_two.png" alt="slide 2"
-       style="left: 810px; top: 200px;"
-       class="ms-layer"
-       data-type="image"
-       data-delay="1000"
-       data-duration="2500"
-       data-ease="easeOutExpo"
-       data-effect="scalefrom(1.1,1.1,190,0)"
-   />
-
-    <h3 class="ms-layer text58"
-    style="left: 230px;top: 200px;"
-    data-type="text"
-    data-delay="1500"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="scale(1.5,1.6)"> Customer-Centric Services & </h3>
-
-    <h3 class="ms-layer text59"
-    style="left: 230px;top: 245px;"
-    data-type="text"
-    data-delay="2000"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="scale(1.5,1.6)"> Customer-first practices </h3>
-
-    <h3 class="ms-layer text3"
-    style="left: 230px; top: 330px;"
+    <!-- slide 3 -->
+    <div class="ms-slide slide-2" data-delay="9">
+      
+      <img src="{% static 'images/slide2.png' %}" alt="slide 2"/>
+      
+      
+      <img src="{% static 'images/slide2_one.png' %}" alt="slide 2"
+		 	  style="right: 260px; top: 160px;"
+		 	  class="ms-layer"
+		 	  data-type="image"
+		 	  data-delay="500"
+		 	  data-duration="2500"
+		 	  data-ease="easeOutExpo"
+		 	  data-effect="scalefrom(1.1,1.1,190,0)"
+		 />
+         
+      <img src="{% static 'images/slide2_two.png' %}" alt="slide 2"
+		 	  style="left: 810px; top: 200px;"
+		 	  class="ms-layer"
+		 	  data-type="image"
+		 	  data-delay="1000"
+		 	  data-duration="2500"
+		 	  data-ease="easeOutExpo"
+		 	  data-effect="scalefrom(1.1,1.1,190,0)"
+		 />
+         
+      <h3 class="ms-layer text58"
+			style="left: 230px;top: 200px;"
+			data-type="text"
+			data-delay="1500"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="scale(1.5,1.6)"> Secure your financial future</h3>
+            
+      <h3 class="ms-layer text59"
+			style="left: 230px;top: 245px;"
+			data-type="text"
+			data-delay="2000"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="scale(1.5,1.6)"> Customer-Centric Practices </h3>
+        
+      <a class="ms-layer sbut1"
+			style="left: 230px; top: 420px;"
+			data-type="text"
+			data-delay="3000"
+			data-ease="easeOutExpo"
+			data-duration="1200"
+			data-effect="scale(1.5,1.6)"
+      href="{% url 'company' %}"> Read More </a> 
+      
+      <a class="ms-layer sbut2"
+			style="left: 470px; top: 420px;"
+			data-type="text"
+			data-delay="3000"
+			data-ease="easeOutExpo"
+			data-duration="1200"
+			data-effect="scale(1.5,1.6)"
+      href="{% url 'contact_us' %}"> Contact Us </a> 
+            
+            </div>
+    <!-- end slide 3 -->
+    
+    <!-- end slide 4 -->
+    <div class="ms-slide" data-delay="10">
+      <video data-autopause="false" data-mute="true" data-loop="true" data-fill-mode="fill">
+        <!-- <source type="video/webm" src="https://codelayers.net/videos/video-2.webm"> -->
+        <source type="video/webm" src="{% static 'videos/slide1.mp4' %}">
+              <!-- <source type="video/mp4" src="https://codelayers.net/videos/video-2.mp4">
+              <source type="video/ogg" src="https://codelayers.net/videos/video-2.ogv"> -->
+              <source type="video/ogg" src="{% static 'videos/slide1.mp4' %}">
+      </video>
+      <h3 class="ms-layer text82"
+			style="left: 430px;top: 180px;"
+			data-type="text"
+			data-delay="1500"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="left(250)"> Expertise In Real Estate & Property </h3>
+            
+      <h3 class="ms-layer text83"
+			style="left: 230px;top: 260px;"
+			data-type="text"
+			data-delay="2000"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+			data-effect="right(250)"> Management</h3>
+            
+    </div>
+    <!-- end slide 4 --> 
+    
+    <!-- slide 5 -->
+    <div class="ms-slide slide-4" data-delay="9"> 
+    <img src="{% static 'images/SLIDE6.png' %}" alt="slide 6"/>
+            
+      <h3 class="ms-layer text82"
+			style="left: 430px;top: 180px;"
+			data-type="text"
+			data-delay="1500"
+			data-ease="easeOutExpo"
+			data-duration="1230"
+      data-effect="left(250)">Build<span class="text-green-2">ing Trust-Ba</span>sed</h3>
+            
+      <h3 class="ms-layer text83"
+      style="left: 230px;top: 260px;"
       data-type="text"
-      data-effect="top(45)"
-      data-duration="2000"
-      data-delay="2500"
-      data-ease="easeOutExpo"> We are
-      driven by the belief that financial prosperity should be accessible to all <br />
-      we invite you to join us on this journey to secure your financial future. </h3>
-
-    <a class="ms-layer sbut1"
-    style="left: 230px; top: 420px;"
-    data-type="text"
-    data-delay="3000"
-    data-ease="easeOutExpo"
-    data-duration="1200"
-    data-effect="scale(1.5,1.6)"
-    href="{% url 'company' %}"> Read More </a>
-
-    <a class="ms-layer sbut2"
-    style="left: 390px; top: 420px;"
-    data-type="text"
-    data-delay="3000"
-    data-ease="easeOutExpo"
-    data-duration="1200"
-    data-effect="scale(1.5,1.6)"
-    href="{% url 'contact_us' %}"> Contact Us </a>
-
-          </div>
-  <!-- end slide 3 -->
-
-  <!-- end slide 4 -->
-  <div class="ms-slide" data-delay="10">
-    <video data-autopause="false" data-mute="true" data-loop="true" data-fill-mode="fill">
-      <source type="video/webm" src="{% static 'videos/slide1.mp4' %}">
-      <source type="video/ogg" src="{% static 'videos/slide1.mp4' %}">
-    </video>
-    <h3 class="ms-layer text82"
-    style="left: 430px;top: 180px;"
-    data-type="text"
-    data-delay="1500"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="left(250)"> Expertise In Real Estate & Property </h3>
-
-    <h3 class="ms-layer text83"
-    style="left: 230px;top: 260px;"
-    data-type="text"
-    data-delay="2000"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="right(250)"> Management</h3>
-
+      data-delay="2000"
+      data-ease="easeOutExpo"
+      data-duration="1230"
+      data-effect="right(250)"><span class="text-orange-2">Relationships</span> </h3>
+    </div>
+    <!-- end slide 5 -->
   </div>
-  <!-- end slide 4 -->
-
-  <!-- slide 5 -->
-  <div class="ms-slide slide-4" data-delay="9">
-  <img src="{% static 'images/SLIDE6.png' %}" alt="slide 6"/>
-
-    <h3 class="ms-layer text82"
-    style="left: 430px;top: 180px;"
-    data-type="text"
-    data-delay="1500"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="left(250)">Building Trust-Based </h3>
-
-    <h3 class="ms-layer text83"
-    style="left: 230px;top: 260px;"
-    data-type="text"
-    data-delay="2000"
-    data-ease="easeOutExpo"
-    data-duration="1230"
-    data-effect="right(250)">Relationships </h3>
-  </div>
-  <!-- end slide 5 -->
-</div>
-<!-- end of masterslider -->
+  <!-- end of masterslider -->
 
   <div class="clearfix"></div>
-
+  
   <section class="sec-padd-default-page">
     <div class="container">
       <div class="row">
@@ -212,7 +206,7 @@
             <a class="btn btn-orange-2 dark btn-xround" href="{% url 'company' %}">Read more <i class="fa fa-angle-right"></i></a> </div>
         </div>
         <!--end item-->
-
+        
         <div class="col-md-6 col-sm-12 col-xs-12 bmargin" data-anim-type="fade-in-left" data-anim-delay="200">
           <div class="col-md-6 col-sm-6 col-xs-12 nopadding">
             <div class="feature-box-101 bmargin">
@@ -227,22 +221,22 @@
             <br>
             <a class="btn btn-orange-2 dark btn-xround" href="{% url 'company' %}">Read more <i class="fa fa-angle-right"></i></a> </div>
         </div>
-        <!--end item-->
+        <!--end item--> 
 
-
+        
       </div>
     </div>
   </section>
-
+        
       </div>
     </div>
   </section>
   <!-- end section -->
   <div class="clearfix"></div>
-
+  
   <section class="section-light section-side-image clearfix">
     <div class="img-holder col-md-6 col-sm-3 pull-left">
-      <div class="background-imgholder"> <img src="images/awe.png" alt="AWESOME_photo"/> </div>
+      <div class="background-imgholder"> <img src="{% static 'images/awe.png' %}" alt="AWESOME_photo"/> </div>
     </div>
     <div class="container-fluid">
       <div class="row">
@@ -252,7 +246,7 @@
               <h6 class="nopadding lspace-1">What We Offer</h6>
               <h2 class="paddtop1 dosis font-weight-5 lspace-sm">Gold<span class="text-orange-2">Ridge</span> Multi<span class="text-orange-2">purpose</span>
                 Coo<span class="text-orange-2">pera</span>tive So<span class="text-orange-2">cie</span>ty  Limi<span class="text-orange-2">ted</span></h2>
-              <div class="title-line-4"></div>
+              <div class="title-line-4"></div> 
             </div>
             <div class="clearfix"></div>
             <ul class="iconlist orange">
@@ -269,32 +263,32 @@
   </section>
   <!--end section-->
   <div class=" clearfix"></div>
-
+  
   <section class="sec-padding">
   <div class="container">
   <div class="row">
-
+  
   <div class="col-md-5 screens-top-padding bmargin">
     <h1 class="font-weight-6 less-mar1 nopadding">Contact <span class="text-orange-2">Us</span></h1>
-    <h5>Join
-      <span class="text-green-2">GoldRidge</span> Multipurpose
+    <h5>Join  
+      <span class="text-green-2">GoldRidge</span> Multipurpose 
       <span class="text-green-2">Cooperative</span></h5>
-    <p>Make Your Money Work For You. It's free.</p>
+    <p><b>Make Your Money Work For You. It's free.</b></p>
     <br>
-    <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-youtube"></i></div>
+    <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-linkedin"></i></div>
     <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-facebook"></i></div>
     <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-twitter"></i></div>
     <div class="iconbox-xtiny left round grayoutline2"><i class="fa fa-instagram"></i></div>
-
+    
     <div class="clearfix"></div>
     <br>
     <a class="btn btn-orange-2 dark btn-xround" href="{% url 'contact_us' %}">Click Here</a>
-
+    
     </div>
   <!--end item-->
-
+  
   <div class="col-md-7 bmargin">
-  <img src="images/hast.png" alt="Contact_Photo" class="img-responsive"/>
+  <img src="{% static 'images/hast.png' %}" alt="Contact_Photo" class="img-responsive"/>
   </div>
   <!--end item-->
 
@@ -303,7 +297,7 @@
   </section>
   <!-- end section -->
   <div class="clearfix"></div>
-
+  
   <section class="sec-padd-default-page">
     <div class="container">
       <div class="row">
@@ -328,18 +322,19 @@
         </div>
         <!--end item-->
         {% endfor %}
-
+        
       </div>
     </div>
   </section>
   <div class="clearfix"></div>
   <!--end section-->
-
+  
   <section class="section-light section-side-image clearfix">
     <div class="img-holder col-md-6 col-sm-3 pull-left">
       <div class="background-imgholder">
-        <img src="images/home_services.png" alt="Home Service Pic"/>
+        <img src="{% static 'images/home_services.png' %}" alt="Home Service Pic"/></div>
       </div>
+      
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-7 col-md-offset-5 col-sm-8 col-sm-offset-4 text-inner clearfix align-left">
@@ -352,42 +347,43 @@
             <div class="clearfix"></div>
             <div class="col-md-4">
               <div class="feature-box-103 text-center bmargin">
-                <div class="iconbox-medium round grayoutline2"><span class="icon-lightbulb"></span></div>
+                <div class="iconbox-medium round grayoutline2" style="font-size: 36px;">🚌</div>
                 <br/>
                 <h4>Transportation</h4>
               </div>
-            </div>
-            <!--end item-->
-
-            <div class="col-md-4">
-              <div class="feature-box-103 text-center bmargin active">
-                <div class="iconbox-medium round grayoutline2"><span class="icon-basket"></span></div>
-                <br/>
-                <h4>Property Management</h4>
               </div>
-            </div>
-            <!--end item-->
-
-            <div class="col-md-4">
-              <div class="feature-box-103 text-center bmargin">
-                <div class="iconbox-medium round grayoutline2"><span class="icon-layers"></span></div>
-                <br/>
-                <h4>Savings</h4>
+              <!--end item-->
+              
+              <div class="col-md-4">
+                <div class="feature-box-103 text-center bmargin active">
+                  <div class="iconbox-medium round grayoutline2" style="font-size: 36px;">🏡</div>
+                  <br/>
+                  <h4>Property Management</h4>
+                </div>
               </div>
-            </div>
+              <!--end item-->
+              
+              <div class="col-md-4">
+                <div class="feature-box-103 text-center bmargin">
+                  <div class="iconbox-medium round grayoutline2" style="font-size: 36px;">💰</div>
+                  <br/>
+                  <h4>Savings</h4>
+                </div>
+              </div>
+              
             <!--end item-->
             <div class="clearfix"></div>
             <br/>
             <br/>
-            <a href="#" class="btn btn-orange-2 dark btn-xround">Read more</a> </div>
+            <a href="#" class="btn btn-orange-2 dark btn-xround">See more</a> </div>
         </div>
       </div>
     </div>
   </section>
   <!--end section-->
   <div class=" clearfix"></div>
-
-
+  
+  
   <section class="sec-padding section-orange-2">
     <div class="container">
       <div class="row">
@@ -397,24 +393,12 @@
         </div>
         <div class="clearfix"></div>
 
-        <form method="POST" action="{% url 'subscribe' %}">
-            {% csrf_token %}
-            <div>
-              <div class="section">
-                <label for="{{ form.email.id_for_label }}" class="field prepend-icon">
-                  <!-- <input type="email" name="email" id="email" class="gui-input" placeholder="Email address"> -->
-                  {{ form.email }}
-                  <span class="field-icon"><i class="fa fa-envelope"></i></span> </label>
-                  {% for err in form.email.errors %}
-                    <small class="text-danger">{{ err }}</small>
-                  {% endfor %}
-              </div>
-              <!-- end section -->
-            <div class="modal-footer">
-              <button type="submit" class="email_submit">Submit</button>
-            </div>
-            <!-- end .form-footer section -->
-          </form>
+        <div class="col-md-12">
+          <div class="input_holder">
+            <input class="email_input" type="search" placeholder="Enter your Email Address">
+            <input name="submit" value="Subscribe" class="email_submit" type="submit">
+          </div>
+        </div>
 
       </div>
     </div>
@@ -422,6 +406,26 @@
   <!--end section-->
   <div class="clearfix"></div>
 
+  <section class="parallax-section68">
+    <div class="section-overlay bg-opacity-4">
+      <div class="container sec-tpadding-3 sec-bpadding-3">
+        <div class="row">
+          <div class="col-md-8 col-centered">
+            <h1 class="text-uppercase text-white text-bold ">
+              <b><span class="text-orange-2">GoldRidge</span> <span class="text-green-2">MultiPurpose</span> 
+                <span class="text-orange-2">Coorperative</span> <span class="text-green-2">Society</span> 
+                <span class="text-orange-2">Limited</span></b>
+            </h1>
+            <br/>
+            <br/>
+            <a class="btn btn-orange-2 btn-xround" href="{% url 'company' %}">Read more</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--end section-->
+  <div class="clearfix"></div>
+  
   <section>
     <div class="container">
     <div class="divider-line solid light opacity-5"></div>
@@ -478,33 +482,14 @@
   </section>
   <!-- end section -->
   <div class="clearfix"></div>
-
-  <section class="parallax-section68">
-    <div class="section-overlay bg-opacity-4">
-      <div class="container sec-tpadding-3 sec-bpadding-3">
-        <div class="row">
-          <div class="col-md-8 col-centered">
-            <h1 class="text-uppercase text-white text-bold ">
-              <b><span class="text-orange-2">GoldRidge</span> <span class="text-green-2">MultiPurpose</span>
-                <span class="text-orange-2">Coorperative</span> <span class="text-green-2">Society</span>
-                <span class="text-orange-2">Limited</span></b>
-            </h1>
-            <br/>
-            <br/>
-            <a class="btn btn-orange-2 btn-xround" href="{% url 'company' %}">Read more</a></div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--end section-->
-  <div class="clearfix"></div>
-
-
+  
+  
   <section class="parallax-section69">
     <div class="section-overlay bg-opacity-7">
       <div class="container sec-tpadding-3 sec-bpadding-3">
         <div class="row slide-controls-color-13">
           <div class="col-md-8 col-centered">
+            
             <div class="col-xs-12 text-center">
               <h6 class="nopadding lspace-1 text-white">Our Clients</h6>
               <h1 class="paddtop1 dosis font-weight-5 text-white lspace-sm">People Sa<span class="text-orange-2">ys</span></h1>
@@ -512,18 +497,18 @@
             </div>
             <div class="clearfix"></div>
             <div id="owl-demo3" class="owl-carousel text-white">
-              {% for test in testimonials %}
+              {% for Testimonial in Testimonials %}
               <div class="item">
-                <blockquote class="style1"><span>{{ test.description }}</span> </blockquote>
+                <blockquote class="style1"><span>{{ Testimonial.description }}</span> </blockquote>
                 <br/>
-                <h5 class="text-white less-mar1">{{ test.client_full_name }}</h5>
-                <span class="text-orange-2">{{ test.client_location }}</span>
+                <h5 class="text-white less-mar1">{{ Testimonial.client_full_name }}</h5>
+                <span class="text-orange-2">{{ Testimonial.client_location }}</span> 
               </div>
               <!--end slide item-->
               {% endfor %}
             </div>
-            <!--end carousel -->
-
+            <!--end carousel --> 
+            
           </div>
         </div>
       </div>
@@ -531,61 +516,24 @@
   </section>
   <!--end section-->
   <div class="clearfix"></div>
-
-  {% comment %} <section class="section-orange-2 section-less-padding">
+  
+  <section class="section-orange-2 section-less-padding">
     <div class="container">
       <div class="row">
         <div class="col-md-9">
           <h3 class="text-orange-2">Frequently Asked Questions</h3>
           <p class="text-white">
-            Have questions about GoldRidge? You're not alone! Check out our FAQ page for answers to common inquiries.
-            We've got you covered on topics ranging from investment strategies to account security.
-            Still can't find what you're looking for? Feel free to contact us, and our dedicated team will be happy to assist you.
-
-            Got questions about GoldRidge? Visit our FAQ page for answers on investments, security, and more. Can't find what you need?
-            Contact us, and our team will help. Explore your financial journey now!
-
-            {{ FAQCategory.home_note }}</p>
+            Have questions about GoldRidge? You're not alone! Check out our FAQ page for answers to common inquiries. 
+            We've got you covered on topics ranging from investment strategies to account security. 
+            Still can't find what you're looking for? Feel free to contact us, and our dedicated team will be happy to assist you.</p>
         </div>
         <div class="col-md-3">
           <div class="margin-top2"></div>
-          <a class="btn btn-border white-2 btn-large pull-right" href="{% url 'faq' %}">Read more</a></div>
+          <a class="btn btn-border white-2 btn-large pull-right" href="#">Read more</a></div>
       </div>
     </div>
-  </section> {% endcomment %}
+  </section>
   <!--end section-->
-
+  
 {% endblock %}
 
-<!-- Certainly, here are some common FAQs and their answers for user registration, login, logout, and forgot password processes:
-
-**User Registration:**
-
-1. **How do I create an account with GoldRidge?**
-   - **Answer:** To create an account, click on the "Sign Up" or "Register" button on our homepage. Fill in your details, including your name, email, and password, and then follow the steps to complete the registration process.
-
-2. **What information is required for registration?**
-   - **Answer:** You'll need to provide your full name, a valid email address, and a secure password. Some additional details may be requested based on the account type you choose.
-
-**User Login:**
-
-1. **How do I log in to my GoldRidge account?**
-   - **Answer:** Visit our homepage and click on "Login" or "Sign In." Enter your registered email address and password. Click "Log In," and you're all set.
-
-2. **I forgot my password. What should I do?**
-   - **Answer:** If you've forgotten your password, click on the "Forgot Password" link on the login page. You'll receive instructions on how to reset your password via your registered email.
-
-**User Logout:**
-
-1. **How do I log out of my GoldRidge account?**
-   - **Answer:** To log out, simply click on the "Log Out" or "Sign Out" option, usually found in the account or profile menu.
-
-**Forgot Password:**
-
-1. **I requested a password reset but didn't receive an email. What should I do?**
-   - **Answer:** Check your spam folder; sometimes password reset emails can end up there. If you still can't find it, ensure you entered the correct email during the process. If the issue persists, contact our support team for assistance.
-
-2. **Can I use the same password after resetting it?**
-   - **Answer:** We recommend creating a new, unique password for security reasons. Choose a combination of letters, numbers, and symbols to enhance your account's safety.
-
-These are general FAQs, and you can adapt them to suit your website's specific procedures and features. -->

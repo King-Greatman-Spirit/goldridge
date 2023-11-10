@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import FAQCategory, FAQQuestion
 from django.contrib.auth.decorators import login_required
 from accounts.views import login
-from .forms import FAQCategoryForm
+from .forms import FAQCategoryForm, FAQQuestionForm
 from django.contrib import messages
 
 def faq_question(request, id=None):
@@ -70,3 +70,56 @@ def update_faqcategory(request, id):
         'updated_faqcategory': updated_faqcategory
     }
     return render(request, 'faq/category_dashboard.html', context)
+
+@login_required(login_url = 'login')
+def faqquestion_dashboard(request):
+    faqcategories = FAQCategory.objects.all()
+    faqquestions = FAQQuestion.objects.filter(category_id__in=faqcategories)
+    
+    if request.method == 'POST':
+        form = FAQQuestionForm(request.POST)
+        if form.is_valid():
+            data = FAQQuestion()
+            data.category = form.cleaned_data['category']
+            data.question = form.cleaned_data['question']
+            data.answer = form.cleaned_data['answer']
+            data.save()
+            messages.success(request, 'Thank you! Your FAQ Question has been created.')
+            return redirect('faqquestion_dashboard')
+    else:
+        form = FAQQuestionForm()
+
+    context = {
+        'form': form,
+        'faqquestions': faqquestions
+    }
+
+    return render(request, 'faq/questions_dashboard.html', context)
+
+@login_required(login_url = 'login')
+def delete_faqquestion(request, id):
+    deleted_faqquestion = FAQQuestion.objects.get(id=id)
+    deleted_faqquestion.delete()
+    return redirect('faqquestion_dashboard')
+
+@login_required(login_url = 'login')
+def update_faqquestion(request, id):
+    faqcategories = FAQCategory.objects.all()
+    faqquestions = FAQQuestion.objects.filter(category_id__in=faqcategories)
+
+    updated_faqquestion = get_object_or_404(faqquestions, id=id)
+    form = FAQQuestionForm(request.POST or None, instance=updated_faqquestion)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('faqquestion_dashboard')
+
+    context = {
+        'form': form,
+        'faqquestions': faqquestions,
+        'updated_faqquestion': updated_faqquestion,
+    }
+
+    return render(request, 'faq/questions_dashboard.html', context)
+
