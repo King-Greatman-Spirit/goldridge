@@ -97,7 +97,7 @@ git init
 git add README.md
 git add .
 git commit -m "first commit"
-git commit -m "9:40AM 9-11-2023 COMMIT"
+git commit -m "8:27PM 10-11-2023 COMMIT"
 git branch -M dev
 git remote add origin git@github.com:King-Greatman-Spirit/GoldRidgeCoop.git
 git push -u origin dev

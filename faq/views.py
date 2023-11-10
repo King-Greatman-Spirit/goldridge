@@ -12,7 +12,7 @@ def faq_question(request, id=None):
         questions = FAQQuestion.objects.filter(category=category)
         context = {
             'category': category,
-            'questions': questions,
+            'questions': questions
         }
     else:
         # Display category listing when no specific category is selected

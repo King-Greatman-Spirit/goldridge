@@ -37,29 +37,20 @@
   <section class="sec-padding">
     <div class="container">
       <div class="row">
-        <div class="col-md-8 col-sm-12 col-xs-12 bmargin">
-
-          <h3>{{ category.name }}</h3>
-          <div class="accordion_holder">
-              <div class="accordion_example1">
-
-                <!-- Section 1 -->
-                <div class="accordion_in">
-                  {% for question in questions %}
-                    <div class="acc_head">{{ question.question }}</div>
-                    <div class="acc_content"> {{ question.answer }} </div>
-                    {% endfor %}
-                </div>
-              </div>
+          <div class="col-md-8 col-sm-12 col-xs-12 bmargin">
+      
+            <h3>{{ category.name }}</h3>
+            <div class=" divider-line dashed light margin"></div>
+              {% for question in questions %}
+                <h4>Q. {{ question.question }}</h4>
+                <p>{{ question.answer }}</p>
+              {% endfor %}
             </div>
-              <!-- Accordion end -->
-
-          </div>
-          <!--end left column-->
+              <!--end left column-->
 
           <div class="col-md-4 col-sm-12 col-xs-12 bmargin padding-left-4">
             <div class="col-md-12 col-sm-12 col-xs-12 nopadding bmargin">
-              <h5>Categories</h5>
+              <h5><a href="{% url 'faq_categories' %}">Categories</a></h5>
               <ul class="category-links orange-2">
                 {% for category in categories %}
                   <li><a href="{% url 'faq_question' category.id %}">{{ category.name }}</a></li>
