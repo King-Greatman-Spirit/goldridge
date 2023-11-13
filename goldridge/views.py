@@ -10,7 +10,7 @@ def home(request):
     title = "Home"
     company = Company.objects.get(id=1, is_client=False)
     company_overview = CompanyOverview.objects.get(company=company)
-    # services = Service.objects.filter(company=company)
+    services = Service.objects.filter(company=company)
     # staff = Staff.objects.filter(company=company)[:3]
 
 
@@ -27,7 +27,7 @@ def home(request):
     context = {
         'company': company,
         'company_overview': company_overview,
-        # 'services': services,
+        'services': services,
         # 'staff': staff,
         # 'articles': articles,
         # 'display_paragraph': display_paragraph,
