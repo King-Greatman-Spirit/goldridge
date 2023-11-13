@@ -4,15 +4,16 @@ from .models import FAQCategory, FAQQuestion
 class FAQCategoryForm(forms.ModelForm):
     class Meta:
         model = FAQCategory
-        fields = ['name']
+        fields = ['name', 'home_note']
 
     # function to loop through form fields and initiat form-control classa
     def __init__(self, *args, **kwargs):
         super(FAQCategoryForm, self).__init__(*args, **kwargs) # modify what django is giving
         self.fields['name'].widget.attrs['placeholder'] = 'Enter Category Name'
+        self.fields['home_note'].widget.attrs['placeholder'] = 'Enter Category Description'
 
-        # self.fields['name'].widget.attrs['class'] = 'textareagui-textarea'
-        self.fields['name'].widget.attrs['class'] = 'form-control'
+        for field in ('name', 'home_note'):
+            self.fields[field].widget.attrs['class'] = 'form-control'
 
 class FAQQuestionForm(forms.ModelForm):
     class Meta:

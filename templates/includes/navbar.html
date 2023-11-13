@@ -57,7 +57,7 @@
           </li>
 
           <li class="dropdown"> <a href="{% url 'blog' %}" class="dropdown-toggle {% if request.path == blog %} active {% endif %}">Blog</a> </li>
-          <li class="dropdown"> <a href="{% url 'faq_categories' %}" class="dropdown-toggle {% if request.path == faq_categories %} active {% endif %}">Faq</a> </li>
+          <li class="dropdown"> <a href="{% url 'faq' %}" class="dropdown-toggle {% if request.path == faq %} active {% endif %}">Faq</a> </li>
           <li class=""> <a style="font-weight: bolder;" href="{% url 'contact_us' %}" class="dropdown-toggle {% if request.path == contact_us %} active {% endif %}">Contact Us</a>
         </ul>
       </div>

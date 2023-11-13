@@ -5,23 +5,46 @@ from accounts.views import login
 from .forms import FAQCategoryForm, FAQQuestionForm
 from django.contrib import messages
 
-def faq_question(request, id=None):
-    if id:
-        # Get questions for the selected category
-        category = get_object_or_404(FAQCategory, id=id)
-        questions = FAQQuestion.objects.filter(category=category)
-        context = {
-            'category': category,
-            'questions': questions
-        }
-    else:
-        # Display category listing when no specific category is selected
-        categories = FAQCategory.objects.all()
-        context = {
-            'categories': categories,
-        }
+def faq(request):
+    title="Faq"
+    categories = FAQCategory.objects.all()
+    context = {
+        'title': title,
+        'categories': categories,
+    }
 
     return render(request, 'faq/faq.html', context)
+
+def faq_question(request, id=None):
+    # Get questions for the selected category
+    category = get_object_or_404(FAQCategory, id=id)
+    questions = FAQQuestion.objects.filter(category=category)
+    categories = FAQCategory.objects.all()
+    context = {
+        'category': category,
+        'questions': questions,
+        'categories': categories,
+    }
+
+    return render(request, 'faq/question.html', context)
+
+# def faq_question(request, id=None):
+#     if id:
+#         # Get questions for the selected category
+#         category = get_object_or_404(FAQCategory, id=id)
+#         questions = FAQQuestion.objects.filter(category=category)
+#         context = {
+#             'category': category,
+#             'questions': questions
+#         }
+#     else:
+#         # Display category listing when no specific category is selected
+#         categories = FAQCategory.objects.all()
+#         context = {
+#             'categories': categories,
+#         }
+
+#     return render(request, 'faq/question.html', context)
 
 
 @login_required(login_url = 'login')
@@ -33,6 +56,7 @@ def faqcategory_dashboard(request):
         if form.is_valid():
             data = FAQCategory()
             data.name = form.cleaned_data['name']
+            data.home_note = form.cleaned_data['home_note']
             data.save()
             messages.success(request, 'Thank you! Your FAQ Category has been created.')
             return redirect('faqcategory_dashboard')

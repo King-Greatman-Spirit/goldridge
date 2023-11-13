@@ -54,7 +54,8 @@ class TestForms(TestCase):
     def test_faq_category_form_valid_data(self):
 
         data = {
-            'name': 'test category'
+            'name': 'test category',
+            'home_note': 'test home note'
         }
 
         form = FAQCategoryForm(data)

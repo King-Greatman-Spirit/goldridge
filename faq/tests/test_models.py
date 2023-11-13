@@ -26,10 +26,12 @@ def create_FAQQuestion(
 class TestFAQModels(TestCase):
 
     def test_create_faq_category(self):
+        home_note = 'test home note'
         name = 'test name'
         category = create_FAQCategory()
 
         self.assertEqual(str(category), name)
+        self.assertEqual(category.home_note, home_note)
 
     def test_create_FAQQuestion(self):
         category = create_FAQCategory()

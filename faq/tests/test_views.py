@@ -68,22 +68,29 @@ class TestViews(TestCase):
             answer='Test Answer',
         )
 
-        self.FAQCategory_url = reverse('faq_categories')
+        self.faq_url = reverse('faq')
+        # self.FAQCategory_url = reverse('faq_categories')
         self.FAQQuestion_url = reverse('faq_question', args=[self.test_FAQCategory.id])
         self.faqcategory_dashboard_url = reverse('faqcategory_dashboard')
         self.faqquestion_dashboard_url = reverse('faqquestion_dashboard')
 
-    def test_faq_categories_GET(self):
-        res = self.client.get(self.FAQCategory_url)
+    def test_faq_GET(self):
+        res = self.client.get(self.faq_url)
 
         self.assertEquals(res.status_code, 200)
         self.assertTemplateUsed(res, 'faq/faq.html')
+
+    # def test_faq_categories_GET(self):
+    #     res = self.client.get(self.FAQCategory_url)
+
+    #     self.assertEquals(res.status_code, 200)
+    #     self.assertTemplateUsed(res, 'faq/question.html')
 
     def test_faq_question_GET(self):
         res = self.client.get(self.FAQQuestion_url)  # Use the faq_detail_url
 
         self.assertEquals(res.status_code, 200)
-        self.assertTemplateUsed(res, 'faq/faq.html')
+        self.assertTemplateUsed(res, 'faq/question.html')
 
     def test_FAQQuestion_url_GET_invalid_category(self):
         url = reverse('faq_question', args=[999])  # Use an invalid category ID
@@ -143,7 +150,8 @@ class TestViews(TestCase):
             'password': 'testpass1234'
         })
         res = self.client.post(self.faqcategory_dashboard_url, {
-            'name': 'test category'
+            'name': 'test category',
+            'home_note': 'test home note'
         })
 
         self.assertEquals(res.status_code, 302)
@@ -176,7 +184,8 @@ class TestViews(TestCase):
         })
 
         payload = {
-            'name': 'test category'
+            'name': 'test category',
+            'home_note': 'test home note'
         }
 
         res = self.client.post(
@@ -195,7 +204,8 @@ class TestViews(TestCase):
         test_user.save()
 
         test_firm = FAQCategory.objects.create(
-            name = 'test category'
+            name = 'test category',
+            home_note = 'test home note'
         )
 
         login_res = self.client.post(self.login_url, {
@@ -235,7 +245,8 @@ class TestViews(TestCase):
         })
 
         faqcategory_res = self.client.post(self.faqcategory_dashboard_url, {
-            'name': 'test category'
+            'name': 'test category',
+            'home_note': 'test home note'
         })
         faqcategory = FAQCategory.objects.get(name='test category')
 

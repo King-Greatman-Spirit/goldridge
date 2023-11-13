@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from faq.views import ( 
-    faq_question,faqcategory_dashboard, update_faqcategory, delete_faqcategory, 
+    faq, faq_question,faqcategory_dashboard, update_faqcategory, delete_faqcategory, 
     faqquestion_dashboard, update_faqquestion, delete_faqquestion
 )
 from faq.models import FAQCategory, FAQQuestion
@@ -38,9 +38,13 @@ def create_FAQQuestion(
 
 class TestUrls(TestCase):
 
-    def test_faq_list_url_resolves(self):
-        url = reverse('faq_categories')
-        self.assertEquals(resolve(url).func, faq_question)
+    def test_faq_url_resolves(self):
+        url = reverse('faq')
+        self.assertEquals(resolve(url).func, faq)
+
+    # def test_faq_list_url_resolves(self):
+    #     url = reverse('faq_question')
+    #     self.assertEquals(resolve(url).func, faq_question)
 
     def test_faq_detail_url_resolves(self):
         category = create_FAQCategory()

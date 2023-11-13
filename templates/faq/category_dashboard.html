@@ -64,6 +64,10 @@
                 <label for="name">Category Name</label>
                 {{ form.name }}
               </div>
+              <div class="form-group col-lg-12">
+                <label for="home_note">Category Description</label>
+                {{ form.home_note }}
+              </div>
 
               <div class="form-group">
                 {% if request.path == c_dash %}
