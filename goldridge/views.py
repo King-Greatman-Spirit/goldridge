@@ -21,7 +21,7 @@ def home(request):
             display_paragraph[article.id] = ' '.join(paragraph.paragraph_content.split(' ')[:18]) + '...'
             break
 
-    # form = LeadForm()
+    form = LeadForm()
 
 
     context = {

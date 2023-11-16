@@ -23,7 +23,7 @@ def company(request):
     }
     return render(request, 'company/about_us.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def company_dashboard(request):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -58,7 +58,7 @@ def company_dashboard(request):
 
     return render(request, 'company/company_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def update_company(request, id):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -79,13 +79,13 @@ def update_company(request, id):
 
     return render(request, 'company/company_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def delete_company(request, id):
     deleted_company = Company.objects.get(id=id, is_client=True)
     deleted_company.delete()
     return redirect('company_dashboard')
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def business_overview(request):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -115,7 +115,7 @@ def business_overview(request):
 
     return render(request, 'company/business_overview.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def update_business_overview(request, id):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -137,7 +137,7 @@ def update_business_overview(request, id):
 
     return render(request, 'company/business_overview.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def delete_business_overview(request, id):
     deleted_overview = CompanyOverview.objects.get(id=id)
     deleted_overview.delete()

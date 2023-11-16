@@ -47,7 +47,7 @@ def faq_question(request, id=None):
 #     return render(request, 'faq/question.html', context)
 
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def faqcategory_dashboard(request):
     faqcategories = FAQCategory.objects.all()
     
@@ -70,13 +70,13 @@ def faqcategory_dashboard(request):
 
     return render(request, 'faq/category_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def delete_faqcategory(request, id):
     deleted_faqcategory = FAQCategory.objects.get(id=id)
     deleted_faqcategory.delete()
     return redirect('faqcategory_dashboard')
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def update_faqcategory(request, id):
     faqcategories = FAQCategory.objects.all()
 
@@ -95,7 +95,7 @@ def update_faqcategory(request, id):
     }
     return render(request, 'faq/category_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def faqquestion_dashboard(request):
     faqcategories = FAQCategory.objects.all()
     faqquestions = FAQQuestion.objects.filter(category_id__in=faqcategories)
@@ -120,13 +120,13 @@ def faqquestion_dashboard(request):
 
     return render(request, 'faq/questions_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def delete_faqquestion(request, id):
     deleted_faqquestion = FAQQuestion.objects.get(id=id)
     deleted_faqquestion.delete()
     return redirect('faqquestion_dashboard')
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def update_faqquestion(request, id):
     faqcategories = FAQCategory.objects.all()
     faqquestions = FAQQuestion.objects.filter(category_id__in=faqcategories)

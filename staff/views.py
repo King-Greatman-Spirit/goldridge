@@ -9,7 +9,7 @@ from .forms import StaffForm
 from django.contrib import messages
 
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def staff_dashboard(request):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -48,7 +48,7 @@ def staff_dashboard(request):
 
     return render(request, 'staff/staff_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def update_staff(request, id):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -70,7 +70,7 @@ def update_staff(request, id):
 
     return render(request, 'staff/staff_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def delete_staff(request, id):
     deleted_staff = Staff.objects.get(id=id)
     deleted_staff.delete()

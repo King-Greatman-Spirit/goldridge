@@ -24,7 +24,7 @@ def service(request, slug):
     }
     return render(request, 'service/service.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def service_dashboard(request):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -52,7 +52,7 @@ def service_dashboard(request):
 
     return render(request, 'service/service_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def update_service(request, id):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -74,13 +74,13 @@ def update_service(request, id):
 
     return render(request, 'service/service_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def delete_service(request, id):
     deleted_service = Service.objects.get(id=id)
     deleted_service.delete()
     return redirect('service_dashboard')
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def service_process_dashboard(request):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -109,7 +109,7 @@ def service_process_dashboard(request):
 
     return render(request, 'service/service_process_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def update_service_process(request, id):
     user = Account.objects.get(id=request.user.id)
     companies = Company.objects.filter(user=user)
@@ -132,7 +132,7 @@ def update_service_process(request, id):
 
     return render(request, 'service/service_process_dashboard.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'admin_login')
 def delete_service_process(request, id):
     deleted_service_processes = ServiceProcess.objects.get(id=id)
     deleted_service_processes.delete()

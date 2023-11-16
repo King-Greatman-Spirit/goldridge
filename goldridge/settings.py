@@ -76,7 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'company.context_processors.menu_links',
-                # 'service.context_processors.menu_links',
+                'service.context_processors.menu_links',
                 # 'blog.context_processors.menu_links',
             ],
         },
