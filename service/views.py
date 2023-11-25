@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import (
-    Service, ServiceProcess, Testimonial, 
+    Service, ServiceProcess, Testimonial,
     SubServiceType, SubService, Prerequisite, Transaction
 )
 from company.models import Company
@@ -174,7 +174,6 @@ def user_subService_dashboard(request):
             data.target = form.cleaned_data['target']
             data.save()
             messages.success(request, 'Thank you! Your User Sub-Service has been created.')
-            print("message sucess")
             return redirect('user_subService_dashboard')
     else:
         form = UserSubServiceForm(company)

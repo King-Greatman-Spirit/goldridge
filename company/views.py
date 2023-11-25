@@ -27,7 +27,7 @@ def company(request):
 def company_dashboard(request):
     user = Account.objects.get(id=request.user.id)
     # Get the Company object with the id equal to 1 from the database
-    company = Company.objects.get(id=1)
+    companies = Company.objects.get(id=1)
 
     if request.method == 'POST':
         form = CompanyForm(request.POST, request.FILES)
@@ -54,7 +54,7 @@ def company_dashboard(request):
 
     context = {
         'form': form,
-        'company': company
+        'companies': companies
     }
 
     return render(request, 'company/company_dashboard.html', context)
