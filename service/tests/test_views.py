@@ -11,7 +11,10 @@ from django.urls import reverse
 
 from accounts.models import Account
 from company.models import Company
-from service.models import Service, ServiceProcess
+from service.models import (
+    Service, ServiceProcess, Testimonial, SubServiceType, 
+    SubService, Prerequisite, Transaction, approval_chioce
+)
 
 def generate_photo_file():
     file = io.BytesIO()
@@ -32,6 +35,7 @@ class TestViews(TestCase):
         self.SPD_url = reverse('service_process_dashboard')
         self.company_dashboard_url = reverse('company_dashboard')
         self.login_url = reverse('login')
+        self.USD_url = reverse('user_subService_dashboard')
         self.setUp_file = generate_photo_file()
         self.user = Account.objects.create_user(
             first_name = 'first',
@@ -41,6 +45,7 @@ class TestViews(TestCase):
             username = 'first_last'
         )
         self.test_company = Company.objects.create(
+            id = 1,  # Add this line to set the specific ID for the company
             company_name = 'testcompany',
             website_address = 'http://testcompany.com',
             email = 'test@testcompany.com',
@@ -53,7 +58,6 @@ class TestViews(TestCase):
             user = self.user,
             logo = ContentFile(self.setUp_file.read(), 'test_image.png')
         )
-
         self.test_service = Service.objects.create(
             company             = self.test_company,
             service_name        = 'test service',
@@ -67,6 +71,23 @@ class TestViews(TestCase):
             process_name        = 'test process',
             process_description = 'my test process',
             image               = ContentFile(self.setUp_file.read(), 'test_image.png')
+        )
+        self.test_subservice_type = SubServiceType.objects.create(
+            company               = self.test_company,
+            service               = self.test_service,
+            type                  = 'test type',
+            description           = 'test description'
+        )
+        self.test_user_subservice    = SubService.objects.create(
+            company                  = self.test_company,
+            service                  = self.test_service,
+            subServiceType           = self.test_subservice_type,
+            user                     = self.user,
+            description              = 'test description',
+            approval                 = approval_chioce[3][0],
+            duration                 = 6,
+            rate                     = 3,
+            target                   = 5000
         )
 
 
@@ -115,6 +136,8 @@ class TestViews(TestCase):
 
         self.assertEquals(res.status_code, 302)
         self.assertTrue(Company.objects.filter(email='test@testcompany.com').exists())
+        self.assertTrue(Service.objects.filter(service_name='test service two').exists())
+
         self.assertRedirects(res, self.service_dashboard_url)
 
     def test_update_service_GET(self):
@@ -221,7 +244,7 @@ class TestViews(TestCase):
             'process_description'   : 'my test process',
             'image'                 : photo_file,
         }, format='multipart')
-        test_sdp = ServiceProcess.objects.all()[1]
+        # test_sdp = ServiceProcess.objects.all()[1]
         # print(test_sdp.id)
 
         self.assertEquals(SPD_res.status_code, 302)
@@ -296,7 +319,51 @@ class TestViews(TestCase):
         self.assertFalse(
             ServiceProcess.objects.filter(id=self.test_service_process.id).exists()
         )
+    
+    def test_USD_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
 
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(self.USD_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'service/user_subService_dashboard.html')
+
+    def test_USD_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        USD_res = self.client.post(self.USD_url, {
+            'company'               : self.test_company.id,
+            'service'               : self.test_service.id,
+            'subServiceType'        : self.test_subservice_type.id,
+            'user'                  : self.user.id,
+            'description'           : 'test description',
+            'approval'              : approval_chioce[3][0],
+            'duration'              : 6,
+            'rate'                  : 3,
+            'target'                : 5000,
+        })
+
+        self.assertEquals(USD_res.status_code, 302)
+        self.assertTrue(Service.objects.filter(company_id=self.test_company.id).exists())
+        self.assertTrue(SubServiceType.objects.filter(service_id=self.test_service.id).exists())
+        self.assertTrue(SubService.objects.filter(subServiceType_id=self.test_subservice_type.id).exists())
+        self.assertRedirects(USD_res, self.USD_url)
+
+ 
 def tearDownModule():
     images_path = os.path.join(settings.MEDIA_ROOT, 'photos/services')
     files = [i for i in os.listdir(images_path)

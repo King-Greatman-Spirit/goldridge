@@ -103,7 +103,7 @@ Design and Developed by: Codelayers
 
 
 body {
-	font: 14px 'Open Sans', sans-serif;
+	font: 12px 'Open Sans', sans-serif;
 	font-weight: normal;
 	font-style: normal;
 	line-height: 23px;
@@ -111,6 +111,9 @@ body {
 }
 /* a link Styles
  ------------------------------ */
+ tbody {
+	text-align: center;
+ }
  
 a, .btn {
 	-webkit-transition: all 0.3s ease-out 0s;
@@ -2135,7 +2138,7 @@ a.read-more.cyan:hover {
 /* side navigation list
  ------------------------------ */
 .category-links {
-	width: 100%;
+	width: 40%;
 	padding: 0px;
 	margin: 0px;
 	float: left;

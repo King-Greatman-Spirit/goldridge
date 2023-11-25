@@ -38,7 +38,7 @@ class TestForms(TestCase):
             phone = '11122233344',
             user = self.user
         )
-        self.companies = Company.objects.filter(user=self.user)
+        self.companies =self.test_company # Pass a single instance, not a queryset
 
     def test_company_form_valid_data(self):
 

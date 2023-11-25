@@ -11,12 +11,14 @@ from django.contrib import messages
 
 @login_required(login_url = 'admin_login')
 def staff_dashboard(request):
-    user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
-    staff = Staff.objects.filter(company_id__in=companies)
+    # user = Account.objects.get(id=request.user.id)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all staff objects associated with the specified company (e.g., Goldridge) from the database
+    staffs = Staff.objects.filter(company=company)
 
     if request.method == 'POST':
-        form = StaffForm(companies, request.POST, request.FILES)
+        form = StaffForm(company, request.POST, request.FILES)
         if form.is_valid():
             data = Staff()
             data.company = form.cleaned_data['company']
@@ -38,24 +40,29 @@ def staff_dashboard(request):
             data.save()
             messages.success(request, 'Thank you! Your Staff has been created.')
             return redirect('staff_dashboard')
+        else:
+            messages.error(request, 'Form submission failed. Please check the form for errors.')
+
     else:
-        form = StaffForm(companies)
+        form = StaffForm(company)
 
     context = {
         'form': form,
-        'staff': staff,
+        'staffs': staffs,
     }
 
     return render(request, 'staff/staff_dashboard.html', context)
 
 @login_required(login_url = 'admin_login')
 def update_staff(request, id):
-    user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
-    staff = Staff.objects.filter(company_id__in=companies)
+    # user = Account.objects.get(id=request.user.id)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all staff objects associated with the specified company (e.g., Goldridge) from the database
+    staffs = Staff.objects.filter(company=company)
 
     updated_staff = get_object_or_404(Staff, id=id)
-    form = StaffForm(companies, request.POST or None, request.FILES or None, instance=updated_staff)
+    form = StaffForm(company, request.POST or None, request.FILES or None, instance=updated_staff)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -64,7 +71,7 @@ def update_staff(request, id):
 
     context = {
         'form': form,
-        'staff': staff,
+        'staffs': staffs,
         'updated_staff': updated_staff,
     }
 

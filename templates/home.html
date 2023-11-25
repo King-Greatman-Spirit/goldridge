@@ -374,7 +374,7 @@
           <div class="title-line-4 align-center"></div>
         </div>
         <div class="clearfix"></div>
-        {% for employee in staff %}
+        {% for employee in staffs %}
         <div class="col-md-4 col-sm-6">
           <div class="team-holder15 two bmargin">
             <div class="team-member"><img src="{{ employee.photo.url }}" alt="http://placehold.it/500x450" class="img-responsive"/></div>
@@ -565,7 +565,7 @@
             <div id="owl-demo3" class="owl-carousel text-white">
               {% for Testimonial in Testimonials %}
               <div class="item">
-                <blockquote class="style1"><span>{{ Testimonial.description }}</span> </blockquote>
+                <blockquote class="style1"> <span>{{ Testimonial.description }}</span> </blockquote>
                 <br/>
                 <h5 class="text-white less-mar1">{{ Testimonial.client_full_name }}</h5>
                 <span class="text-orange-2">{{ Testimonial.client_location }}</span>

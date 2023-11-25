@@ -7,11 +7,10 @@ class StaffForm(forms.ModelForm):
         model = Staff
         fields = ['company', 'first_name', 'last_name', 'email', 'phone', 'job_title', 'about', 'photo', 'address_line_1', 'address_line_2', 'city', 'state', 'country','employment_date', 'is_management', 'is_primary_contact']
 
-    # function to loop through form fields and initiat form-control class
-    def __init__(self, companies, *args, **kwargs):
-        super(StaffForm, self).__init__(*args, **kwargs) # modify what django is giving
+    def __init__(self, company, *args, **kwargs):
+        super(StaffForm, self).__init__(*args, **kwargs)
         self.fields['company'].empty_label = 'Select Company'
-        self.fields['company'].queryset = Company.objects.filter(id__in=companies)
+        self.fields['company'].queryset = Company.objects.filter(id=company.id)
 
         self.fields['first_name'].widget.attrs['placeholder'] = 'Enter First Name'
         self.fields['last_name'].widget.attrs['placeholder'] = 'Enter Last Name'
@@ -27,8 +26,8 @@ class StaffForm(forms.ModelForm):
         self.fields['state'].widget.attrs['placeholder'] = 'Enter State'
         self.fields['country'].widget.attrs['placeholder'] = 'Enter Country'
 
-        self.fields['employment_date'].input_formats = '%d-%m-%Y %H:%M:%S'
         self.fields['employment_date'].widget.attrs['class'] = 'form-control datetimepicker'
+        self.fields['employment_date'].input_formats = ['%d-%m-%Y %H:%M:%S']
 
         self.fields['is_management'].widget.attrs['placeholder'] = 'Management'
         self.fields['is_primary_contact'].widget.attrs['placeholder'] = 'Primary Contact'

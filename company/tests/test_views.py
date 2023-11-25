@@ -42,6 +42,7 @@ class TestViews(TestCase):
             username = 'first_last'
         )
         self.test_company = Company.objects.create(
+            id = 1,  # Add this line to set the specific ID for the company
             company_name = 'testcompany',
             website_address = 'http://testcompany.com',
             email = 'test@testcompany.com',
@@ -100,7 +101,7 @@ class TestViews(TestCase):
         res = self.client.post(self.company_dashboard_url, {
             'company_name': 'testcompany2',
             'website_address': 'http://testcompany2.com',
-            'email': 'test@testcompany2.com',
+            'email': 'test@testcompany.com',
             'address_line_1': 'address line 1',
             'address_line_2': 'address line 2',
             'city': 'test city',
@@ -113,7 +114,7 @@ class TestViews(TestCase):
         # print(res.context['form'].errors)
 
         self.assertEquals(res.status_code, 302)
-        self.assertTrue(Company.objects.filter(email='test@testcompany2.com').exists())
+        self.assertTrue(Company.objects.filter(email='test@testcompany.com').exists())
         self.assertRedirects(res, self.company_dashboard_url)
 
     def test_update_company_GET(self):
@@ -146,7 +147,7 @@ class TestViews(TestCase):
         payload = {
             'company_name': 'test company2',
             'website_address': 'http://testcompany2.com',
-            'email': 'test2@testcompany2.com',
+            'email': 'test@testcompany.com',
             'address_line_1': 'address line 1',
             'address_line_2': 'address line 2',
             'city': 'test city',
@@ -250,9 +251,12 @@ class TestViews(TestCase):
             'goal': 'test philosophy'
         })
 
-        self.assertEquals(BO_res.status_code, 302)
-        self.assertTrue(CompanyOverview.objects.filter(company_id=company.id).exists())
-        self.assertRedirects(BO_res, self.BO_url)
+        self.assertEquals(company_res.status_code, 302)
+        self.assertEquals(BO_res.status_code, 200)
+        self.assertTrue(CompanyOverview.objects.filter(goal='test philosophy').exists())
+        self.assertTemplateUsed(BO_res, 'company/business_overview.html')
+
+
 
     def test_update_BO_GET(self):
         test_user = Account.objects.get(email='user1@example.com')

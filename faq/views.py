@@ -96,13 +96,19 @@ def update_faqcategory(request, id):
     return render(request, 'faq/category_dashboard.html', context)
 
 @login_required(login_url = 'admin_login')
+# View for managing FAQ questions in the dashboard
 def faqquestion_dashboard(request):
+    # Retrieve all FAQ categories from the database
     faqcategories = FAQCategory.objects.all()
-    faqquestions = FAQQuestion.objects.filter(category_id__in=faqcategories)
+    
+    # Filter FAQ questions based on selected categories
+    faqquestions = FAQQuestion.objects.filter(category__in=faqcategories)
     
     if request.method == 'POST':
+        # Process the form data if the request method is POST
         form = FAQQuestionForm(request.POST)
         if form.is_valid():
+            # Create a new FAQQuestion instance and save it to the database
             data = FAQQuestion()
             data.category = form.cleaned_data['category']
             data.question = form.cleaned_data['question']
@@ -111,25 +117,23 @@ def faqquestion_dashboard(request):
             messages.success(request, 'Thank you! Your FAQ Question has been created.')
             return redirect('faqquestion_dashboard')
     else:
+        # If the request method is not POST, create an empty form
         form = FAQQuestionForm()
 
+    # Prepare context to be passed to the template
     context = {
         'form': form,
         'faqquestions': faqquestions
     }
 
+    # Render the FAQ question dashboard template with the provided context
     return render(request, 'faq/questions_dashboard.html', context)
-
-@login_required(login_url = 'admin_login')
-def delete_faqquestion(request, id):
-    deleted_faqquestion = FAQQuestion.objects.get(id=id)
-    deleted_faqquestion.delete()
-    return redirect('faqquestion_dashboard')
 
 @login_required(login_url = 'admin_login')
 def update_faqquestion(request, id):
     faqcategories = FAQCategory.objects.all()
-    faqquestions = FAQQuestion.objects.filter(category_id__in=faqcategories)
+    faqquestions = FAQQuestion.objects.filter(category__in=faqcategories)
+
 
     updated_faqquestion = get_object_or_404(faqquestions, id=id)
     form = FAQQuestionForm(request.POST or None, instance=updated_faqquestion)
@@ -146,4 +150,10 @@ def update_faqquestion(request, id):
     }
 
     return render(request, 'faq/questions_dashboard.html', context)
+    
+@login_required(login_url = 'admin_login')
+def delete_faqquestion(request, id):
+    deleted_faqquestion = FAQQuestion.objects.get(id=id)
+    deleted_faqquestion.delete()
+    return redirect('faqquestion_dashboard')
 

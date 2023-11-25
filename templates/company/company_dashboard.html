@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 
 {% block content %}
 {% load static %}
@@ -7,7 +7,7 @@
 {% url 'company_dashboard' as c_dashboard %}
 {% url 'update_company' updated_company.id as u_company %}
 {% url 'business_overview' as BO %}
-{% url 'update_business_overview' as UBO %}
+{% url 'update_business_overview' updated_overview.company_id as UBO %}
 
 
   <!-- <section>
@@ -27,7 +27,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <h3>Portfolio Two Column</h3>
+            <h3>Admin Dashboard</h3>
           </div>
           <div class="col-md-6 text-right">
             <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Portfolio</a> <i> / </i> Portfolio Two Column</div>
@@ -39,14 +39,15 @@
   <!--end section-->
   <div class="clearfix"></div>
 
-  {% include 'includes/dashboard_navbar.html' %}
 
-  <section class="sec-padding-2">
+  <section class="sec-padding">
     <div class="container">
       <div class="row">
 
-      <div class="col-md-12">
-        <div class="text-box padding-2 border">
+      {% include 'includes/admin_dash_navbar.html' %}
+
+      <div class="col-md-9 col-sm-9 col-xs-12 bmargin">
+        <div class="text-box padding-3 border">
         <div class=" bmargin">
 
             <h3>Company Details</h3>
@@ -116,18 +117,10 @@
           </div>
           <!-- end .smart-forms section -->
       </div>
-      </div>
+      <div class="text-box padding-3"></div>
 
-      </div>
-    </div>
-  </section>
-{% if companies.all %}
-  <section class="sec-padding-2">
-    <div class="container">
-      <div class="row">
-
-      <div class="col-md-12">
-        <div class="text-box padding-2 border">
+    {% if companies.all %}
+      <div class="text-box padding-3 border">
         <div class=" bmargin">
             <div class="table-responsive">
               <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
@@ -180,11 +173,11 @@
           </div>
           </div>
       </div>
+      {% endif %}
       </div>
 
       </div>
     </div>
   </section>
-  {% endif %}
 
   {% endblock %}

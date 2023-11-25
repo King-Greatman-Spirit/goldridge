@@ -99,16 +99,16 @@ git add .
 git commit -m "first commit"
 git commit -m "12:28AM 11-11-2023 COMMIT"
 git branch -M dev
-git remote add origin git@github.com:King-Greatman-Spirit/GoldRidgeCoop.git
+git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
 git push -u origin dev
 
 push an existing repository from the command line
-git remote add origin git@github.com:King-Greatman-Spirit/GoldRidgeCoop.git
+git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
 git branch -M dev
 git push -u origin dev
 
 git pull origin dev
 
+      
 
-
-
+    

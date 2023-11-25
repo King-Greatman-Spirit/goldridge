@@ -23,10 +23,11 @@ def company(request):
     }
     return render(request, 'company/about_us.html', context)
 
-@login_required(login_url = 'admin_login')
+@login_required(login_url = 'login')
 def company_dashboard(request):
     user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
 
     if request.method == 'POST':
         form = CompanyForm(request.POST, request.FILES)
@@ -53,15 +54,16 @@ def company_dashboard(request):
 
     context = {
         'form': form,
-        'companies': companies
+        'company': company
     }
 
     return render(request, 'company/company_dashboard.html', context)
 
-@login_required(login_url = 'admin_login')
+@login_required(login_url = 'login')
 def update_company(request, id):
     user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
 
     updated_company = get_object_or_404(Company, id=id)
     form = CompanyForm(request.POST or None, request.FILES or None, instance=updated_company)
@@ -73,27 +75,27 @@ def update_company(request, id):
 
     context = {
         'form': form,
-        'companies': companies,
+        'company': company,
         'updated_company': updated_company,
     }
 
     return render(request, 'company/company_dashboard.html', context)
 
-@login_required(login_url = 'admin_login')
+@login_required(login_url = 'login')
 def delete_company(request, id):
     deleted_company = Company.objects.get(id=id, is_client=True)
     deleted_company.delete()
     return redirect('company_dashboard')
 
-@login_required(login_url = 'admin_login')
+@login_required(login_url = 'login')
 def business_overview(request):
-    user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
     # print(companies.values)
-    business_overviews = CompanyOverview.objects.filter(company_id__in=companies)
+    business_overviews = CompanyOverview.objects.filter(id=company.id)
     # print(business_overviews.values)
     if request.method == 'POST':
-        form = CompanyOverviewForm(companies, request.POST)
+        form = CompanyOverviewForm(company, request.POST)
         if form.is_valid():
             data = CompanyOverview()
             data.company = form.cleaned_data['company']
@@ -106,7 +108,7 @@ def business_overview(request):
             messages.success(request, 'Thank you! Your Business Overview has been created.')
             return redirect('business_overview')
     else:
-        form = CompanyOverviewForm(companies)
+        form = CompanyOverviewForm(company)
 
     context = {
         'form': form,
@@ -115,14 +117,14 @@ def business_overview(request):
 
     return render(request, 'company/business_overview.html', context)
 
-@login_required(login_url = 'admin_login')
+@login_required(login_url = 'login')
 def update_business_overview(request, id):
-    user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
-    business_overviews = CompanyOverview.objects.filter(company_id__in=companies)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    business_overviews = CompanyOverview.objects.filter(id=company.id)
 
     updated_overview = get_object_or_404(CompanyOverview, company_id=id)
-    form = CompanyOverviewForm(companies, request.POST or None, instance=updated_overview)
+    form = CompanyOverviewForm(company, request.POST or None, instance=updated_overview)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -137,7 +139,7 @@ def update_business_overview(request, id):
 
     return render(request, 'company/business_overview.html', context)
 
-@login_required(login_url = 'admin_login')
+@login_required(login_url = 'login')
 def delete_business_overview(request, id):
     deleted_overview = CompanyOverview.objects.get(id=id)
     deleted_overview.delete()

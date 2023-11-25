@@ -23,4 +23,5 @@ urlpatterns = [
     path('service_process_dashboard/', views.service_process_dashboard, name='service_process_dashboard'),
     path('update_service_process/<int:id>', views.update_service_process, name='update_service_process'),
     path('delete_service_process/<int:id>', views.delete_service_process, name='delete_service_process'),
+    path('user_subService_dashboard/', views.user_subService_dashboard, name='user_subService_dashboard'),
 ]

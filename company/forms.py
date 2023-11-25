@@ -30,10 +30,10 @@ class CompanyOverviewForm(forms.ModelForm):
         fields = ['company', 'mission', 'vision', 'goal', 'business_overview', 'competive_advantage']
 
     # function to loop through form fields and initiat form-control class
-    def __init__(self, companies, *args, **kwargs):
+    def __init__(self, company, *args, **kwargs):
         super(CompanyOverviewForm, self).__init__(*args, **kwargs) # modify what django is giving
         self.fields['company'].empty_label = 'Select Company'
-        self.fields['company'].queryset = Company.objects.filter(id__in=companies)
+        self.fields['company'].queryset = Company.objects.filter(id=company.id)
         self.fields['mission'].widget.attrs['placeholder'] = 'Enter Company Mission'
         self.fields['vision'].widget.attrs['placeholder'] = 'Enter Company Vision'
         self.fields['goal'].widget.attrs['placeholder'] = 'Enter Company Goal'

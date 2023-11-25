@@ -1,12 +1,15 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from service.views import (
-   service, service_dashboard, update_service, delete_service,
-   service_process_dashboard, update_service_process, delete_service_process
+   service, service_dashboard, update_service, delete_service, service_process_dashboard, 
+   update_service_process, delete_service_process, user_subService_dashboard
 )
 from accounts.models import Account
 from company.models import Company
-from service.models import Service, ServiceProcess
+from service.models import (
+    Service, ServiceProcess, Testimonial, 
+    SubServiceType, SubService, Prerequisite, Transaction
+)
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
@@ -45,10 +48,26 @@ class TestUrls(TestCase):
             service_description =  'my test service'
         )
         self.test_service_process = ServiceProcess.objects.create(
-            company             = self.test_company,
-            service             = self.test_service,
-            process_name        = 'test process',
-            process_description = 'my test process'
+            company               = self.test_company,
+            service               = self.test_service,
+            process_name          = 'test process',
+            process_description   = 'my test process'
+        )
+        self.test_subservice_type = SubServiceType.objects.create(
+            company               = self.test_company,
+            service               = self.test_service,
+            type                  = 'test type',
+            description           = 'test description'
+        )
+        self.test_user_subservice    = SubService.objects.create(
+            company                  = self.test_company,
+            service                  = self.test_service,
+            subServiceType           = self.test_subservice_type,
+            user                     = self.user,
+            description              = 'test description',
+            duration                 = 6,
+            rate                     = 3,
+            target                   = 5000
         )
 
     def test_service_urls_resolves(self):
@@ -78,4 +97,8 @@ class TestUrls(TestCase):
     def test_delete_service_process_urls_resolves(self):
         url = url_with_args('delete_service_process', self.test_service.id)
         self.assertEquals(resolve(url).func, delete_service_process)
+
+    def test_user_subService_dashboard_urls_resolves(self):
+        url = reverse('user_subService_dashboard')
+        self.assertEquals(resolve(url).func, user_subService_dashboard)
 

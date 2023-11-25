@@ -80,12 +80,12 @@ class TestUrls(TestCase):
     #     self.assertEquals(resolve(url).func, resetPassword)
 
 
-    # # def test_add_urls_resolves(self):
-    # #     url = reverse('add')
-    # #     # print(resolve(url))
-    # #     self.assertEquals(resolve(url).func.view_class, ProjectCreateView)
+    # def test_add_urls_resolves(self):
+    #     url = reverse('add')
+    #     # print(resolve(url))
+    #     self.assertEquals(resolve(url).func.view_class, ProjectCreateView)
 
-    # # def test_detail_urls_resolves(self):
-    # #     url = reverse('detail', args=['some-slug'])
-    # #     # print(resolve(url))
-    # #     self.assertEquals(resolve(url).func, project_detail)
+    # def test_detail_urls_resolves(self):
+    #     url = reverse('detail', args=['some-slug'])
+    #     # print(resolve(url))
+    #     self.assertEquals(resolve(url).func, project_detail)

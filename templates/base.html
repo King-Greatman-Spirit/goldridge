@@ -52,6 +52,9 @@
 <link rel="stylesheet" href="{% static 'js/ytplayer/ytplayer.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'js/smart-forms/smart-forms.css' %}">
 
+<!-- jQuery -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+
 
 <!-- Remove the below comments to use your color option -->
 <!--<link rel="stylesheet" href="css/colors/lightblue.css" />-->
@@ -132,10 +135,23 @@
 <script type="text/javascript" src="{% static 'js/smart-forms/additional-methods.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/smart-forms/smart-form.js' %}"></script>
 
+<!-- XDSoft DateTimePicker -->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
 
+<script>
+	$(".service").on('keyup',function(){
+		$(".slug").val($(this).val().toLowerCase().split(' ').join('-'));
+	});
+</script>
 
-
+<script>
+	$(function () {
+	  $(".datetimepicker").datetimepicker({
+		format: 'Y-m-d H:i:s',
+	  });
+	});
+</script>
 
 </body>
 </html>

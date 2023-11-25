@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Service, ServiceProcess
+from .models import (
+    Service, ServiceProcess, Testimonial, 
+    SubServiceType, SubService, Prerequisite, Transaction
+)
 from company.models import Company
 from django.contrib.auth.decorators import login_required
 from accounts.models import Account
-from .forms import ServiceForm, ServiceProcessForm
+from .forms import ServiceForm, ServiceProcessForm, UserSubServiceForm
 from django.contrib import messages
 
 
@@ -26,12 +29,14 @@ def service(request, slug):
 
 @login_required(login_url = 'admin_login')
 def service_dashboard(request):
-    user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
-    services = Service.objects.filter(company_id__in=companies)
+    # user = Account.objects.get(id=request.user.id)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all Service objects associated with the specified company (e.g., Goldridge) from the database
+    services = Service.objects.filter(company=company)
 
     if request.method == 'POST':
-        form = ServiceForm(companies, request.POST, request.FILES)
+        form = ServiceForm(company, request.POST, request.FILES)
         if form.is_valid():
             data = Service()
             data.company = form.cleaned_data['company']
@@ -42,8 +47,11 @@ def service_dashboard(request):
             data.save()
             messages.success(request, 'Thank you! Your Service has been created.')
             return redirect('service_dashboard')
+        else:
+            messages.error(request, 'Form submission failed. Please check the form for errors.')
+
     else:
-        form = ServiceForm(companies)
+        form = ServiceForm(company)
 
     context = {
         'form': form,
@@ -54,12 +62,14 @@ def service_dashboard(request):
 
 @login_required(login_url = 'admin_login')
 def update_service(request, id):
-    user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
-    services = Service.objects.filter(company_id__in=companies)
+    # user = Account.objects.get(id=request.user.id)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all Service objects associated with the specified company (e.g., Goldridge) from the database
+    services = Service.objects.filter(company=company)
 
     updated_service = get_object_or_404(Service, id=id)
-    form = ServiceForm(companies, request.POST or None, request.FILES or None, instance=updated_service)
+    form = ServiceForm(company, request.POST or None, request.FILES or None, instance=updated_service)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -82,13 +92,14 @@ def delete_service(request, id):
 
 @login_required(login_url = 'admin_login')
 def service_process_dashboard(request):
-    user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
-    services = Service.objects.filter(company_id__in=companies)
-    service_processes = ServiceProcess.objects.filter(service_id__in=services)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all Service objects associated with the specified company (e.g., Goldridge) from the database
+    services = Service.objects.filter(company=company)
+    service_processes = ServiceProcess.objects.filter(service__in=services)
 
     if request.method == 'POST':
-        form = ServiceProcessForm(companies, request.POST, request.FILES)
+        form = ServiceProcessForm(company, request.POST, request.FILES)
         if form.is_valid():
             data = ServiceProcess()
             data.company = form.cleaned_data['company']
@@ -100,7 +111,7 @@ def service_process_dashboard(request):
             messages.success(request, 'Thank you! Your Service Process has been created.')
             return redirect('service_process_dashboard')
     else:
-        form = ServiceProcessForm(companies)
+        form = ServiceProcessForm(company)
 
     context = {
         'form': form,
@@ -111,13 +122,14 @@ def service_process_dashboard(request):
 
 @login_required(login_url = 'admin_login')
 def update_service_process(request, id):
-    user = Account.objects.get(id=request.user.id)
-    companies = Company.objects.filter(user=user)
-    services = Service.objects.filter(company_id__in=companies)
-    service_processes = ServiceProcess.objects.filter(service_id__in=services)
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all Service objects associated with the specified company (e.g., Goldridge) from the database
+    services = Service.objects.filter(company=company)
+    service_processes = ServiceProcess.objects.filter(service__in=services)
 
     updated_sp = get_object_or_404(service_processes, id=id)
-    form = ServiceProcessForm(companies, request.POST or None, request.FILES or None, instance=updated_sp)
+    form = ServiceProcessForm(company, request.POST or None, request.FILES or None, instance=updated_sp)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -137,3 +149,42 @@ def delete_service_process(request, id):
     deleted_service_processes = ServiceProcess.objects.get(id=id)
     deleted_service_processes.delete()
     return redirect('service_process_dashboard')
+
+@login_required(login_url = 'login')
+def user_subService_dashboard(request):
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all Service objects associated with the specified company (e.g., Goldridge) from the database
+    services = Service.objects.filter(company=company)
+    subServiceTypes = SubServiceType.objects.filter(service__in=services)
+    subservices = SubService.objects.filter(subServiceType__in=subServiceTypes)
+
+    if request.method == 'POST':
+        form = UserSubServiceForm(company, request.POST)
+        if form.is_valid():
+            data = SubService()
+            data.company = form.cleaned_data['company']
+            data.service = form.cleaned_data['service']
+            data.subServiceType = form.cleaned_data['subServiceType']
+            data.user = form.cleaned_data['user']
+            data.description = form.cleaned_data['description']
+            data.approval = form.cleaned_data['approval']
+            data.duration = form.cleaned_data['duration']
+            data.rate = form.cleaned_data['rate']
+            data.target = form.cleaned_data['target']
+            data.save()
+            messages.success(request, 'Thank you! Your User Sub-Service has been created.')
+            print("message sucess")
+            return redirect('user_subService_dashboard')
+    else:
+        form = UserSubServiceForm(company)
+
+    context = {
+        'form': form,
+        'subservices': subservices,
+    }
+
+    return render(request, 'service/user_subService_dashboard.html', context)
+
+
+

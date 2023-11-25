@@ -44,6 +44,7 @@ class TestViews(TestCase):
             username = 'first_last'
         )
         self.test_company = Company.objects.create(
+            id = 1,  # Add this line to set the specific ID for the company
             company_name = 'testcompany',
             website_address = 'http://testcompany.com',
             email = 'test@testcompany.com',

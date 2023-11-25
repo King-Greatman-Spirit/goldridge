@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 
 {% block content %}
 {% url 'admin_dashboard' as admin_dashboard %}
@@ -15,15 +15,15 @@
   <!-- end header inner -->
   <div class="clearfix"></div>
 
-  <section>
+<section>
     <div class="pagenation-holder">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <h3>Portfolio Two Column</h3>
+            <h3>Admin Dashboard</h3>
           </div>
           <div class="col-md-6 text-right">
-            <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Portfolio</a> <i> / </i> Portfolio Two Column</div>
+            <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Pages</a> <i> / </i> Left Navigation</div>
           </div>
         </div>
       </div>
@@ -32,52 +32,57 @@
   <!--end section-->
   <div class="clearfix"></div>
 
-  {% include 'includes/admin_dash_navbar.html' %}
   {% include 'includes/alerts.html' %}
-
+  
   <section class="sec-padding">
     <div class="container">
-      <div class="row">
-
-      <div class="col-md-12">
+    <div class="row">
+    
+    {% include 'includes/admin_dash_navbar.html' %}
+    
+    <div class="col-md-9 col-sm-9 col-xs-12 bmargin">
         <div class="text-box padding-3 border">
-        <div class=" bmargin">
-
-            <h3>Update Admin Details</h3>
-
-            <p>Please update your details; note that if you wish to change your password; logout and click forget password.</p>
-            <br/>
-            <br/>
-
-            <form method="POST" action="{% url 'admin_dashboard' %}">
-              {% csrf_token %}
-              <div class="form-group col col-md-6">
-                <label for="{{ form.first_name.id_for_label }}">First Name</label>
-                {{ form.first_name }}
+            <div class=" bmargin">
+    
+                <h3>Update Admin Details</h3>
+    
+                <p>Please update your details; note that if you wish to change your password; logout and click forget password.</p>
+                <br/>
+                <br/>
+    
+                <form method="POST" action="{% url 'admin_dashboard' %}">
+                  {% csrf_token %}
+                  <div class="form-group col col-md-6">
+                    <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                    {{ form.first_name }}
+                  </div>
+                  <div class="form-group col col-md-6">
+                    <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                    {{ form.last_name }}
+                  </div>
+                  <div class="form-group col col-md-6">
+                    <label for="{{ form.email.id_for_label }}">Email Address</label>
+                    {{ form.email }}
+                  </div>
+                  <div class="form-group col col-md-6">
+                    <label for="{{ form.phone_number.id_for_label }}">Phone Number</label>
+                    {{ form.phone_number }}
+                  </div>
+                  <div class="form-group col col-md-12">
+                   <button type="submit" class="btn btn-primary">Update</button>
+                 </div>
+                </form>
               </div>
-              <div class="form-group col col-md-6">
-                <label for="{{ form.last_name.id_for_label }}">Last Name</label>
-                {{ form.last_name }}
-              </div>
-              <div class="form-group col col-md-6">
-                <label for="{{ form.email.id_for_label }}">Email Address</label>
-                {{ form.email }}
-              </div>
-              <div class="form-group col col-md-6">
-                <label for="{{ form.phone_number.id_for_label }}">Phone Number</label>
-                {{ form.phone_number }}
-              </div>
-              <div class="form-group col col-md-12">
-               <button type="submit" class="btn btn-primary">Update</button>
-             </div>
-            </form>
+              <!-- end .smart-forms section -->
           </div>
-          <!-- end .smart-forms section -->
-      </div>
-      </div>
-
-      </div>
+     
     </div>
-  </section>
+    <!--end right column-->
+    
+
+  
+    </div>
+    </div>
+    </section>
 
   {% endblock %}
