@@ -95,7 +95,8 @@ class SubServiceType(models.Model):
         show_all = False,
         auto_choose=True,
         default=None)
-    type = models.CharField(max_length=50)
+    type = models.CharField(max_length=100)
+    abbr = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField(max_length=500)
 
     class Meta:
@@ -130,20 +131,34 @@ class SubService(models.Model):
         default=None)
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     description = models.TextField(max_length=500, blank=True, null=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
     approval = models.CharField(max_length=100, choices=approval_chioce, default='Pending')
     approval_note = models.TextField(max_length=500)
     duration = models.IntegerField(blank=True, null=True)
     rate = models.IntegerField(blank=True, null=True)
     target = models.IntegerField(blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'SubService'
         verbose_name_plural = 'SubServices'
+        ordering = ['approval', 'created_date']
 
     def __str__(self):
         return str(self.duration)
+    
+    def update_url(self):
+        return reverse('update_admin_service_app', args=[self.id])
+
+    def delete_url(self):
+        return reverse('delete_admin_service_app', args=[self.id])
+    
+    def get_update_type_url(self):
+        return reverse('update-type-dashboard', args=[self.id])
+
+    def get_delete_type_url(self):
+        return reverse('delete-type-dashboard', args=[self.id])
+
 
 class Prerequisite(models.Model): 
     company = models.ForeignKey(Company, on_delete=models.CASCADE)

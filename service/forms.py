@@ -1,5 +1,5 @@
 from django import forms
-from .models import Service, ServiceProcess, SubService, SubServiceType
+from .models import Service, ServiceProcess, SubService, SubServiceType, approval_chioce
 from company.models import Company
 
 
@@ -51,31 +51,34 @@ class ServiceProcessForm(forms.ModelForm):
         for field in ('company', 'service', 'process_name', 'process_description', 'image'):
             self.fields[field].widget.attrs['class'] = 'form-control'
 
-class UserSubServiceForm(forms.ModelForm):
+class SubServiceForm(forms.ModelForm):
     class Meta:
         model = SubService
-        fields = ['company', 'service', 'subServiceType', 'user', 'description', 
-                  'duration', 'rate', 'target', 'approval']
+        fields = ['company', 'service', 'subServiceType', 'description', 'duration', 'rate', 'target', 'approval', 'approval_note']
 
     # function to loop through form fields and initiat form-control class
     def __init__(self, company, *args, **kwargs):
-        super(UserSubServiceForm, self).__init__(*args, **kwargs) # modify what django is giving
+        super(SubServiceForm, self).__init__(*args, **kwargs) # modify what django is giving
         self.fields['company'].empty_label = 'Select Company'
         self.fields['company'].queryset = Company.objects.filter(id=company.id)
 
         self.fields['service'].empty_label = 'Select Service'
 
-        self.fields['subServiceType'].empty_label = 'Select Sub-Service Type'
-        self.fields['user'].empty_label = 'Select User'
+        self.fields['subServiceType'].empty_label = 'Select Service Application Type'
 
-        self.fields['description'].widget.attrs['placeholder'] = 'Describe Sub-Service'
+        self.fields['description'].widget.attrs['placeholder'] = 'Describe Service Application'
         self.fields['description'].widget.attrs['rows'] = 3
-
+        
+        # Render the approval field manually to apply the custom class
+        self.fields['approval'].widget = forms.Select(choices=approval_chioce, attrs={'class': 'form-control'})
+        # Mark approval and approval_note as not required
+        self.fields['approval'].required = False
+        self.fields['approval_note'].required = False
         self.fields['duration'].widget.attrs['placeholder'] = 'Enter Duration'
         self.fields['rate'].widget.attrs['placeholder'] = 'Enter Rate'
-        self.fields['target'].widget.attrs['placeholder'] = 'Enter Target'
+        self.fields['target'].widget.attrs['placeholder'] = 'Enter Amount'
 
-        for field in ('company', 'service', 'subServiceType', 'user', 'description', 'duration', 'rate', 'target'):
+        for field in ('company', 'service', 'subServiceType', 'description', 'duration', 'rate', 'target', 'approval_note'):
             self.fields[field].widget.attrs['class'] = 'form-control'
 
             

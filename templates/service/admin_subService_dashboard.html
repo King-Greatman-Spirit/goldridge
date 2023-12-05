@@ -1,0 +1,233 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+{% load static %}
+
+{% url 'client_dashboard' as client_dashboard %}
+{% url 'admin_service_applications' as ASA %}
+{% url 'update_admin_service_app' updated_asa.id as UASA %}
+
+
+  <!-- <section>
+    <div class="header-inner two">
+      <div class="inner text-center">
+        <h4 class="title text-white uppercase">We Are Hasta</h4>
+        <h5 class="text-white uppercase">Get Many More Features</h5>
+      </div>
+      <div class="overlay bg-opacity-5"></div>
+      <img src="http://placehold.it/1920x800" alt="" class="img-responsive"/> </div>
+  </section> -->
+  <!-- end header inner -->
+  <div class="clearfix"></div>
+
+  <section>
+    <div class="pagenation-holder">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Admin Dashboard</h3>
+          </div>
+          <div class="col-md-6 text-right">
+            <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Portfolio</a> <i> / </i> Portfolio Two Column</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--end section-->
+  <div class="clearfix"></div>
+
+<section class="sec-padding">
+  <div class="container">
+    <div class="row">
+    
+    {% include 'includes/admin_dash_navbar.html' %}
+    
+      <div class="col-md-9 col-sm-9 col-xs-12 bmargin">
+        <div class="text-box padding-3 border">
+          <div class=" bmargin">
+
+            <h3>Service Applications</h3>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et justo. Praesent mattis commodo augue. Aliquam ornare hendrerit consectetuer adipiscing elit. Suspendisse et justo. augue.</p>
+            <br/>
+            {% include 'includes/alerts.html' %}
+            <br/>
+
+          {% if request.path == UASA %}
+            <!-- Render the form for editing existing record -->
+            <form method="POST" action="{% url 'update_admin_service_app' updated_asa.id %}" enctype="multipart/form-data">
+                  
+                {% csrf_token %}
+              <div class="form-group col col-md-12">
+                  <label for="company">Company</label>
+                  {{ form.company }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="service">Service</label>
+                  {{ form.service }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="subServiceType">Service Application Type</label>
+                  {{ form.subServiceType }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="duration">Duration (Month)</label>
+                  {{ form.duration }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="rate">Rate</label>
+                  {{ form.rate }}
+              </div>
+              <div class="form-group col col-md-12">
+                  <label for="description">Describe Service Application</label>
+                  {{ form.description }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="target">Target/Amount</label>
+                  {{ form.target }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="approval">Approval</label>
+                  {{ form.approval }}
+              </div>
+              <div class="form-group col col-md-12">
+                  <label for="approval_note">Approval Note</label>
+                  {{ form.approval_note }}
+              </div>
+              <div class="form-group col col-md-12">
+                  <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </div>
+            <!-- end .smart-forms section -->
+        </div>
+        <div class="text-box padding-3"></div>
+
+        {% if user_service_applications.all %}
+        <div class="text-box padding-3 border">
+          <div class=" bmargin">
+            <div class="table-responsive">
+              <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
+                <thead>
+                    <tr class="primary">
+                      <th scope="col" data-field="User">User</th>
+                      <th scope="col" data-field="Service">Service</th>
+                      <th scope="col" data-field="Sub-ServiceType">Subservice </th>
+                      <th scope="col" data-field="Approval">Approval</th>
+                      <th scope="col" data-field="Created Date">Date</th>
+                      <th scope="col" data-field="Edit">Edit</th>
+                      <th scope="col" data-field="Delete">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for sub in user_service_applications %}
+                    <tr>
+                      <td scope="row">{{ sub.user }}</td>
+                      <td scope="row">{{ sub.service }}</td>
+                      <td scope="row">{{ sub.subServiceType.abbr }}</td>
+                      <td scope="row">{{ sub.approval }}</td>
+                      <td scope="row">{{ sub.created_date|date:"d/m/Y" }}</td>
+                      <td scope="row">
+                        <!-- Change the href to link to the update_admin_service_app view with the specific ID -->
+                        <a title="Edit" href="{{ sub.update_url }}" class="btn btn-warning btn-small btn-round">
+                          <span title="Edit">
+                            <i class="fa fa-pencil fa-sm" aria-hidden="true"></i>
+                          </span>
+                        </a>
+                      </td>
+                      <td scope="row">
+                        <a title="Delete" href="{{ sub.delete_url }}" class="btn btn-danger btn-small btn-round">
+                          <span>
+                            <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
+                          </span>
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>User</th>
+                    <th>Service</th>
+                    <th>Subservice </th>
+                    <th>Approval</th>
+                    <th>Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+      </div>
+
+      {% if request.path == ASA %}
+
+        {% if user_service_applications.all %}
+        <div class="text-box padding-3 border">
+          <div class=" bmargin">
+            <div class="table-responsive">
+              <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
+                <thead>
+                    <tr class="primary">
+                      <th scope="col" data-field="User">User</th>
+                      <th scope="col" data-field="Service">Service</th>
+                      <th scope="col" data-field="Sub-ServiceType">Subservice </th>
+                      <th scope="col" data-field="Approval">Approval</th>
+                      <th scope="col" data-field="Created Date">Date</th>
+                      <th scope="col" data-field="Edit">Edit</th>
+                      <th scope="col" data-field="Delete">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for sub in user_service_applications %}
+                    <tr>
+                      <td scope="row">{{ sub.user }}</td>
+                      <td scope="row">{{ sub.service }}</td>
+                      <td scope="row">{{ sub.subServiceType.abbr }}</td>
+                      <td scope="row">{{ sub.approval }}</td>
+                      <td scope="row">{{ sub.created_date|date:"d/m/Y" }}</td>
+                      <td scope="row">
+                        <!-- Change the href to link to the update_admin_service_app view with the specific ID -->
+                        <a title="Edit" href="{{ sub.update_url }}" class="btn btn-warning btn-small btn-round">
+                          <span title="Edit">
+                            <i class="fa fa-pencil fa-sm" aria-hidden="true"></i>
+                          </span>
+                        </a>
+                      </td>
+                      <td scope="row">
+                        <a title="Delete" href="{{ sub.delete_url }}" class="btn btn-danger btn-small btn-round">
+                          <span>
+                            <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
+                          </span>
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>User</th>
+                    <th>Service</th>
+                    <th>Subservice </th>
+                    <th>Approval</th>
+                    <th>Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+{% endblock %}

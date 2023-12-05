@@ -34,7 +34,7 @@ class TestViews(TestCase):
     def setUp(self):
         self.client = Client()
         self.staff_dashboard_url = reverse('staff_dashboard')
-        self.login_url = reverse('login')
+        self.admin_login_url = reverse('admin_login')
         self.photo_file = ContentFile(img.read(), 'test_image.png')
         self.user = Account.objects.create_user(
             first_name = 'first',
@@ -77,9 +77,10 @@ class TestViews(TestCase):
     def test_staff_dashboard_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -92,9 +93,10 @@ class TestViews(TestCase):
     def test_staff_dashboard_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -125,9 +127,10 @@ class TestViews(TestCase):
     def test_update_staff_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -140,9 +143,10 @@ class TestViews(TestCase):
     def test_update_staff_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -182,6 +186,7 @@ class TestViews(TestCase):
     def test_delete_staff(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
         test_staff = Staff.objects.create(
@@ -200,7 +205,7 @@ class TestViews(TestCase):
             employment_date = timezone.now()
         )
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })

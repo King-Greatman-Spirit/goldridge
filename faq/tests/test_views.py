@@ -73,6 +73,7 @@ class TestViews(TestCase):
         self.FAQQuestion_url = reverse('faq_question', args=[self.test_FAQCategory.id])
         self.faqcategory_dashboard_url = reverse('faqcategory_dashboard')
         self.faqquestion_dashboard_url = reverse('faqquestion_dashboard')
+        self.admin_login_url = reverse('admin_login')
 
     def test_faq_GET(self):
         res = self.client.get(self.faq_url)
@@ -128,12 +129,14 @@ class TestViews(TestCase):
     def test_faqcategory_dashboard_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
+
         res = self.client.get(self.faqcategory_dashboard_url)
 
         self.assertEquals(res.status_code, 200)
@@ -143,12 +146,14 @@ class TestViews(TestCase):
     def test_faqcategory_dashboard_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
+
         res = self.client.post(self.faqcategory_dashboard_url, {
             'name': 'test category',
             'home_note': 'test home note'
@@ -161,9 +166,10 @@ class TestViews(TestCase):
     def test_update_faqcategory_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -176,9 +182,10 @@ class TestViews(TestCase):
     def test_update_faqcategory_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -201,6 +208,7 @@ class TestViews(TestCase):
     def test_delete_faqcategory(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
         test_firm = FAQCategory.objects.create(
@@ -208,7 +216,7 @@ class TestViews(TestCase):
             home_note = 'test home note'
         )
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -222,9 +230,10 @@ class TestViews(TestCase):
     def test_faqquestion_dashboard_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -237,9 +246,10 @@ class TestViews(TestCase):
     def test_faqquestion_dashboard_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -263,9 +273,10 @@ class TestViews(TestCase):
     def test_delete_faqquetion(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -284,9 +295,10 @@ class TestViews(TestCase):
     def test_update_faqquestion_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -299,9 +311,10 @@ class TestViews(TestCase):
     def test_update_faqquestion_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })

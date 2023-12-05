@@ -6,7 +6,7 @@ from .forms import FAQCategoryForm, FAQQuestionForm
 from django.contrib import messages
 
 def faq(request):
-    title="Faq"
+    title="Faq Category"
     categories = FAQCategory.objects.all()
     context = {
         'title': title,
@@ -16,11 +16,13 @@ def faq(request):
     return render(request, 'faq/faq.html', context)
 
 def faq_question(request, id=None):
+    title="Faq Q&A"
     # Get questions for the selected category
     category = get_object_or_404(FAQCategory, id=id)
     questions = FAQQuestion.objects.filter(category=category)
     categories = FAQCategory.objects.all()
     context = {
+        'title': title,
         'category': category,
         'questions': questions,
         'categories': categories,
@@ -28,27 +30,14 @@ def faq_question(request, id=None):
 
     return render(request, 'faq/question.html', context)
 
-# def faq_question(request, id=None):
-#     if id:
-#         # Get questions for the selected category
-#         category = get_object_or_404(FAQCategory, id=id)
-#         questions = FAQQuestion.objects.filter(category=category)
-#         context = {
-#             'category': category,
-#             'questions': questions
-#         }
-#     else:
-#         # Display category listing when no specific category is selected
-#         categories = FAQCategory.objects.all()
-#         context = {
-#             'categories': categories,
-#         }
-
-#     return render(request, 'faq/question.html', context)
-
-
 @login_required(login_url = 'admin_login')
 def faqcategory_dashboard(request):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    title="Category Dashboard"
     faqcategories = FAQCategory.objects.all()
     
     if request.method == 'POST':
@@ -72,12 +61,23 @@ def faqcategory_dashboard(request):
 
 @login_required(login_url = 'admin_login')
 def delete_faqcategory(request, id):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
     deleted_faqcategory = FAQCategory.objects.get(id=id)
     deleted_faqcategory.delete()
     return redirect('faqcategory_dashboard')
 
 @login_required(login_url = 'admin_login')
 def update_faqcategory(request, id):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    title = "Update Category Dashboard"
     faqcategories = FAQCategory.objects.all()
 
     updated_faqcategory = get_object_or_404(FAQCategory, id=id)
@@ -86,9 +86,11 @@ def update_faqcategory(request, id):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            messages.success(request, 'Category Dashboard updated successfully.')
             return redirect('faqcategory_dashboard')
 
     context = {
+        'title': title,
         'form': form,
         'faqcategories': faqcategories,
         'updated_faqcategory': updated_faqcategory
@@ -98,6 +100,12 @@ def update_faqcategory(request, id):
 @login_required(login_url = 'admin_login')
 # View for managing FAQ questions in the dashboard
 def faqquestion_dashboard(request):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    title="Faq Q&A Dashboard"
     # Retrieve all FAQ categories from the database
     faqcategories = FAQCategory.objects.all()
     
@@ -114,7 +122,7 @@ def faqquestion_dashboard(request):
             data.question = form.cleaned_data['question']
             data.answer = form.cleaned_data['answer']
             data.save()
-            messages.success(request, 'Thank you! Your FAQ Question has been created.')
+            messages.success(request, 'Thank you! Your FAQ Q&A has been created.')
             return redirect('faqquestion_dashboard')
     else:
         # If the request method is not POST, create an empty form
@@ -122,6 +130,7 @@ def faqquestion_dashboard(request):
 
     # Prepare context to be passed to the template
     context = {
+        'title': title,
         'form': form,
         'faqquestions': faqquestions
     }
@@ -131,6 +140,12 @@ def faqquestion_dashboard(request):
 
 @login_required(login_url = 'admin_login')
 def update_faqquestion(request, id):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    title = "Update FAQ Q&A Dashboard"
     faqcategories = FAQCategory.objects.all()
     faqquestions = FAQQuestion.objects.filter(category__in=faqcategories)
 
@@ -141,9 +156,11 @@ def update_faqquestion(request, id):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            messages.success(request, 'FAQ Q&A Dashboard updated successfully.')
             return redirect('faqquestion_dashboard')
 
     context = {
+        'title': title,
         'form': form,
         'faqquestions': faqquestions,
         'updated_faqquestion': updated_faqquestion,
@@ -153,7 +170,29 @@ def update_faqquestion(request, id):
     
 @login_required(login_url = 'admin_login')
 def delete_faqquestion(request, id):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
     deleted_faqquestion = FAQQuestion.objects.get(id=id)
     deleted_faqquestion.delete()
     return redirect('faqquestion_dashboard')
 
+# def faq_question(request, id=None):
+#     if id:
+#         # Get questions for the selected category
+#         category = get_object_or_404(FAQCategory, id=id)
+#         questions = FAQQuestion.objects.filter(category=category)
+#         context = {
+#             'category': category,
+#             'questions': questions
+#         }
+#     else:
+#         # Display category listing when no specific category is selected
+#         categories = FAQCategory.objects.all()
+#         context = {
+#             'categories': categories,
+#         }
+
+#     return render(request, 'faq/question.html', context)

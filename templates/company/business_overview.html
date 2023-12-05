@@ -5,9 +5,7 @@
 
 {% url 'client_dashboard' as client_dashboard %}
 {% url 'company_dashboard' as c_dashboard %}
-{% url 'update_company' as u_company %}
 {% url 'business_overview' as BO %}
-{% url 'update_business_overview' updated_overview.company_id as UBO %}
 
 
   <!-- <section>
@@ -54,12 +52,8 @@
             <br/>
             {% include 'includes/alerts.html' %}
             <br/>
-            {% if request.path == BO %}
-            <form method="POST" action="{% url 'business_overview' %}" enctype="multipart/form-data">
-            {% else %}
-            <form method="POST" action="{% url 'update_business_overview' updated_overview.company_id %}" enctype="multipart/form-data">
-            {% endif %}
 
+            <form method="POST" action="{% url 'business_overview' %}" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group col-lg-12">
                 <label for="company">Company</label>
@@ -85,13 +79,8 @@
                 <label for="address_line_2">Enter Philosophy</label>
                 {{ form.goal }}
               </div>
-
-              <div class="form-group">
-                {% if request.path == BO %}
-                <button type="submit" class="btn btn-primary">submit</button>
-                {% else %}
+              <div class="form-group col col-md-12">
                 <button type="submit" class="btn btn-primary">Update</button>
-                {% endif %}
               </div>
             </form>
           </div>
@@ -99,7 +88,7 @@
       </div>
       <div class="text-box padding-3"></div>
 
-    {% if business_overviews.all %}
+    <!-- {% if business_overviews.all %}
       <div class="text-box padding-3 border">
         <div class=" bmargin">
             <div class="table-responsive">
@@ -144,7 +133,7 @@
           </div>
           </div>
       </div>
-      {% endif %}
+      {% endif %} -->
 
       </div>
 

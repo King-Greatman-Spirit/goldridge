@@ -107,8 +107,15 @@ git remote add origin git@github.com:King-Greatman-Spirit/goldridge.git
 git branch -M dev
 git push -u origin dev
 
+
+
+# Stash your local changes (if you want to keep them for later)
+git stash
+
+# Fetch and force pull the latest changes from the remote dev branch
 git pull origin dev
 
-      
+#To run test files in docker
+$ docker compose run --rm app
 
     

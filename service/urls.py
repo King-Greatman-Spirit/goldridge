@@ -12,6 +12,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.urls import path
 from . import views
 
@@ -23,5 +24,14 @@ urlpatterns = [
     path('service_process_dashboard/', views.service_process_dashboard, name='service_process_dashboard'),
     path('update_service_process/<int:id>', views.update_service_process, name='update_service_process'),
     path('delete_service_process/<int:id>', views.delete_service_process, name='delete_service_process'),
-    path('user_subService_dashboard/', views.user_subService_dashboard, name='user_subService_dashboard'),
+    path('user_service_applications/', views.user_subService_dashboard, name='user_service_applications'),
+    path('admin_service_applications/', views.admin_subService_dashboard, name='admin_service_applications'),
+    path('update_admin_service_app/<int:id>', views.update_admin_subService, name='update_admin_service_app'),
+    path('delete_admin_service_app/<int:id>', views.delete_admin_subService, name='delete_admin_service_app'),
+    path('apps-by-type/', views.apps_by_type, name='apps-by-type'),
+    path('type-dashboard/<int:id>', views.type_dashboard, name='type-dashboard'),
+    path('update-type-dashboard/<int:service_id>/<int:app_id>/', views.update_type_dashboard, name='update-type-dashboard'),
+    path('delete-type-dashboard/<int:id>', views.delete_type_dashboard, name='delete-type-dashboard'),
+    path('clients-table/', views.clients_table, name='clients-table'),
 ]
+

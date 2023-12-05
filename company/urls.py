@@ -19,9 +19,9 @@ from . import views
 urlpatterns = [
     path('', views.company, name='company'),
     path('company_dashboard/', views.company_dashboard, name='company_dashboard'),
-    path('update_company/<int:id>', views.update_company, name='update_company'),
-    path('delete_company/<int:id>', views.delete_company, name='delete_company'),
+    # path('update_company/<int:id>', views.update_company, name='update_company'),
+    # path('delete_company/<int:id>', views.delete_company, name='delete_company'),
     path('business_overview/', views.business_overview, name='business_overview'),
-    path('update_business_overview/<int:id>', views.update_business_overview, name='update_business_overview'),
-    path('delete_business_overview/<int:id>', views.delete_business_overview, name='delete_business_overview'),
+    # path('update_business_overview/<int:id>', views.update_business_overview, name='update_business_overview'),
+    # path('delete_business_overview/<int:id>', views.delete_business_overview, name='delete_business_overview'),
 ]

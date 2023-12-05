@@ -2,11 +2,13 @@
 
 {% url 'admin_dashboard' as admin_dashboard %}
 
+{% url 'clients-table' as CT %}
+
 {% url 'company_dashboard' as c_dashboard %}
-{% url 'update_company' updated_company.id as u_company %}
+<!-- {% url 'update_company' updated_company.id as u_company %} -->
 
 {% url 'business_overview' as BO %}
-{% url 'update_business_overview' updated_overview.company_id as UBO %}
+<!-- {% url 'update_business_overview' updated_overview.id as UBO %} -->
 
 {% url 'staff_dashboard' as SD %}
 {% url 'update_staff' updated_staff.id as US %}
@@ -29,12 +31,20 @@
 {% url 'faqquestion_dashboard' as q_dash %}
 {% url 'update_faqquestion' updated_faqquestion.id as u_question %}
 
+{% url 'apps-by-type' as ABT %}
+
+{% url 'admin_service_applications' as ASA %}
+{% url 'update_admin_service_app' updated_asa.id as UASA %}
+
+
+
 <div class="col-md-3 col-sm-3 col-xs-12 bmargin">
   <h5 class="padd_bot2">Categories</h5>
           <ul class="category-links orange-2">
               <li class="{% if request.path == admin_dashboard %} cbp-filter-item-active {% endif %} cbp-filter-item"> <a href="{% url 'admin_dashboard' %}">Admin Profile</a></li>
-              <li class="{% if request.path == c_dashboard or request.path == u_company %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'company_dashboard' %}">Company</a></li>
-              <li class="{% if request.path == BO or request.path == UBO %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'business_overview' %}"> Business Overview</a></li>
+              <li class="{% if request.path == CT %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'clients-table' %}">Clients Table</a></li>
+              <li class="{% if request.path == c_dashboard %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'company_dashboard' %}">Company</a></li>
+              <li class="{% if request.path == BO %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'business_overview' %}"> Business Overview</a></li>
               <li class="{% if request.path == SD or request.path == US %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'staff_dashboard' %}"> Staff</a></li>
               <li class="{% if request.path == ServeD or request.path == UServe %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'service_dashboard' %}"> Services</a></li>
               <li class="{% if request.path == SPD or request.path == USP %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'service_process_dashboard' %}"> Service processes</a></li>
@@ -42,6 +52,8 @@
               <li class="{% if request.path == PID or request.path == UPI %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'project_image_dashboard' %}"> Projects Images</a></li> {% endcomment %}
               <li class="{% if request.path == c_dash or request.path == u_category %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'faqcategory_dashboard' %}">Faq Category</a></li>
               <li class="{% if request.path == q_dash or request.path == u_question %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'faqquestion_dashboard' %}">Faq Question</a></li>
+              <li class="{% if request.path == ABT %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'apps-by-type' %}">Applications by Type</a></li>
+              <li class="{% if request.path == ASA or request.path == UASA %} cbp-filter-item-active {% endif %} cbp-filter-item"><a href="{% url 'admin_service_applications' %}">Service Applications</a></li>
           </ul>
   </div>
  <!--end section-->

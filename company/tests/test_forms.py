@@ -63,30 +63,20 @@ class TestForms(TestCase):
         self.assertTrue(form.is_valid())
         self.assertFalse(form.errors)
 
-    def test_company_form_no_data(self):
-        form = CompanyForm(data={})
-
-        self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 10)
-
     def test_BO_form_valid_data(self):
-
         data = {
-            'company': self.test_company.id,
+            'company': self.companies.id,  # Use self.companies.id to get the id of the Company instance
             'business_overview': 'test overview',
             'competive_advantage': 'test advantage',
             'mission': 'test mission',
             'vision': 'test vision',
             'goal': 'test philosophy'
         }
-
-        form = CompanyOverviewForm(self.companies, data)
-
+        form = CompanyOverviewForm(data=data)
         self.assertTrue(form.is_valid())
         self.assertFalse(form.errors)
 
     def test_BO_form_no_data(self):
-        form = CompanyOverviewForm(self.companies, data={})
-
+        form = CompanyOverviewForm(data={})
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 1)

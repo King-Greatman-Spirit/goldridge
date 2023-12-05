@@ -1,0 +1,64 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+{% load static %}
+
+{% url 'client_dashboard' as client_dashboard %}
+{% url 'apps-by-type' as ABT %}
+{% url 'type-dashboard' service.id as TD %}
+
+<section>
+<div class="pagenation-holder">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+        <h3>Admin Dashboard</h3>
+        </div>
+        <div class="col-md-6 text-right">
+        <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Portfolio</a> <i> / </i> Portfolio Two Column</div>
+        </div>
+    </div>
+    </div>
+</div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+
+<section class="sec-padding">
+ <div class="container">
+  <div class="row">
+   {% include 'includes/admin_dash_navbar.html' %}
+
+    <div class="col-md-9 col-sm-9 col-xs-12 bmargin">
+     <div class="text-box padding-3 border">
+      <div class=" bmargin">
+        <h3>Applications By Type</h3>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et justo. Praesent mattis commodo augue. Aliquam ornare hendrerit consectetuer adipiscing elit. Suspendisse et justo. augue.</p>
+        <br/>
+
+      {% for service in services %}
+        <div class="col-md-3 col-sm-6">
+          <div class="feature-box4 bmargin centre">
+            <div class="col-md-12 nopadding">
+              {% comment %} <div class="iconbox-xtiny dark"><i class="fa fa-android"></i></div> {% endcomment %}
+              <a href="{% url 'type-dashboard' service.id %}"><img src="{{ service.image.url }}" alt="" class="img-responsive"/> </a>
+            </div>
+            <div class="margin-top3"></div>
+            <!-- <h5 class="centre">{{service.service_name}}</h5> -->
+            <p>{{ TD }}</p>
+
+            <br/>
+            <a class="btn btn-border light btn-round" href="{% url 'type-dashboard' service.id %}">{{service.service_name}}</a> 
+          </div>
+        </div>
+        <!--end item-->
+      {% endfor %}
+
+      </div>
+     </div>
+    </div>
+  </div>
+ </div>
+</section>
+
+{% endblock %}

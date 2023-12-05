@@ -101,7 +101,7 @@ def create_user(
         username   = username
     )
 
-def create_subservice(
+def create_service_application(
     company,
     service,
     subServiceType,
@@ -209,7 +209,7 @@ class TestModels(TestCase):
         self.assertEquals(str(subservice_type), type)
         self.assertEquals(subservice_type.description, description)
 
-    def test_create_subservice(self):
+    def test_create_service_application(self):
         description   = 'test description'
         approval_note = 'test note'
         duration      = 6
@@ -219,7 +219,7 @@ class TestModels(TestCase):
         service = create_service(company)
         user    = create_user()
         subservice_type = create_subservice_type(company, service)
-        subservice = create_subservice(company, service, subservice_type, user)
+        subservice = create_service_application(company, service, subservice_type, user)
 
         self.assertEquals(subservice.duration, duration)
         self.assertEquals(subservice.description, description)

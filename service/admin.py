@@ -16,7 +16,7 @@ class TestimonialAdmin(admin.ModelAdmin):
     list_display = ('service', 'client_full_name', 'client_location', 'created_date')
 
 class SubServiceTypeAdmin(admin.ModelAdmin):
-    list_display = ('service', 'type')
+    list_display = ('service', 'type', 'abbr')
 
 class SubServiceAdmin(admin.ModelAdmin):
     list_display = ('service', 'subServiceType', 'user', 'created_date')

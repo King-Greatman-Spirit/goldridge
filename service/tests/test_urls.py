@@ -2,13 +2,15 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 from service.views import (
    service, service_dashboard, update_service, delete_service, service_process_dashboard, 
-   update_service_process, delete_service_process, user_subService_dashboard
+   update_service_process, delete_service_process, user_subService_dashboard,
+   admin_subService_dashboard, update_admin_subService, delete_admin_subService,
+   apps_by_type, type_dashboard, delete_type_dashboard, update_type_dashboard, clients_table
 )
 from accounts.models import Account
 from company.models import Company
 from service.models import (
-    Service, ServiceProcess, Testimonial, 
-    SubServiceType, SubService, Prerequisite, Transaction
+    Service, ServiceProcess, Testimonial, SubServiceType, 
+    SubService, Prerequisite, Transaction, approval_chioce
 )
 
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -59,15 +61,17 @@ class TestUrls(TestCase):
             type                  = 'test type',
             description           = 'test description'
         )
-        self.test_user_subservice    = SubService.objects.create(
-            company                  = self.test_company,
-            service                  = self.test_service,
-            subServiceType           = self.test_subservice_type,
-            user                     = self.user,
-            description              = 'test description',
-            duration                 = 6,
-            rate                     = 3,
-            target                   = 5000
+        self.test_service_application    = SubService.objects.create(
+            company                      = self.test_company,
+            service                      = self.test_service,
+            subServiceType               = self.test_subservice_type,
+            user                         = self.user,
+            description                  = 'test description',
+            approval                     = approval_chioce[3][0],
+            approval_note                = 'test note',
+            duration                     = 6,
+            rate                         = 3,
+            target                       = 5000
         )
 
     def test_service_urls_resolves(self):
@@ -98,7 +102,38 @@ class TestUrls(TestCase):
         url = url_with_args('delete_service_process', self.test_service.id)
         self.assertEquals(resolve(url).func, delete_service_process)
 
-    def test_user_subService_dashboard_urls_resolves(self):
-        url = reverse('user_subService_dashboard')
+    def test_user_service_applications_urls_resolves(self):
+        url = reverse('user_service_applications')
         self.assertEquals(resolve(url).func, user_subService_dashboard)
 
+    def test_admin_service_applications_urls_resolves(self):
+        url = reverse('admin_service_applications')
+        self.assertEquals(resolve(url).func, admin_subService_dashboard)
+
+    def test_update_admin_service_app_urls_resolves(self):
+        url = url_with_args('update_admin_service_app', self.test_service.id)
+        self.assertEquals(resolve(url).func, update_admin_subService)
+
+    def test_delete_admin_service_app_urls_resolves(self):
+        url = url_with_args('delete_admin_service_app', self.test_service.id)
+        self.assertEquals(resolve(url).func, delete_admin_subService)
+
+    def test_apps_by_type_urls_resolves(self):
+        url = reverse('apps-by-type')
+        self.assertEquals(resolve(url).func, apps_by_type)
+
+    def test_type_dashboard_urls_resolves(self):
+        url = url_with_args('type-dashboard', self.test_service.id)
+        self.assertEquals(resolve(url).func, type_dashboard)
+
+    def test_delete_type_dashboard_urls_resolves(self):
+        url = url_with_args('delete-type-dashboard', self.test_service.id)
+        self.assertEquals(resolve(url).func, delete_type_dashboard)
+
+    def test_update_type_dashboard_urls_resolves(self):
+        url = reverse('update-type-dashboard', args=[self.test_service.id, 1])  # Replace 1 with any integer value for app_id
+        self.assertEquals(resolve(url).func, update_type_dashboard)
+
+    def test_clients_table_urls_resolves(self):
+        url = reverse('clients-table')
+        self.assertEquals(resolve(url).func, clients_table)

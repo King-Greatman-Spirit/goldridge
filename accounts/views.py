@@ -281,6 +281,7 @@ def admin_activate(request, uidb64, token):
 
 @login_required(login_url='admin_login')
 def admin_dashboard(request):
+    title = "Company Dashboard"
     # Ensure the user is an admin
     if not request.user.is_admin:
         messages.error(request, 'You do not have permission to access the admin dashboard.')
@@ -295,6 +296,7 @@ def admin_dashboard(request):
             return redirect('admin_dashboard')
 
     context = {
+        'title': title,
         'form': form,
     }
 

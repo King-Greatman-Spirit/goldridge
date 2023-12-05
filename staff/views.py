@@ -11,7 +11,12 @@ from django.contrib import messages
 
 @login_required(login_url = 'admin_login')
 def staff_dashboard(request):
-    # user = Account.objects.get(id=request.user.id)
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    title = "Staff Dashboard"
     # Get the Company object with the id equal to 1 from the database
     company = Company.objects.get(id=1)
     # Retrieve all staff objects associated with the specified company (e.g., Goldridge) from the database
@@ -49,13 +54,19 @@ def staff_dashboard(request):
     context = {
         'form': form,
         'staffs': staffs,
+        'title': title,
     }
 
     return render(request, 'staff/staff_dashboard.html', context)
 
 @login_required(login_url = 'admin_login')
 def update_staff(request, id):
-    # user = Account.objects.get(id=request.user.id)
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    title = "Update Staff"
     # Get the Company object with the id equal to 1 from the database
     company = Company.objects.get(id=1)
     # Retrieve all staff objects associated with the specified company (e.g., Goldridge) from the database
@@ -67,11 +78,13 @@ def update_staff(request, id):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            messages.success(request, 'Staff updated successfully.')
             return redirect('staff_dashboard')
 
     context = {
         'form': form,
         'staffs': staffs,
+        'title': title,
         'updated_staff': updated_staff,
     }
 
@@ -79,6 +92,11 @@ def update_staff(request, id):
 
 @login_required(login_url = 'admin_login')
 def delete_staff(request, id):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
     deleted_staff = Staff.objects.get(id=id)
     deleted_staff.delete()
     return redirect('staff_dashboard')

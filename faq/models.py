@@ -23,8 +23,8 @@ class FAQCategory(models.Model):
 
 class FAQQuestion(models.Model):
     category = models.ForeignKey(FAQCategory, on_delete=models.CASCADE)
-    question = models.TextField(max_length=500)
-    answer = models.TextField(max_length=500)
+    question = models.TextField(max_length=1000)
+    answer = models.TextField(max_length=2000)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 

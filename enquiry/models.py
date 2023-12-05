@@ -9,7 +9,7 @@ channel_chioce = (
     ('Google','Google'),
     ('word of mouth','Word of Mouth'),
     ('youtube','Youtube'),
-    ('Tictok','Tictok'),
+    ('Tiktok','Tiktok'),
     ('Marketer','Marketer'),
     ('others','Others'),
 )
