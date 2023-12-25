@@ -12,7 +12,7 @@
         <h5 class="text-white uppercase">Invest Wisely, Save Securely, Travel Freely, Live Lavishly</h5>
       </div>
       <div class="overlay bg-opacity-5"></div>
-      <img src="http://placehold.it/1920x800" alt="" class="img-responsive"/> </div>
+      <img src="{% static 'images/banner.png' %}" alt="goldridge banner" class="img-responsive"/> </div>
   </section>
   <!-- end header inner -->
   <div class="clearfix"></div>
@@ -44,24 +44,19 @@
         <div class="clearfix"></div>
         
         <div class="col-md-6"> 
-          <img src="http://placehold.it/800x600" alt="" class="img-responsive"/> 
+          <img src="{% static 'images/about_new.png' %}" alt="About_Us Picture" class="img-responsive"/> 
         </div>
         <!--end item-->
         
         <div class="col-md-6">
-          <h5> Business Overview</h5>
+          <h5>– Business Overview</h5>
           <p>
             {{ company_overview.business_overview }}
-            GoldRidge is a leading financial institution committed to empowering individuals and businesses on their path to financial success. With a dedication to ethical practices and unwavering customer service, we provide a wide array of services, including 
-            asset management, investment strategies, and innovative savings solutions. Our primary mission is to put our clients first, building long-lasting relationships based on trust and delivering comprehensive resources to meet their financial goals. We are 
-            driven by the belief that financial prosperity should be accessible to all, and we invite you to join us on this journey to secure your financial future.
           </p>
           <br/>
-          <h5>Our Competive Advantage</h5>
+          <h5>– Our Competive Advantage</h5>
           <p>
             {{ company_overview.competive_advantage }}
-            At GoldRidge Multipurpose Cooperative Society Limited, our unwavering commitment to your financial well-being is what sets us apart. We uphold the highest security standards. GoldRidge employs cutting-edge encryption technology to safeguard your data, 
-            backed by two-factor authentication for every customer account. Your funds are not only safe but also secure with us. Our competitive advantage is rooted in a vision, mission, and goal that prioritize your financial security and success.
           </p>
         </div>
         <!--end item--> 
@@ -77,20 +72,22 @@
       
         <div class="col-md-4 col-sm-6">
           <div class="feature-box1 bmargin">
-            <div class="iconbox-tiny left round grayoutline2"><span class="icon-eye" data-icon="&#xe08b;"></span></div>
+            <div class="iconbox-tiny left round grayoutline2"><span class="icon-pencil" data-icon="&#xe08b;"></span></div>
             <div class="text-box-right">
               <h4>Our Vision</h4>
               <p>{{ company_overview.vision }}</p>
+            </div>
             </div>
         </div>
         <!--end item -->
         
         <div class="col-md-4 col-sm-6">
-          <div class="feature-box1 bmargin active">
-            <div class="iconbox-tiny left round grayoutline2"><span class="icon-flag" data-icon="&#xe085;"></div>
+          <div class="feature-box1 bmargin">
+            <div class="iconbox-tiny left round grayoutline2"><span class="icon-flag" data-icon="&#xe085;"></span></div>
             <div class="text-box-right">
               <h4>Our Mission</h4>
               <p>{{ company_overview.mission }}</p>
+            </div>
             </div>
         </div>
         <!--end item -->
@@ -102,6 +99,7 @@
               <h4>Our Goal</h4>
               <p>{{ company_overview.goal }}</p>
             </div>
+            </div>
         </div>
         <!--end item --> 
         
@@ -110,27 +108,64 @@
   </section>
   <!--end section-->
   <div class="clearfix"></div>
-  
-  <section class="parallax-section8">
-    <div class="section-overlay bg-opacity-7">
-      <div class="container sec-tpadding-2 sec-bpadding-2">
-        <div class="row">
-         <h2 class="section-title text-white">People Says</h2>
-                <br/>
-                
-          <div id="owl-demo3" class="owl-carousel text-white">
-            {% for test in testimonials %}
-            <div class="item">
-              <blockquote class="style1"><span>{{ test.description }}</span> </blockquote>
-              <br/>
-              <h5 class="text-white less-mar1">{{ test.client_full_name }}</h5>
-              <span class="text-orange-2">{{ test.client_location }}</span> 
+
+  <section class="sec-padd-default-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <h6 class="nopadding lspace-1">Who We Are</h6>
+          <h1 class="paddtop1 dosis font-weight-5 lspace-sm"><span class="text-orange-2">Me</span>et O<span class="text-orange-2">ur</span>
+            Te<span class="text-orange-2">am</span></h1>
+          <div class="title-line-4 align-center"></div>
+        </div>
+        <div class="clearfix"></div>
+        {% for employee in staffs %}
+        <div class="col-md-4 col-sm-6">
+          <div class="team-holder15 two bmargin">
+            <div class="team-member"><img src="{{ employee.photo.url }}" alt="http://placehold.it/500x450" class="img-responsive"/></div>
+            <div class="info-box text-center">
+            <h5 class="uppercase less-mar2">{{ employee.full_name }}</h5>
+            <span class="text-orange-2">{{ employee.job_title }}</span> <br/>
+            <br/>
+              <p>{{ employee.about }}</p>
             </div>
-            <!--end slide item-->
-            {% endfor %}
           </div>
-          <!--end carousel--> 
-          
+        </div>
+        <!--end item-->
+        {% endfor %}
+        
+      </div>
+    </div>
+  </section>
+  <div class="clearfix"></div>
+  <!--end section-->
+  
+  <section class="parallax-section69">
+    <div class="section-overlay bg-opacity-7">
+      <div class="container sec-tpadding-3 sec-bpadding-3">
+        <div class="row slide-controls-color-13">
+          <div class="col-md-8 col-centered">
+            
+            <div class="col-xs-12 text-center">
+              <h6 class="nopadding lspace-1 text-white">Our Clients</h6>
+              <h1 class="paddtop1 dosis font-weight-5 text-white lspace-sm">People Sa<span class="text-orange-2">ys</span></h1>
+              <div class="title-line-4 white align-center"></div>
+            </div>
+            <div class="clearfix"></div>
+            <div id="owl-demo3" class="owl-carousel text-white">
+              {% for Testimonial in Testimonials %}
+              <div class="item">
+                <blockquote class="style1"><span>{{ Testimonial.description }}</span> </blockquote>
+                <br/>
+                <h5 class="text-white less-mar1">{{ Testimonial.client_full_name }}</h5>
+                <span class="text-orange-2">{{ Testimonial.client_location }}</span> 
+              </div>
+              <!--end slide item-->
+              {% endfor %}
+            </div>
+            <!--end carousel --> 
+            
+          </div>
         </div>
       </div>
     </div>

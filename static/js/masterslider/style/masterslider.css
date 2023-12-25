@@ -765,7 +765,7 @@
 
 .ms-layer.sbut1 {
 	color: #fff;
-	font-size: 14px;
+	font-size: 20px;
 	line-height: 16px;
 	font-family: "Raleway", sans-serif;
 	font-weight: 500;
@@ -784,7 +784,7 @@
 }
 .ms-layer.sbut2 {
 	color: #242424;
-	font-size: 14px;
+	font-size: 20px;
 	line-height: 16px;
 	font-family: "Raleway", sans-serif;
 	font-weight: 500;
@@ -2149,8 +2149,9 @@
 	background-color: rgba(255, 255, 255, 0.3)
 }
 .ms-layer.text78 {
-	color: #fff;
-	font-size: 14px;
+	color: black;
+	font-size: 38px;
+	font-weight: bolder;
 	line-height: 40px;
 	text-align: left;
 	letter-spacing: 20px;
@@ -2160,7 +2161,8 @@
 .ms-layer.text79 {
 	width: 100%;
 	color: #fff;
-	font-size: 30px;
+	font-size: 38px;
+	font-weight: bolder;
 	line-height: 50px;
 	text-align: center;
 	font-family: 'Roboto', sans-serif;

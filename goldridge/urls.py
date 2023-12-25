@@ -22,6 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('chaining/', include('smart_selects.urls')),
+    path('', views.home, name='home'),
     path('company/', include('company.urls')),
     path('service/', include('service.urls')),
     path('blog/', include('blog.urls')),

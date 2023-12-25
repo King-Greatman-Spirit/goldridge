@@ -31,7 +31,7 @@ class Staff(models.Model):
 
     class Meta:
         verbose_name = 'Staff'
-        verbose_name_plural = 'Staff'
+        verbose_name_plural = 'Staffs'
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'

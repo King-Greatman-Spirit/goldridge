@@ -1,7 +1,7 @@
 from django.test import TestCase
 from company.models import Company
 from service.models import Service
-from enquiry.models import Lead, Newsletter, no_of_employees_chioce, channel_chioce
+from enquiry.models import Lead, Newsletter, channel_chioce
 
 
 def create_company(
@@ -41,7 +41,6 @@ def create_enquiry(
     email = 'test@testlead.com',
     phone_number = '2348176334125',
     company_name = 'test company',
-    no_of_employees = no_of_employees_chioce[3][0],
     message = 'my test message',
     channel = channel_chioce[3][0]
 ):
@@ -51,7 +50,6 @@ def create_enquiry(
         phone_number= phone_number,
         email = email,
         company_name = company_name,
-        no_of_employees = no_of_employees,
         message = message,
         channel = channel
     )
@@ -74,7 +72,6 @@ class TestModels(TestCase):
     def test_create_enquiry(self):
         full_name = 'test full'
         email = 'test@testlead.com'
-        no_of_employees = no_of_employees_chioce[3][0]
         channel = channel_chioce[3][0]
 
         company = create_company()
@@ -83,7 +80,6 @@ class TestModels(TestCase):
 
         self.assertEquals(str(enquiry), email)
         self.assertEquals(enquiry.full_name, full_name)
-        self.assertEquals(enquiry.no_of_employees, no_of_employees)
         self.assertEquals(enquiry.channel, channel)
 
     def test_create_lead(self):

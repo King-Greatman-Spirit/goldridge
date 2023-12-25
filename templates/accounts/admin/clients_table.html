@@ -1,0 +1,84 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+{% load static %}
+
+{% url 'client_dashboard' as client_dashboard %}
+{% url 'clients-table' as CT %}
+
+<div class="clearfix"></div>
+
+<section>
+  <div class="pagenation-holder">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+            <h3>Admin Dashboard</h3>
+        </div>
+        <div class="col-md-6 text-right">
+          <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Portfolio</a> <i> / </i> Portfolio Two Column</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--end section-->
+<div class="clearfix"></div>
+
+<section class="sec-padding">
+  <div class="container">
+    <div class="row">
+      
+    {% include 'includes/admin_dash_navbar.html' %}
+    
+      <div class="col-md-9 col-sm-9 col-xs-12 bmargin">
+        {% if request.path == CT %}
+
+          {% if users_data %}
+          <div class="text-box padding-3 border">
+            <div class=" bmargin">
+                <h3>Clients Table</h3>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et justo. Praesent mattis commodo augue. Aliquam ornare hendrerit consectetuer adipiscing elit. Suspendisse et justo. augue.</p>
+                <br/>
+
+              <div class="table-responsive">
+                <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
+                  <thead>
+                    <tr class="primary">
+                    <th scope="col" data-field="User">Name</th>
+                    <th scope="col" data-field="Service">Email</th>
+                    <th scope="col" data-field="Sub-ServiceType">Phone Number</th>
+                    <th scope="col" data-field="Approval">Subservice</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in users_data %}
+                      <tr>
+                        <td scope="row">{{ user.name }}</td>
+                        <td scope="row">{{ user.email }}</td>
+                        <td scope="row">{{ user.phone_number }}</td>
+                        <td scope="row">{{ user.subservice_abbr }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+                      <th>Subservice</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+

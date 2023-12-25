@@ -1,0 +1,144 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+{% load static %}
+
+{% url 'client_dashboard' as client_dashboard %}
+{% url 'company_dashboard' as c_dashboard %}
+{% url 'business_overview' as BO %}
+
+
+  <!-- <section>
+    <div class="header-inner two">
+      <div class="inner text-center">
+        <h4 class="title text-white uppercase">We Are Hasta</h4>
+        <h5 class="text-white uppercase">Get Many More Features</h5>
+      </div>
+      <div class="overlay bg-opacity-5"></div>
+      <img src="http://placehold.it/1920x800" alt="" class="img-responsive"/> </div>
+  </section> -->
+  <!-- end header inner -->
+  <div class="clearfix"></div>
+
+<section>
+  <div class="pagenation-holder">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Admin Dashboard</h3>
+        </div>
+        <div class="col-md-6 text-right">
+          <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Portfolio</a> <i> / </i> Portfolio Two Column</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <!--end section-->
+  <div class="clearfix"></div>
+
+  <section class="sec-padding">
+    <div class="container">
+      <div class="row">
+
+      {% include 'includes/admin_dash_navbar.html' %}
+
+      <div class="col-md-9 col-sm-9 col-xs-12 bmargin">
+        <div class="text-box padding-3 border">
+        <div class=" bmargin">
+
+            <h3>Company Overview</h3>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et justo. Praesent mattis commodo augue. Aliquam ornare hendrerit consectetuer adipiscing elit. Suspendisse et justo. augue.</p>
+            <br/>
+            {% include 'includes/alerts.html' %}
+            <br/>
+
+            <form method="POST" action="{% url 'business_overview' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group col-lg-12">
+                <label for="company">Company</label>
+                {{ form.company }}
+              </div>
+              <div class="form-group col-lg-12">
+                <label for="business_overview">Enter Business Overview</label>
+                {{ form.business_overview }}
+              </div>
+              <div class="form-group col-lg-6">
+                <label for="phone">Enter Competive Advantage</label>
+                {{ form.competive_advantage }}
+              </div>
+              <div class="form-group col-lg-6">
+                <label for="website_address">Enter Mission Statement</label>
+                {{ form.mission }}
+              </div>
+              <div class="form-group col-lg-6">
+                <label for="address_line_1">Enter Company Vision</label>
+                {{ form.vision }}
+              </div>
+              <div class="form-group col-lg-6">
+                <label for="address_line_2">Enter Philosophy</label>
+                {{ form.goal }}
+              </div>
+              <div class="form-group col col-md-12">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </div>
+          <!-- end .smart-forms section -->
+      </div>
+      <div class="text-box padding-3"></div>
+
+    <!-- {% if business_overviews.all %}
+      <div class="text-box padding-3 border">
+        <div class=" bmargin">
+            <div class="table-responsive">
+              <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
+                <thead>
+                    <tr class="primary">
+                        <th scope="col" data-field="Company">Company Overview</th>
+                        <th scope="col" data-field="Edit">Edit</th>
+                        <th scope="col" data-field="Delete">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for overview in business_overviews %}
+                    <tr>
+                        <td scope="row">{{ overview.company }} Overview</td>
+                        <td  scope="row">
+                          <a title="Edit" href="{{ overview.update_url }}" class="btn btn-warning btn-small btn-round" style=>
+                            <span title="Edit">
+                              <i class="fa fa-pencil fa-sm" aria-hidden="true"></i>
+                            </span>
+                          </a>
+                        </td>
+                        <td  scope="row">
+                          <a title="Delete" href="{{ overview.delete_url }}" class="btn btn-danger btn-small btn-round">
+                            <span>
+                              <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
+                            </span>
+                          </a>
+                        </td>
+                    </tr>
+                  {% endfor %}
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Company</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </tfoot>
+            </table>
+          </div>
+          </div>
+      </div>
+      {% endif %} -->
+
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% endblock %}

@@ -1,6 +1,7 @@
 from django import forms
-from .models import Service, ServiceProcess
+from .models import Service, ServiceProcess, SubService, SubServiceType, approval_chioce
 from company.models import Company
+
 
 class ServiceForm(forms.ModelForm):
     class Meta:
@@ -8,10 +9,10 @@ class ServiceForm(forms.ModelForm):
         fields = ['company', 'service_name', 'slug', 'service_description', 'image']
 
     # function to loop through form fields and initiat form-control class
-    def __init__(self, companies, *args, **kwargs):
-        super(ServiceForm, self).__init__(*args, **kwargs) # modify what django is giving
+    def __init__(self, company, *args, **kwargs):
+        super(ServiceForm, self).__init__(*args, **kwargs)
         self.fields['company'].empty_label = 'Select Company'
-        self.fields['company'].queryset = Company.objects.filter(id__in=companies)
+        self.fields['company'].queryset = Company.objects.filter(id=company.id)
 
         self.fields['service_name'].widget.attrs['placeholder'] = 'Enter Service Name'
         self.fields['service_name'].widget.attrs['class'] = 'service form-control'
@@ -33,10 +34,10 @@ class ServiceProcessForm(forms.ModelForm):
         fields = ['company', 'service', 'process_name', 'process_description', 'image']
 
     # function to loop through form fields and initiat form-control class
-    def __init__(self, companies, *args, **kwargs):
-        super(ServiceProcessForm, self).__init__(*args, **kwargs) # modify what django is giving
+    def __init__(self, company, *args, **kwargs):
+        super(ServiceProcessForm, self).__init__(*args, **kwargs)
         self.fields['company'].empty_label = 'Select Company'
-        self.fields['company'].queryset = Company.objects.filter(id__in=companies)
+        self.fields['company'].queryset = Company.objects.filter(id=company.id)
 
         self.fields['service'].empty_label = 'Select Service'
 
@@ -49,3 +50,35 @@ class ServiceProcessForm(forms.ModelForm):
 
         for field in ('company', 'service', 'process_name', 'process_description', 'image'):
             self.fields[field].widget.attrs['class'] = 'form-control'
+
+class SubServiceForm(forms.ModelForm):
+    class Meta:
+        model = SubService
+        fields = ['company', 'service', 'subServiceType', 'description', 'duration', 'rate', 'target', 'approval', 'approval_note']
+
+    # function to loop through form fields and initiat form-control class
+    def __init__(self, company, *args, **kwargs):
+        super(SubServiceForm, self).__init__(*args, **kwargs) # modify what django is giving
+        self.fields['company'].empty_label = 'Select Company'
+        self.fields['company'].queryset = Company.objects.filter(id=company.id)
+
+        self.fields['service'].empty_label = 'Select Service'
+
+        self.fields['subServiceType'].empty_label = 'Select Service Application Type'
+
+        self.fields['description'].widget.attrs['placeholder'] = 'Describe Service Application'
+        self.fields['description'].widget.attrs['rows'] = 3
+        
+        # Render the approval field manually to apply the custom class
+        self.fields['approval'].widget = forms.Select(choices=approval_chioce, attrs={'class': 'form-control'})
+        # Mark approval and approval_note as not required
+        self.fields['approval'].required = False
+        self.fields['approval_note'].required = False
+        self.fields['duration'].widget.attrs['placeholder'] = 'Enter Duration'
+        self.fields['rate'].widget.attrs['placeholder'] = 'Enter Rate'
+        self.fields['target'].widget.attrs['placeholder'] = 'Enter Amount'
+
+        for field in ('company', 'service', 'subServiceType', 'description', 'duration', 'rate', 'target', 'approval_note'):
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+            

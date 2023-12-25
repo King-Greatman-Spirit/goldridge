@@ -1,0 +1,174 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+{% load static %}
+
+{% url 'client_dashboard' as client_dashboard %}
+{% url 'company_dashboard' as c_dashboard %}
+{% url 'business_overview' as BO %}
+
+
+  <!-- <section>
+    <div class="header-inner two">
+      <div class="inner text-center">
+        <h4 class="title text-white uppercase">We Are Hasta</h4>
+        <h5 class="text-white uppercase">Get Many More Features</h5>
+      </div>
+      <div class="overlay bg-opacity-5"></div>
+      <img src="http://placehold.it/1920x800" alt="" class="img-responsive"/> </div>
+  </section> -->
+  <!-- end header inner -->
+  <div class="clearfix"></div>
+
+  <section>
+    <div class="pagenation-holder">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Admin Dashboard</h3>
+          </div>
+          <div class="col-md-6 text-right">
+            <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Portfolio</a> <i> / </i> Portfolio Two Column</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--end section-->
+  <div class="clearfix"></div>
+
+
+  <section class="sec-padding">
+    <div class="container">
+      <div class="row">
+
+      {% include 'includes/admin_dash_navbar.html' %}
+
+      <div class="col-md-9 col-sm-9 col-xs-12 bmargin">
+        <div class="text-box padding-3 border">
+        <div class=" bmargin">
+
+            <h3>Company Details</h3>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et justo. Praesent mattis commodo augue. Aliquam ornare hendrerit consectetuer adipiscing elit. Suspendisse et justo. augue.</p>
+            <br/>
+            {% include 'includes/alerts.html' %}
+            <br/>
+
+            <form method="POST" action="{% url 'company_dashboard' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group col col-md-6">
+                <label for="company_name">Company Name</label>
+                {{ form.company_name }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="email">Company Email Address</label>
+                {{ form.email }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="phone">Company Phone Number</label>
+                {{ form.phone }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="website_address">Company website</label>
+                {{ form.website_address }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="address_line_1">Address Line 1</label>
+                {{ form.address_line_1 }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="address_line_2">Address Line 2</label>
+                {{ form.address_line_2 }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="postal_code">Postal Code</label>
+                {{ form.postal_code }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="city">City</label>
+                {{ form.city }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="state">State</label>
+                {{ form.state }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="country">Country</label>
+                {{ form.country }}
+              </div>
+              <div class="form-group col col-md-6">
+                <label for="logo">Select Logo</label>
+                {{ form.logo }}
+              </div>
+              <div class="form-group col col-md-12">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </div>
+          <!-- end .smart-forms section -->
+      </div>
+      <div class="text-box padding-3"></div>
+
+    <!-- {% if companies.all %}
+      <div class="text-box padding-3 border">
+        <div class=" bmargin">
+            <div class="table-responsive">
+              <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
+                <thead>
+                    <tr class="primary">
+                        <th scope="col" data-field="Company">Company</th>
+                        <th scope="col" data-field="Email">Email</th>
+                        <th scope="col" data-field="Created Date">Created Date</th>
+                        <th scope="col" data-field="Modified Date">Modified Date</th>
+                        <th scope="col" data-field="Edit">Edit</th>
+                        <th scope="col" data-field="Delete">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for company in companies %}
+                    <tr>
+                        <td scope="row">{{ company.company_name }}</td>
+                        <td>{{ company.email }}</td>
+                        <td>{{ company.created_date }}</td>
+                        <td>{{ company.modified_date }}</td>
+                        <td  scope="row">
+                          <a title="Edit" href="{{ company.update_url }}" class="btn btn-warning btn-small btn-round" style=>
+                            <span title="Edit">
+                              <i class="fa fa-pencil fa-sm" aria-hidden="true"></i>
+                            </span>
+                          </a>
+                        </td>
+                        <td  scope="row">
+                          <a title="Delete" href="{{ company.delete_url }}" class="btn btn-danger btn-small btn-round">
+                            <span>
+                              <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
+                            </span>
+                          </a>
+                        </td>
+                    </tr>
+                  {% endfor %}
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Company</th>
+                        <th>Email</th>
+                        <th>Created Date</th>
+                        <th>Modified Date</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </tfoot>
+            </table>
+          </div>
+          </div>
+      </div>
+      {% endif %} -->
+
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% endblock %}

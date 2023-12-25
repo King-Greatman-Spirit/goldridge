@@ -11,7 +11,10 @@ from django.urls import reverse
 
 from accounts.models import Account
 from company.models import Company
-from service.models import Service, ServiceProcess
+from service.models import (
+    Service, ServiceProcess, Testimonial, SubServiceType, 
+    SubService, Prerequisite, Transaction, approval_chioce
+)
 
 def generate_photo_file():
     file = io.BytesIO()
@@ -24,6 +27,11 @@ def generate_photo_file():
 def url_with_args(name, args):
     return reverse(name, args=[args])
 
+def custom_args(name, service_id, app_id):
+    return reverse(name, args=[service_id, app_id])
+
+
+
 class TestViews(TestCase):
 
     def setUp(self):
@@ -32,6 +40,12 @@ class TestViews(TestCase):
         self.SPD_url = reverse('service_process_dashboard')
         self.company_dashboard_url = reverse('company_dashboard')
         self.login_url = reverse('login')
+        self.admin_login_url = reverse('admin_login')
+        self.USA_url = reverse('user_service_applications')
+        self.ASA_url = reverse('admin_service_applications')
+        self.ABT_url = reverse('apps-by-type')
+        self.CT_url = reverse('clients-table')
+        self.setUp_file = generate_photo_file()
         self.user = Account.objects.create_user(
             first_name = 'first',
             last_name = 'last',
@@ -40,6 +54,7 @@ class TestViews(TestCase):
             username = 'first_last'
         )
         self.test_company = Company.objects.create(
+            id = 1,  # Add this line to set the specific ID for the company
             company_name = 'testcompany',
             website_address = 'http://testcompany.com',
             email = 'test@testcompany.com',
@@ -49,9 +64,9 @@ class TestViews(TestCase):
             postal_code = '111222',
             country = 'test country',
             phone = '11122233344',
-            user = self.user
+            user = self.user,
+            logo = ContentFile(self.setUp_file.read(), 'test_image.png')
         )
-        self.setUp_file = generate_photo_file()
         self.test_service = Service.objects.create(
             company             = self.test_company,
             service_name        = 'test service',
@@ -66,6 +81,38 @@ class TestViews(TestCase):
             process_description = 'my test process',
             image               = ContentFile(self.setUp_file.read(), 'test_image.png')
         )
+        self.test_subservice_type = SubServiceType.objects.create(
+            company               = self.test_company,
+            service               = self.test_service,
+            type                  = 'test type',
+            description           = 'test description'
+        )
+        self.test_service_application  = SubService.objects.create(
+            company                           = self.test_company,
+            service                           = self.test_service,
+            subServiceType                    = self.test_subservice_type,
+            user                              = self.user,
+            description                       = 'test description',
+            approval                          = approval_chioce[3][0],
+            approval_note                     = 'test note',
+            duration                          = 6,
+            rate                              = 3,
+            target                            = 5000
+        )
+        self.test_app = SubService.objects.create(
+            company                           = self.test_company,
+            service                           = self.test_service,
+            subServiceType                    = self.test_subservice_type,
+            user                              = self.user,
+            description                       = 'description test',
+            approval                          = approval_chioce[3][0],
+            approval_note                     = 'test approval',
+            duration                          = 6,
+            rate                              = 3,
+            target                            = 5000
+        )
+        self.TypeDashboard_url = reverse('type-dashboard', args=[self.test_service_application.service.id])
+
 
 
     def test_service(self):
@@ -78,9 +125,10 @@ class TestViews(TestCase):
     def test_service_dashboard_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -93,9 +141,10 @@ class TestViews(TestCase):
     def test_service_dashboard_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -113,14 +162,17 @@ class TestViews(TestCase):
 
         self.assertEquals(res.status_code, 302)
         self.assertTrue(Company.objects.filter(email='test@testcompany.com').exists())
+        self.assertTrue(Service.objects.filter(service_name='test service two').exists())
+
         self.assertRedirects(res, self.service_dashboard_url)
 
     def test_update_service_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -133,9 +185,10 @@ class TestViews(TestCase):
     def test_update_service_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -165,6 +218,7 @@ class TestViews(TestCase):
     def test_delete_service(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
         test_service = Service.objects.create(
@@ -174,10 +228,11 @@ class TestViews(TestCase):
             service_description =  'my test service'
         )
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
+
 
         res = self.client.get(url_with_args('delete_service', test_service.id))
 
@@ -188,9 +243,10 @@ class TestViews(TestCase):
     def test_SPD_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -203,9 +259,10 @@ class TestViews(TestCase):
     def test_SPD_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -219,7 +276,7 @@ class TestViews(TestCase):
             'process_description'   : 'my test process',
             'image'                 : photo_file,
         }, format='multipart')
-        test_sdp = ServiceProcess.objects.all()[1]
+        # test_sdp = ServiceProcess.objects.all()[1]
         # print(test_sdp.id)
 
         self.assertEquals(SPD_res.status_code, 302)
@@ -230,9 +287,10 @@ class TestViews(TestCase):
     def test_update_service_process_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -245,9 +303,10 @@ class TestViews(TestCase):
     def test_update_service_process_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -275,13 +334,16 @@ class TestViews(TestCase):
     def test_delete_service_process(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
+
         process = ServiceProcess.objects.all()[0]
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
+
         # print(process.id)
 
         res = self.client.get(url_with_args(
@@ -294,7 +356,354 @@ class TestViews(TestCase):
         self.assertFalse(
             ServiceProcess.objects.filter(id=self.test_service_process.id).exists()
         )
+    
+    def test_USA_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
 
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(self.USA_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'service/user_subService_dashboard.html')
+
+    def test_USA_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        USA_res = self.client.post(self.USA_url, {
+            'company'               : self.test_company.id,
+            'service'               : self.test_service.id,
+            'subServiceType'        : self.test_subservice_type.id,
+            'user'                  : self.user.id,
+            'description'           : 'test description',
+            'approval'              : approval_chioce[3][0],
+            'duration'              : 6,
+            'rate'                  : 3,
+            'target'                : 5000,
+        })
+
+        self.assertEquals(USA_res.status_code, 302)
+        self.assertTrue(Service.objects.filter(company_id=self.test_company.id).exists())
+        self.assertTrue(SubServiceType.objects.filter(service_id=self.test_service.id).exists())
+        self.assertTrue(SubService.objects.filter(subServiceType_id=self.test_subservice_type.id).exists())
+        self.assertRedirects(USA_res, self.USA_url)
+
+    def test_ASA_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+
+        res = self.client.get(self.ASA_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'service/admin_subService_dashboard.html')
+
+    def test_ASA_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        ASA_res = self.client.post(self.ASA_url, {
+            'company'               : self.test_company.id,
+            'service'               : self.test_service.id,
+            'subServiceType'        : self.test_subservice_type.id,
+            'user'                  : self.user.id,
+            'description'           : 'test description',
+            'approval'              : approval_chioce[3][0],
+            'duration'              : 6,
+            'rate'                  : 3,
+            'target'                : 5000,
+        })
+
+        self.assertEquals(ASA_res.status_code, 302)
+        self.assertTrue(Service.objects.filter(company_id=self.test_company.id).exists())
+        self.assertTrue(SubServiceType.objects.filter(service_id=self.test_service.id).exists())
+        self.assertTrue(SubService.objects.filter(subServiceType_id=self.test_subservice_type.id).exists())
+        self.assertRedirects(ASA_res, self.ASA_url)
+
+    def test_Update_ASA_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(url_with_args('update_admin_service_app', self.test_service_application.id))
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'service/admin_subService_dashboard.html')
+
+    def test_Update_ASA_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        payload ={
+            'company'               : self.test_company.id,
+            'service'               : self.test_service.id,
+            'subServiceType'        : self.test_subservice_type.id,
+            'user'                  : self.user.id,
+            'description'           : 'test description',
+            'approval'              : approval_chioce[3][0],
+            'duration'              : 6,
+            'rate'                  : 3,
+            'target'                : 5000,
+        }
+
+        res = self.client.post(
+            url_with_args('update_admin_service_app', self.test_service_application.id),
+            payload
+        )
+
+        self.assertEquals(res.status_code, 302)
+        self.test_service_application.refresh_from_db()
+        self.assertEqual(self.test_service_application.duration, payload['duration'])
+        self.assertRedirects(res, self.ASA_url)
+
+    def test_Update_ASA_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        payload ={
+            'company'               : self.test_company.id,
+            'service'               : self.test_service.id,
+            'subServiceType'        : self.test_subservice_type.id,
+            'user'                  : self.user.id,
+            'description'           : 'test description',
+            'approval'              : approval_chioce[3][0],
+            'duration'              : 6,
+            'rate'                  : 3,
+            'target'                : 5000,
+        }
+
+        res = self.client.post(
+            url_with_args('update_admin_service_app', self.test_service_application.id),
+            payload
+        )
+
+        self.assertEquals(res.status_code, 302)
+        self.test_service_application.refresh_from_db()
+        self.assertRedirects(res, self.ASA_url)
+
+    def test_delete_ASA(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(url_with_args(
+            'delete_admin_service_app',
+            self.test_service_application.id
+        ))
+
+        self.assertEquals(res.status_code, 302)
+        self.assertRedirects(res, self.ASA_url)
+        self.assertFalse(
+            SubService.objects.filter(id=self.test_service_application.id).exists()
+        )
+
+    def test_apps_by_type_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+        res = self.client.get(self.ABT_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'service/app_by_type/app_by_type.html')
+
+    def test_type_dashboard_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+        res = self.client.get(url_with_args('type-dashboard',  self.test_service.id))
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'service/app_by_type/type_dashboard.html')
+
+    def test_type_dashboard_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        payload ={
+            'company'               : self.test_company.id,
+            'service'               : self.test_service.id,
+            'subServiceType'        : self.test_subservice_type.id,
+            'user'                  : self.user.id,
+            'description'           : 'test description',
+            'approval'              : approval_chioce[3][0],
+            'duration'              : 6,
+            'rate'                  : 3,
+            'target'                : 5000,
+        }
+
+        res = self.client.post(
+            url_with_args('type-dashboard', self.test_service.id),
+            payload
+        )
+
+        self.assertEquals(res.status_code, 302)
+        self.test_service_application.refresh_from_db()
+        self.assertEqual(self.test_service_application.duration, payload['duration'])
+        self.assertRedirects(res, self.TypeDashboard_url)
+
+    def test_delete_TD(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email': 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(url_with_args(
+            'delete-type-dashboard',
+            self.test_service_application.id
+        ))
+        # Check if the view returns a redirect status code
+        self.assertEquals(res.status_code, 302)
+
+        # Check if the view redirects to the correct URL
+        self.assertRedirects(res, reverse('type-dashboard', args=[self.test_service_application.service.id]))
+
+        # Check if the SubService object has been deleted
+        self.assertFalse(SubService.objects.filter(id=self.test_service_application.id).exists())
+
+    def test_Update_TD_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email': 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        # Assuming you have a test_service_application instance
+        res = self.client.get(
+            custom_args('update-type-dashboard', self.test_service.id, self.test_app.id)
+        )
+
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'service/app_by_type/type_dashboard.html')
+
+    def test_Update_TD_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        payload ={
+            'company'               : self.test_company.id,
+            'service'               : self.test_service.id,
+            'subServiceType'        : self.test_subservice_type.id,
+            'user'                  : self.user.id,
+            'description'           : 'test description',
+            'approval'              : approval_chioce[3][0],
+            'duration'              : 6,
+            'rate'                  : 3,
+            'target'                : 5000,
+        }
+
+        res = self.client.post(
+            custom_args('update-type-dashboard', self.test_service.id, self.test_app.id),
+            payload 
+        )
+
+        self.assertEquals(res.status_code, 302)
+        self.test_service_application.refresh_from_db()
+        self.assertEqual(self.test_service_application.duration, payload['duration'])
+        self.assertRedirects(res, self.TypeDashboard_url)
+
+    def test_clients_table_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+        res = self.client.get(self.CT_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'accounts/admin/clients_table.html')
+ 
 def tearDownModule():
     images_path = os.path.join(settings.MEDIA_ROOT, 'photos/services')
     files = [i for i in os.listdir(images_path)
@@ -312,10 +721,10 @@ def tearDownModule():
     for file in files:
         os.remove(os.path.join(sp_images_path, file))
 
-    project_images_path = os.path.join(settings.MEDIA_ROOT, 'photos/project')
-    project_files = [i for i in os.listdir(project_images_path)
-             if os.path.isfile(os.path.join(project_images_path, i))
+    logos_images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
+    logos_files = [i for i in os.listdir(logos_images_path)
+             if os.path.isfile(os.path.join(logos_images_path, i))
              and i.startswith('test_')]
 
-    for file in project_files:
-        os.remove(os.path.join(project_images_path, file))
+    for file in logos_files:
+        os.remove(os.path.join(logos_images_path, file))

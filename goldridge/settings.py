@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # Django Apps
     'smart_selects',
     'accounts',
@@ -77,7 +77,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'company.context_processors.menu_links',
                 'service.context_processors.menu_links',
-                'blog.context_processors.menu_links',
+                # 'blog.context_processors.menu_links',
             ],
         },
     },

@@ -2,6 +2,7 @@ import os
 import io
 import shutil
 from django.conf import settings
+from django.core.files.base import ContentFile
 
 from PIL import Image
 
@@ -23,6 +24,8 @@ def generate_photo_file():
     file.seek(0)
     return file
 
+img = generate_photo_file()
+
 def url_with_args(name, args):
     return reverse(name, args=[args])
 
@@ -31,7 +34,8 @@ class TestViews(TestCase):
     def setUp(self):
         self.client = Client()
         self.staff_dashboard_url = reverse('staff_dashboard')
-        self.login_url = reverse('login')
+        self.admin_login_url = reverse('admin_login')
+        self.photo_file = ContentFile(img.read(), 'test_image.png')
         self.user = Account.objects.create_user(
             first_name = 'first',
             last_name = 'last',
@@ -40,6 +44,7 @@ class TestViews(TestCase):
             username = 'first_last'
         )
         self.test_company = Company.objects.create(
+            id = 1,  # Add this line to set the specific ID for the company
             company_name = 'testcompany',
             website_address = 'http://testcompany.com',
             email = 'test@testcompany.com',
@@ -49,7 +54,8 @@ class TestViews(TestCase):
             postal_code = '111222',
             country = 'test country',
             phone = '11122233344',
-            user = self.user
+            user = self.user,
+            logo = self.photo_file
         )
         self.test_staff = Staff.objects.create(
             company         = self.test_company,
@@ -71,9 +77,10 @@ class TestViews(TestCase):
     def test_staff_dashboard_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -86,13 +93,13 @@ class TestViews(TestCase):
     def test_staff_dashboard_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
-
         photo_file = generate_photo_file()
 
         res = self.client.post(self.staff_dashboard_url, {
@@ -120,9 +127,10 @@ class TestViews(TestCase):
     def test_update_staff_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -135,9 +143,10 @@ class TestViews(TestCase):
     def test_update_staff_POST(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -145,7 +154,7 @@ class TestViews(TestCase):
         photo_file = generate_photo_file()
 
         payload = {
-             'company': self.test_company.id,
+            'company': self.test_company.id,
             'first_name': 'first',
             'last_name': 'last',
             'email': 'test@teststaff.com',
@@ -177,6 +186,7 @@ class TestViews(TestCase):
     def test_delete_staff(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
+        test_user.is_admin = True
         test_user.save()
 
         test_staff = Staff.objects.create(
@@ -195,7 +205,7 @@ class TestViews(TestCase):
             employment_date = timezone.now()
         )
 
-        login_res = self.client.post(self.login_url, {
+        admin_login_res = self.client.post(self.admin_login_url, {
             'email' : 'user1@example.com',
             'password': 'testpass1234'
         })
@@ -214,3 +224,11 @@ def tearDownModule():
 
     for file in files:
         os.remove(os.path.join(images_path, file))
+
+    logos_images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
+    logos_files = [i for i in os.listdir(logos_images_path)
+             if os.path.isfile(os.path.join(logos_images_path, i))
+             and i.startswith('test_')]
+
+    for file in logos_files:
+        os.remove(os.path.join(logos_images_path, file))

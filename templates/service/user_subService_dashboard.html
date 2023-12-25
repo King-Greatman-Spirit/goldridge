@@ -1,0 +1,129 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+{% load static %}
+
+{% url 'client_dashboard' as client_dashboard %}
+{% url 'user_service_applications' as USA %}
+
+
+  <!-- <section>
+    <div class="header-inner two">
+      <div class="inner text-center">
+        <h4 class="title text-white uppercase">We Are Hasta</h4>
+        <h5 class="text-white uppercase">Get Many More Features</h5>
+      </div>
+      <div class="overlay bg-opacity-5"></div>
+      <img src="http://placehold.it/1920x800" alt="" class="img-responsive"/> </div>
+  </section> -->
+  <!-- end header inner -->
+  <div class="clearfix"></div>
+
+  <section>
+    <div class="pagenation-holder">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>User Dashboard</h3>
+          </div>
+          <div class="col-md-6 text-right">
+            <div class="pagenation_links"><a href="index.html">Home</a><i> / </i> <a href="index.html">Portfolio</a> <i> / </i> Portfolio Two Column</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--end section-->
+  <div class="clearfix"></div>
+
+  <section class="sec-padding">
+    <div class="container">
+      <div class="row">
+  
+        {% include 'includes/dashboard_navbar.html' %}
+        <div class="col-md-9 col-sm-9 col-xs-12 bmargin">
+          <div class="text-box padding-3 border">
+            <div class=" bmargin">
+  
+              <h3>Service Applications</h3>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et justo. Praesent mattis commodo augue. Aliquam ornare hendrerit consectetuer adipiscing elit. Suspendisse et justo. augue.</p>
+              <br/>
+              {% include 'includes/alerts.html' %}
+              <br/>
+
+              <form method="POST" action="{% url 'user_service_applications' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media.js }}
+                <div class="form-group col col-md-12">
+                  <label for="company">Company</label>
+                  {{ form.company }}
+                </div>
+                <div class="form-group col col-md-6">
+                  <label for="service">Service</label>
+                  {{ form.service }}
+                </div>
+                <div class="form-group col col-md-6">
+                  <label for="subServiceType">Service Application Type</label>
+                  {{ form.subServiceType }}
+                </div>
+                <div class="form-group col col-md-12">
+                  <label for="description">Describe Service Application</label>
+                  {{ form.description }}
+                </div>
+                <div class="form-group col col-md-6">
+                  <label for="duration">Duration (Month)</label>
+                  {{ form.duration }}
+                </div>
+                <div class="form-group col col-md-6">
+                  <label for="target">Target/Amount</label>
+                  {{ form.target }}
+                </div>
+                <div class="form-group col col-md-12">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- end .smart-forms section -->
+          </div>
+          <div class="text-box padding-3"></div>
+
+        {% if subservices.all %}
+          <div class="text-box padding-3 border">
+            <div class=" bmargin">
+              <div class="table-responsive">
+                <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
+                  <thead>
+                      <tr class="primary">
+                          <th scope="col" data-field="Service">Service Name</th>
+                          <th scope="col" data-field="Sub-ServiceType">Subservice</th>
+                          <th scope="col" data-field="Approval">Approval</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for sub in subservices %}
+                      <tr>
+                          <td scope="row">{{ sub.service }}</td>
+                          <td>{{ sub.subServiceType }}</td>
+                          <td>{{ sub.approval|default:"Pending" }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+                  <tfoot>
+                      <tr>
+                        <th>Service Name</th>
+                        <th>Subservice</th>
+                        <th>Approval</th>
+                      </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>  
+        {% endif %}  
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% endblock %}
