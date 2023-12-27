@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.views import login
 from .forms import FAQCategoryForm, FAQQuestionForm
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def faq(request):
     title="Faq Category"

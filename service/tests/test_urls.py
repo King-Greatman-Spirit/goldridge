@@ -4,7 +4,8 @@ from service.views import (
    service, service_dashboard, update_service, delete_service, service_process_dashboard, 
    update_service_process, delete_service_process, user_subService_dashboard,
    admin_subService_dashboard, update_admin_subService, delete_admin_subService,
-   apps_by_type, type_dashboard, delete_type_dashboard, update_type_dashboard, clients_table
+   apps_by_type, type_dashboard, delete_type_dashboard, update_type_dashboard, clients_table,
+   subservice_type_dashboard, update_subservice_type, delete_subservice_type
 )
 from accounts.models import Account
 from company.models import Company
@@ -59,6 +60,7 @@ class TestUrls(TestCase):
             company               = self.test_company,
             service               = self.test_service,
             type                  = 'test type',
+            abbr                  = 'test abbr',
             description           = 'test description'
         )
         self.test_service_application    = SubService.objects.create(
@@ -137,3 +139,15 @@ class TestUrls(TestCase):
     def test_clients_table_urls_resolves(self):
         url = reverse('clients-table')
         self.assertEquals(resolve(url).func, clients_table)
+
+    def test_subservice_type_dashboard_urls_resolves(self):
+        url = reverse('subservice-type-dashboard')
+        self.assertEquals(resolve(url).func, subservice_type_dashboard)
+
+    def test_update_subservice_type_urls_resolves(self):
+        url = url_with_args('update-subservice-type', self.test_service.id)
+        self.assertEquals(resolve(url).func, update_subservice_type)
+
+    def test_delete_subservice_type_urls_resolves(self):
+        url = url_with_args('delete-subservice-type', self.test_service.id)
+        self.assertEquals(resolve(url).func, delete_subservice_type)

@@ -33,5 +33,8 @@ urlpatterns = [
     path('update-type-dashboard/<int:service_id>/<int:app_id>/', views.update_type_dashboard, name='update-type-dashboard'),
     path('delete-type-dashboard/<int:id>', views.delete_type_dashboard, name='delete-type-dashboard'),
     path('clients-table/', views.clients_table, name='clients-table'),
+    path('subservice-type-dashboard/', views.subservice_type_dashboard, name='subservice-type-dashboard'),
+    path('update-subservice-type/<int:id>', views.update_subservice_type, name='update-subservice-type'),
+    path('delete-subservice-type/<int:id>', views.delete_subservice_type, name='delete-subservice-type'),
 ]
 

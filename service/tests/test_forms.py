@@ -6,7 +6,7 @@ from django.test import TestCase
 from accounts.models import Account
 from company.models import Company
 from service.models import Service, ServiceProcess, SubService, SubServiceType, approval_chioce
-from service.forms import ServiceForm, ServiceProcessForm, SubServiceForm
+from service.forms import ServiceForm, ServiceProcessForm, SubServiceForm, SubServiceTypeForm
 
 def generate_photo_file():
     file = io.BytesIO()
@@ -58,6 +58,7 @@ class TestForms(TestCase):
             company             = self.test_company,
             service             = self.test_service,
             type                = 'test type',
+            abbr                = 'test abbr',
             description         = 'test description'
         )
         self.test_service_application    = SubService.objects.create(
@@ -70,7 +71,7 @@ class TestForms(TestCase):
             approval_note                     = 'test note',
             duration                          = 6,
             rate                              = 3,
-            target                            = 5000
+            target                            = 5000,
         )
 
     def test_service_form_valid_data(self):
@@ -119,7 +120,7 @@ class TestForms(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 4)
 
-    def test_service_application_valid_data(self):
+    def test_service_application_form_valid_data(self):
 
         data = {
             'company'             : self.test_company.id,
@@ -131,7 +132,7 @@ class TestForms(TestCase):
             'approval_note'       : 'test approval note',
             'duration'            : 6,
             'rate'                : 3,
-            'target'              : 5000
+            'target'              : 5000,
         }
 
         form = SubServiceForm(self.companies, data)
@@ -144,3 +145,24 @@ class TestForms(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 3)
+
+    def test_subservice_type_valid_data(self):
+
+        data = {
+            'company'             : self.test_company.id,
+            'service'             : self.test_service.id,
+            'type'                : 'test type',
+            'abbr'                : 'test abbreviation',
+            'description'         : 'test description'
+        }
+
+        form = SubServiceTypeForm(self.companies, data)
+
+        self.assertTrue(form.is_valid())
+        self.assertFalse(form.errors)
+
+    def test_subservice_type_form_no_data(self):
+        form = SubServiceTypeForm(self.companies, data={})
+
+        self.assertFalse(form.is_valid())
+        self.assertEquals(len(form.errors), 4)

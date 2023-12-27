@@ -117,5 +117,3 @@ git pull origin dev
 
 #To run test files in docker
 $ docker compose run --rm app
-
-    

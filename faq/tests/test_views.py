@@ -72,8 +72,13 @@ class TestViews(TestCase):
         # self.FAQCategory_url = reverse('faq_categories')
         self.FAQQuestion_url = reverse('faq_question', args=[self.test_FAQCategory.id])
         self.faqcategory_dashboard_url = reverse('faqcategory_dashboard')
+        self.update_faqcategory_url = reverse('update_faqcategory', args=[self.test_FAQCategory.id])
+        self.delete_faqcategory_url = reverse('delete_faqcategory', args=[self.test_FAQCategory.id])
         self.faqquestion_dashboard_url = reverse('faqquestion_dashboard')
+        self.update_faqquestion_url = reverse('update_faqquestion', args=[self.test_FAQQuestion.id])
+        self.delete_faqquestion_url = reverse('delete_faqquestion', args=[self.test_FAQQuestion.id])
         self.admin_login_url = reverse('admin_login')
+
 
     def test_faq_GET(self):
         res = self.client.get(self.faq_url)
@@ -333,6 +338,65 @@ class TestViews(TestCase):
         self.assertEquals(res.status_code, 302)
         self.test_FAQQuestion.refresh_from_db()
         self.assertRedirects(res, self.faqquestion_dashboard_url)
+
+    def test_non_admin_user_access(self):
+        # Create a client user
+        self.user = Account.objects.create_user(
+            first_name='first',
+            last_name='last',
+            email='nonadmin@example.com',
+            password='testpass1234',
+            username='test first_last'
+        )
+
+        # Make the client user as a client, not an admin
+        self.user.is_admin = False  # Set 'is_admin' to False to make the user a client
+        self.user.is_active = True  # Set 'is_active' to True
+        self.user.save()
+
+        # Try to access the FAQ category dashboard view as a client
+        self.client.login(email='nonadmin@example.com', password='testpass1234')
+        res_dashboard = self.client.get(self.faqcategory_dashboard_url)
+
+        # Check that the client is redirected to the login page after attempting to access the FAQ category dashboard
+        self.assertEquals(res_dashboard.status_code, 302)
+        self.assertFalse(res_dashboard.url.startswith(self.faqcategory_dashboard_url))  # Ensure not redirected to FAQ category dashboard view
+
+        # Try to access the update FAQ category view as a client
+        res_update = self.client.get(self.update_faqcategory_url)
+
+        # Check that the client is redirected to the login page when attempting to access the update FAQ category view
+        self.assertEquals(res_update.status_code, 302)
+        self.assertFalse(res_update.url.startswith(self.update_faqcategory_url))  # Ensure not redirected to update FAQ category view
+
+        # Try to access the delete FAQ category view as a client
+        res_delete = self.client.get(self.delete_faqcategory_url)
+
+        # Check that the client is redirected to the login page after attempting to access the delete FAQ category view
+        self.assertEquals(res_delete.status_code, 302)
+        self.assertFalse(res_delete.url.startswith(self.delete_faqcategory_url))  # Ensure not redirected to delete FAQ category view
+
+        # Try to access the FAQ question dashboard view as a client
+        res_faqquestion = self.client.get(self.faqquestion_dashboard_url)
+
+        # Check that the client is redirected to the login page when attempting to access the FAQ question dashboard view
+        self.assertEquals(res_faqquestion.status_code, 302)
+        self.assertFalse(res_faqquestion.url.startswith(self.faqquestion_dashboard_url))  # Ensure not redirected to FAQ question dashboard view
+
+        # Try to access the update FAQ question view as a client
+        res_update = self.client.get(self.update_faqquestion_url)
+
+        # Check that the client is redirected to the login page when attempting to access the update FAQ question view
+        self.assertEquals(res_update.status_code, 302)
+        self.assertFalse(res_update.url.startswith(self.update_faqquestion_url))  # Ensure not redirected to update FAQ question view
+
+        # Try to access the delete FAQ question view as a client
+        res_delete = self.client.get(self.delete_faqquestion_url)
+
+        # Check that the client is redirected to the login page after attempting to access the delete FAQ question view
+        self.assertEquals(res_delete.status_code, 302)
+        self.assertFalse(res_delete.url.startswith(self.delete_faqquestion_url))  # Ensure not redirected to delete FAQ question view
+
 
 def tearDownModule():
     images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')

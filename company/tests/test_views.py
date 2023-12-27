@@ -128,7 +128,6 @@ class TestViews(TestCase):
         # Check the redirection
         self.assertRedirects(res, self.company_dashboard_url)
 
-
     def test_BO_GET(self):
         test_user = Account.objects.get(email='user1@example.com')
         test_user.is_active = True
@@ -192,6 +191,38 @@ class TestViews(TestCase):
 
         # Check the redirection
         self.assertRedirects(BO_res, self.BO_url)
+
+    def test_non_admin_user_access(self):
+        # Create a client user
+        self.user = Account.objects.create_user(
+            first_name='first',
+            last_name='last',
+            email='nonadmin@example.com',
+            password='testpass1234',
+            username='test first_last'
+        )
+
+        # Make the client user as a client, not an admin
+        self.user.is_admin = False  # Set 'is_admin' to False to make the user a client
+        self.user.is_active = True  # Set 'is_active' to True
+        self.user.save()
+
+        # Try to access the company dashboard view as a client
+        self.client.login(email='nonadmin@example.com', password='testpass1234')
+        res_dashboard = self.client.get(self.company_dashboard_url)
+
+        # Check that the client is redirected to the login page after attempting to access the company dashboard
+        self.assertEquals(res_dashboard.status_code, 302)
+        self.assertFalse(res_dashboard.url.startswith(self.company_dashboard_url))  # Ensure not redirected to company dashboard view
+
+        # Try to access the business operations view as a client
+        res_bo = self.client.get(self.BO_url)
+
+        # Check that the client is redirected to the login page when attempting to access business operations view
+        self.assertEquals(res_bo.status_code, 302)
+        self.assertFalse(res_bo.url.startswith(self.BO_url))  # Ensure not redirected to business operations view
+
+
 
     # def test_update_company_GET(self):
     #     test_user = Account.objects.get(email='user1@example.com')

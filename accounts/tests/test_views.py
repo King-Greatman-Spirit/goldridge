@@ -18,6 +18,7 @@ from django.utils.encoding import force_bytes
 
 from accounts.models import Account
 from company.models import Company
+from accounts.forms import RegistrationForm
 
 def generate_photo_file():
     file = io.BytesIO()
@@ -40,12 +41,14 @@ class TestViews(TestCase):
         self.logout_url = reverse('logout')
         self.forgotPassword_url = reverse('forgotPassword')
         self.resetPassword_url = reverse('resetPassword')
+        self.client_dashboard_url = reverse('client_dashboard')
 
         self.admin_register_url = reverse('admin_register')
         self.admin_login_url = reverse('admin_login')
         self.admin_logout_url = reverse('admin_logout')
         self.admin_forgot_password_url = reverse('admin_forgot_password')
         self.admin_reset_password_url = reverse('admin_reset_password')
+        self.admin_dashboard_url = reverse('admin_dashboard')
 
         self.photo_file = generate_photo_file()
         self.company = Company.objects.create(
@@ -228,6 +231,56 @@ class TestViews(TestCase):
         self.assertEquals(res.status_code, 302)
         self.assertRedirects(res, self.login_url)
 
+    def test_client_dashboard_GET(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(self.client_dashboard_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'accounts/client_dashboard.html')
+
+    def test_client_dashboard_POST(self):
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.save()
+
+        login_res = self.client.post(self.login_url, {
+            'email' : 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        # Simulate a POST request to update user details
+        res = self.client.post(self.client_dashboard_url, {
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'phone_number': '1234567890',
+            'email': 'new_email@example.com',
+            'password': 'testpass123',
+            'confirm_password': 'testpass123',
+        })
+        # print(res.context['form'].errors)
+
+        # Check the response status code
+        self.assertEquals(res.status_code, 302)
+
+        # Retrieve the updated User instance using the known email
+        updated_user = Account.objects.get(email='new_email@example.com')
+
+        # Check whether the User details are updated successfully
+        self.assertEquals(updated_user.first_name, 'First Name')
+        self.assertEquals(updated_user.last_name, 'Last Name')
+        self.assertEquals(updated_user.phone_number, '1234567890')
+
+        # Check the redirection
+        self.assertRedirects(res, self.client_dashboard_url, target_status_code=302)
+
     def test_admin_register_GET(self):
         res = self.client.get(self.admin_register_url)
 
@@ -245,8 +298,13 @@ class TestViews(TestCase):
         })
 
         self.assertEquals(res.status_code, 302)
-        self.assertTrue(Account.objects.filter(email='user@example.com').exists())
+        # Check if the user with email 'user@example.com' and is_admin=True exists
+        admin_user = Account.objects.filter(email='user@example.com', is_admin=True).first()
+        self.assertIsNotNone(admin_user, "Admin user should be created")
+        self.assertTrue(admin_user.check_password('testpass123'), "Password should be set correctly")
+        self.assertTrue(Account.objects.filter(email='user@example.com', is_admin=True).exists())  # Check is_admin field
         self.assertRedirects(res, '/accounts/admin_login/?command=verification&email=user@example.com')
+
 
     def test_admin_login_GET(self):
         res = self.client.get(self.admin_login_url)
@@ -405,7 +463,91 @@ class TestViews(TestCase):
         self.assertEquals(res.status_code, 302)
         self.assertRedirects(res, self.admin_login_url)
 
+    def test_admin_dashboard_GET(self):
+        # Test for admin user
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
 
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email': 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        res = self.client.get(self.admin_dashboard_url)
+
+        self.assertEquals(res.status_code, 200)
+        self.assertTemplateUsed(res, 'accounts/admin/admin_dashboard.html')
+
+    def test_admin_dashboard_POST(self):
+        # Test for admin user
+        test_user = Account.objects.get(email='user1@example.com')
+        test_user.is_active = True
+        test_user.is_admin = True
+        test_user.save()
+
+        admin_login_res = self.client.post(self.admin_login_url, {
+            'email': 'user1@example.com',
+            'password': 'testpass1234'
+        })
+
+        # Simulate a POST request to update user details
+        res = self.client.post(self.admin_dashboard_url, {
+            'first_name': 'New First Name',
+            'last_name': 'New Last Name',
+            'phone_number': '1234567890',
+            'email': 'new_email@example.com',
+            'password': 'testpass123',
+            'confirm_password': 'testpass123',
+        })
+        # print(res.context['form'].errors)
+
+        # Check the response status code
+        self.assertEquals(res.status_code, 302)
+
+        # Retrieve the updated User instance
+        updated_admin = Account.objects.get(email='new_email@example.com')
+
+        # Check whether the User details are updated successfully
+        self.assertEquals(updated_admin.first_name, 'New First Name')
+        self.assertEquals(updated_admin.last_name, 'New Last Name')
+        self.assertEquals(updated_admin.phone_number, '1234567890')
+
+        # Check the redirection
+        self.assertRedirects(res, self.admin_dashboard_url, target_status_code=302)
+
+    def test_non_admin_user_access(self):
+        # Create a client user
+        self.user = Account.objects.create_user(
+            first_name='first',
+            last_name='last',
+            email='nonadmin@example.com',
+            password='testpass1234',
+            username='test first_last'
+        )
+
+        # Make the client user as a client, not an admin
+        self.user.is_admin = False  # Set 'is_admin' to False to make the user a client
+        self.user.is_active = True  # Set 'is_active' to True
+        self.user.save()
+        
+        # Try to access the admin logout view as a client
+        self.client.login(email='nonadmin@example.com', password='testpass1234')
+        res_logout = self.client.get(self.admin_logout_url)
+
+        # Check that the client is redirected to the login page after attempting admin logout
+        self.assertEquals(res_logout.status_code, 302)
+        self.assertFalse(res_logout.url.startswith(self.admin_logout_url))  # Ensure not redirected to admin logout view
+
+        # Try to access the admin dashboard view as a client
+        res_dashboard = self.client.get(self.admin_dashboard_url)
+
+        # Check that the client is redirected to the login page when attempting to access admin dashboard
+        self.assertEquals(res_dashboard.status_code, 302)
+        self.assertFalse(res_dashboard.url.startswith(self.admin_dashboard_url))  # Ensure not redirected to admin dashboard view
+
+    
 def tearDownModule():
     images_path = os.path.join(settings.MEDIA_ROOT, 'photos/logos')
     files = [i for i in os.listdir(images_path)

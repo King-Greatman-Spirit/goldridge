@@ -48,43 +48,48 @@
           <form method="POST" action="{% url 'update-type-dashboard' service.id updated_td.id %}" enctype="multipart/form-data">
                 
               {% csrf_token %}
-            <div class="form-group col col-md-12">
-                <label for="company">Company</label>
-                {{ form.company }}
-            </div>
-            <div class="form-group col col-md-6">
-                <label for="service">Service</label>
-                {{ form.service }}
-            </div>
-            <div class="form-group col col-md-6">
-                <label for="subServiceType">Service Application Type</label>
-                {{ form.subServiceType }}
-            </div>
-            <div class="form-group col col-md-6">
-                <label for="duration">Duration (Month)</label>
-                {{ form.duration }}
-            </div>
-            <div class="form-group col col-md-6">
-                <label for="rate">Rate</label>
-                {{ form.rate }}
-            </div>
-            <div class="form-group col col-md-12">
-                <label for="description">Describe Service Application</label>
-                {{ form.description }}
-            </div>
-            <div class="form-group col col-md-6">
-                <label for="target">Target/Amount</label>
-                {{ form.target }}
-            </div>
-            <div class="form-group col col-md-6">
-                <label for="approval">Approval</label>
-                {{ form.approval }}
-            </div>
-            <div class="form-group col col-md-12">
-                <label for="approval_note">Approval Note</label>
-                {{ form.approval_note }}
-            </div>
-            <div class="form-group col col-md-12">
+              {{ form.media.js }}
+              <div class="form-group col col-md-6">
+                  <label for="company">Company</label>
+                  {{ form.company }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="service">Service</label>
+                  {{ form.service }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="subServiceType">Service Application Type</label>
+                  {{ form.subServiceType }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="duration">Duration (Month)</label>
+                  {{ form.duration }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="rate">Rate</label>
+                  {{ form.rate }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="target">Target/Amount</label>
+                  {{ form.target }}
+              </div>
+              <div class="form-group col col-md-12">
+                  <label for="description">Describe Service Application</label>
+                  {{ form.description }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="approval">Approval</label>
+                  {{ form.approval }}
+              </div>
+              <div class="form-group col col-md-6">
+                  <label for="char_id">Unique Account ID</label>
+                  {{ form.char_id }}
+              </div>
+              <div class="form-group col col-md-12">
+                  <label for="approval_note">Approval Note</label>
+                  {{ form.approval_note }}
+              </div>
+              <div class="form-group col col-md-12">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
           </form>
@@ -96,28 +101,34 @@
       {% if apps_type.all %}
       <div class="text-box padding-3 border">
         <div class=" bmargin">
-          <div class="table-responsive">
-            <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
-              <thead>
-                  <tr class="primary">
-                    <th scope="col" data-field="User">User</th>
-                    <th scope="col" data-field="Service">Service</th>
-                    <th scope="col" data-field="Sub-ServiceType">Subservice </th>
-                    <th scope="col" data-field="Approval">Approval</th>
-                    <th scope="col" data-field="Created Date">Date</th>
-                    <th scope="col" data-field="Edit">Edit</th>
-                    <th scope="col" data-field="Delete">Delete</th>
-                  </tr>
+          <div class="cd__main table-wrapper">
+              <!-- Your table -->
+              <table
+                class="table table-striped"
+                id="example"
+                style="width:100%"
+              >
+                <thead>
+                 <tr>
+                  <th data-label="User">User</th>
+                  <th data-label="Service">Service</th>
+                  <th data-label="Sub-ServiceType">Sub-ServiceType</th>
+                  <th data-label="Approval">Approval</th>
+                  <th data-label="char_id">Char ID</th>
+                  <th data-label="Edit">Edit</th>
+                  <th data-label="Delete">Delete</th>
+                 </tr>
               </thead>
               <tbody>
                 {% for app in apps_type %}
                   <tr>
-                    <td scope="row">{{ app.user }}</td>
-                    <td scope="row">{{ app.service }}</td>
-                    <td scope="row">{{ app.subServiceType.abbr }}</td>
-                    <td scope="row">{{ app.approval }}</td>
-                    <td scope="row">{{ app.created_date|date:"d/m/Y" }}</td>
-                    <td scope="row">
+                    <td>{{ app.user }}</td>
+                    <td>{{ app.service }}</td>
+                    <td>{{ app.subServiceType.abbr }}</td>
+                    <td>{{ app.approval }}</td>
+                    <!-- <td>{{ app.created_date|date:"d/m/Y" }}</td> -->
+                      <td>{{ app.char_id }}</td>
+                    <td>
                       <!-- Change the href to link to the apps type view with the specific ID -->
                       <a title="Edit" href="{% url 'update-type-dashboard' service.id app.id %}" class="btn btn-warning btn-small btn-round">
                         <span title="Edit">
@@ -125,7 +136,7 @@
                         </span>
                     </a>
                     </td>
-                    <td scope="row">
+                    <td>
                       <a title="Delete" href="{{ app.get_delete_type_url }}" class="btn btn-danger btn-small btn-round">
                         <span>
                           <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
@@ -141,7 +152,7 @@
                   <th>Service</th>
                   <th>Subservice </th>
                   <th>Approval</th>
-                  <th>Date</th>
+                  <th>Char ID</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -154,74 +165,77 @@
   {% endif %}
     </div>
           
-      {% if request.path == TD %}
-      {% if apps_type %}
-        {% if apps_type.all %}
-        <div class="text-box padding-3 border">
-          <div class=" bmargin">
-            <div class="table-responsive">
-              <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
-                <thead>
-                    <tr class="primary">
-                      <th scope="col" data-field="User">User</th>
-                      <th scope="col" data-field="Service">Service</th>
-                      <th scope="col" data-field="Sub-ServiceType">Subservice </th>
-                      <th scope="col" data-field="Approval">Approval</th>
-                      <th scope="col" data-field="Created Date">Date</th>
-                      <th scope="col" data-field="Edit">Edit</th>
-                      <th scope="col" data-field="Delete">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  {% for app in apps_type %}
-                    <tr>
-                      <td scope="row">{{ app.user }}</td>
-                      <td scope="row">{{ app.service }}</td>
-                      <td scope="row">{{ app.subServiceType.abbr }}</td>
-                      <td scope="row">{{ app.approval }}</td>
-                      <td scope="row">{{ app.created_date|date:"d/m/Y" }}</td>
-                      <td scope="row">
-                        <!-- Change the href to link to the apps type view with the specific ID -->
-                        <a title="Edit" href="{% url 'update-type-dashboard' service.id app.id %}" class="btn btn-warning btn-small btn-round">
-                          <span title="Edit">
-                              <i class="fa fa-pencil fa-sm" aria-hidden="true"></i>
-                          </span>
-                      </a>
-                      
-                      </td>
-                      <td scope="row">
-                        <a title="Delete" href="{{ app.get_delete_type_url }}" class="btn btn-danger btn-small btn-round">
-                          <span>
-                            <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
-                          </span>
-                        </a>
-                      </td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-                <tfoot>
+    {% if request.path == TD %}
+    <div class="text-box padding-3 border">
+      <div class=" bmargin">
+        <div class="cd__main table-wrapper">
+          <!-- Your table -->
+          <table class="table table-striped" id="example" style="width:100%">
+            <thead>
+              <tr>
+                <th data-label="User">User</th>
+                <th data-label="Service">Service</th>
+                <th data-label="Sub-ServiceType">Sub-ServiceType</th>
+                <th data-label="Approval">Approval</th>
+                <th data-label="char_id">Char ID</th>
+                <th data-label="Edit">Edit</th>
+                <th data-label="Delete">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if apps_type.all %}
+                {% for app in apps_type %}
                   <tr>
-                    <th>User</th>
-                    <th>Service</th>
-                    <th>Subservice </th>
-                    <th>Approval</th>
-                    <th>Date</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <td>{{ app.user }}</td>
+                    <td>{{ app.service }}</td>
+                    <td>{{ app.subServiceType.abbr }}</td>
+                    <td>{{ app.approval }}</td>
+                    <!-- <td>{{ app.created_date|date:"d/m/Y" }}</td> -->
+                      <td>{{ app.char_id }}</td>
+                    <td>
+                      <!-- Change the href to link to the app's type update view with the specific service and app IDs -->
+                      <a title="Edit" href="{% url 'update-type-dashboard' service.id app.id %}" class="btn btn-warning btn-small btn-round">
+                        <span title="Edit">
+                          <i class="fa fa-pencil fa-sm" aria-hidden="true"></i>
+                        </span>
+                      </a>
+                    </td>
+                    <td>
+                      <!-- Link to the delete view using the URL generated by the get_delete_type_url method -->
+                      <a title="Delete" href="{{ app.get_delete_type_url }}" class="btn btn-danger btn-small btn-round">
+                        <span>
+                          <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
+                        </span>
+                      </a>
+                    </td>
                   </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="7">
+                    <h3 class="empty-table-message centre">No {{ service.service_name }} Service Application Table Record</h3>
+                  </td>
+                </tr>
+              {% endif %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>User</th>
+                <th>Service</th>
+                <th>Subservice </th>
+                <th>Approval</th>
+                <th>Char ID</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </tfoot>
+          </table>
         </div>
-        {% endif %}
       </div>
-
-      {% else %}
-        <h3 class="centre">No {{ service.service_name }} Service Application Table Record</h3>
-      {% endif %}
-      {% endif %}
-
+    </div>
+  {% endif %}
+  
+      </div>
     </div>
   </div>
 </section>
