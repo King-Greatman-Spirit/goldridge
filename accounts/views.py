@@ -106,6 +106,7 @@ def activate(request, uidb64, token):
 
 @login_required(login_url = 'login')
 def client_dashboard(request):
+    title = "Client Dashboard"
     user = get_object_or_404(Account, id=request.user.id)
     form = RegistrationForm(request.POST or None, instance=user)
 
@@ -115,6 +116,7 @@ def client_dashboard(request):
             return redirect('client_dashboard')
 
     context = {
+        'title': title,
         'form': form,
     }
 
@@ -178,7 +180,6 @@ def resetPassword(request):
             return redirect('resetPassword')
     else:
         return render(request, 'accounts/resetPassword.html')
-
 
 def admin_register(request):
     title = "Admin Registration"
@@ -281,7 +282,7 @@ def admin_activate(request, uidb64, token):
 
 @login_required(login_url='admin_login')
 def admin_dashboard(request):
-    title = "Company Dashboard"
+    title = "Admin Dashboard"
     # Ensure the user is an admin
     if not request.user.is_admin:
         messages.error(request, 'You do not have permission to access the admin dashboard.')

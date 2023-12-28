@@ -101,7 +101,6 @@ Design and Developed by: Codelayers
 
 /* =========== General ============= */
 
-
 body {
 	font: 11px 'Open Sans', sans-serif;
 	font-weight: normal;
@@ -109,6 +108,7 @@ body {
 	line-height: 23px;
 	color: #727272;
 }
+
 /* a link Styles
  ------------------------------ */
  tbody {
@@ -282,6 +282,13 @@ h6.less-mar4 {
 ul {
 	list-style-type: none;
 }
+
+label[for="searchInput"] {
+    font-weight: bold;
+    font-size: 14px; /* Adjust the font size as needed */
+    color: #333; /* Adjust the color as needed */
+}
+
 /*=============== Text Colors ============= */
 
 .text-green-4 {
@@ -5704,3 +5711,103 @@ div.demo .title span {
 	margin: 10px;
 	color: #333;
 }
+
+/*======================== bootstrap table with filter, sorting & search ======================== */
+.cd__main .table-wrapper {
+	margin-top: 5vh;
+  }
+  
+  .cd__main .table-wrapper .dataTables_filter {
+	float: right;
+  } 
+  
+  .cd__main .table-wrapper .table-hover > tbody > tr:hover {
+	background-color: #ccffff;
+  }
+  
+  @media only screen and (min-width: 768px) {
+	.cd__main .table-wrapper .table {
+	  table-layout: fixed;
+	  max-width: 100% !important;
+	}
+  }
+  
+  .cd__main .table-wrapper thead {
+	background: #ddd;
+  }
+  
+  .cd__main .table-wrapper .table td:nth-child(2) {
+	overflow: hidden;
+	text-overflow: ellipsis;
+  }
+  
+  .cd__main .table-wrapper .highlight {
+	background: #ffff99;
+  } 
+  
+  @media only screen and (max-width: 767px) {
+	/* Force table to not be like tables anymore */
+	.cd__main .table-wrapper table,
+	.cd__main .table-wrapper thead,
+	.cd__main .table-wrapper tbody,
+	.cd__main .table-wrapper th,
+	.cd__main .table-wrapper td,
+	.cd__main .table-wrapper tr {
+	  display: block;
+	} 
+  
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.cd__main .table-wrapper thead tr,
+	.cd__main .table-wrapper tfoot tr {
+	  position: absolute;
+	  top: -9999px;
+	  left: -9999px;
+	}
+  
+	.cd__main .table-wrapper td {
+	  /* Behave like a "row" */
+	  border: none;
+	  border-bottom: 1px solid #eee;
+	  position: relative;
+	  padding-left: 50% !important;
+	}
+  
+	.cd__main .table-wrapper td:before {
+	  /* Now like a table header */
+	  position: absolute;
+	  /* Top/left values mimic padding */
+	  top: 6px;
+	  left: 6px;
+	  width: 45%;
+	  padding-right: 10px;
+	  white-space: nowrap;
+	}
+  
+	.cd__main .table-wrapper .table td:nth-child(1) {
+	  background: #ccc;
+	  height: 100%;
+	  top: 0;
+	  left: 0;
+	  font-weight: bold;
+	}
+  
+	/* Label the data */
+	.cd__main .table-wrapper td:before {
+	  content: attr(data-label);
+	}
+  
+	.cd__main .table-wrapper .dataTables_length {
+	  display: none;
+	}
+  }
+/* Custom styles to center the table head and foot */
+.table-wrapper table.dataTable thead,
+.table-wrapper table.dataTable tfoot {
+  text-align: center;
+}
+
+.table-wrapper table.dataTable thead th,
+.table-wrapper table.dataTable tfoot th {
+  text-align: center;
+}
+

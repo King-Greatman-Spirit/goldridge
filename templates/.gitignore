@@ -1,0 +1,7 @@
+__pycache__/
+.DS_Store
+*.sqlite3
+commands.txt
+venv
+.env
+.dockerignore

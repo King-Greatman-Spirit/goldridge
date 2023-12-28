@@ -33,8 +33,9 @@ class TestViews(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.staff_dashboard_url = reverse('staff_dashboard')
+        self.login_url = reverse('login')
         self.admin_login_url = reverse('admin_login')
+        self.staff_dashboard_url = reverse('staff_dashboard')
         self.photo_file = ContentFile(img.read(), 'test_image.png')
         self.user = Account.objects.create_user(
             first_name = 'first',
@@ -72,6 +73,8 @@ class TestViews(TestCase):
             # employment_date = datetime(2022, 12, 7, 11, 30, 11, 429000)
             employment_date = timezone.now()
         )
+        self.update_staff_url = reverse('update_staff', args=[self.test_staff.id])
+        self.delete_staff_url = reverse('delete_staff', args=[self.test_staff.id])
 
 
     def test_staff_dashboard_GET(self):
@@ -215,6 +218,44 @@ class TestViews(TestCase):
         self.assertEquals(res.status_code, 302)
         self.assertRedirects(res, self.staff_dashboard_url)
         self.assertFalse(Staff.objects.filter(email='test@teststaff3.com').exists())
+
+    def test_non_admin_user_access(self):
+        # Create a client user
+        self.user = Account.objects.create_user(
+            first_name='first',
+            last_name='last',
+            email='nonadmin@example.com',
+            password='testpass1234',
+            username='test first_last'
+        )
+
+        # Make the client user as a client, not an admin
+        self.user.is_admin = False  # Set 'is_admin' to False to make the user a client
+        self.user.is_active = True  # Set 'is_active' to True
+        self.user.save()
+
+        # Try to access the staff dashboard as a client
+        self.client.login(email='nonadmin@example.com', password='testpass1234')
+        response_dashboard = self.client.get(self.staff_dashboard_url)
+
+        # Check that the client is redirected to the login page
+        self.assertEquals(response_dashboard.status_code, 302)
+        self.assertFalse(response_dashboard.url.startswith(self.staff_dashboard_url))  # Ensure not redirected to staff dashboard
+
+        # Try to access the update staff view as a client
+        response_update = self.client.get(self.update_staff_url)
+
+        # Check that the client is redirected to the login page
+        self.assertEquals(response_update.status_code, 302)
+        self.assertFalse(response_update.url.startswith(self.update_staff_url))  # Ensure not redirected to update staff view
+
+        # Try to access the delete staff view as a client
+        response_delete = self.client.get(self.delete_staff_url)
+
+        # Check that the client is redirected to the login page
+        self.assertEquals(response_delete.status_code, 302)
+        self.assertFalse(response_delete.url.startswith(self.delete_staff_url))  # Ensure not redirected to delete staff view
+
 
 def tearDownModule():
     images_path = os.path.join(settings.MEDIA_ROOT, 'photos/staff')

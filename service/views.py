@@ -6,10 +6,12 @@ from .models import (
 from company.models import Company
 from django.contrib.auth.decorators import login_required
 from accounts.models import Account
-from .forms import ServiceForm, ServiceProcessForm, SubServiceForm
+from .forms import ServiceForm, ServiceProcessForm, SubServiceForm, SubServiceTypeForm
 from django.contrib import messages
 from django.urls import reverse
 from django.db.models import Q
+import uuid # Import the 'uuid' module for generating universally unique identifiers (UUIDs).
+from django.utils import timezone
 
 
 def service(request, slug):
@@ -123,6 +125,7 @@ def service_process_dashboard(request):
     company = Company.objects.get(id=1)
     # Retrieve all Service objects associated with the specified company (e.g., Goldridge) from the database
     services = Service.objects.filter(company=company)
+    # Filter service processes based on selected services
     service_processes = ServiceProcess.objects.filter(service__in=services)
 
     if request.method == 'POST':
@@ -191,13 +194,16 @@ def delete_service_process(request, id):
     deleted_service_processes.delete()
     return redirect('service_process_dashboard')
 
+# def generate_char_id(sub):
+#     unique_id = f"{sub.id}-{sub.user.id}-{sub.description}-{sub.created_date.timestamp()}"
+#     hashed_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, unique_id)).replace("-", "")[:13]
+#     return hashed_id
+
 @login_required(login_url='login')
 def user_subService_dashboard(request):
     title = "User Service Applications"
-    user = get_object_or_404(Account, id=request.user.id)  # Ensure user exists
+    user = get_object_or_404(Account, id=request.user.id)
     company = Company.objects.get(id=1)
-
-    # Retrieve only the user's service applications
     subservices = SubService.objects.filter(user=user)
 
     if request.method == 'POST':
@@ -217,15 +223,16 @@ def user_subService_dashboard(request):
             data.duration = form.cleaned_data['duration']
             data.rate = form.cleaned_data['rate']
             data.target = form.cleaned_data['target']
+            if 'char_id' in form.cleaned_data:
+                data.char_id = form.cleaned_data['char_id']
             # Set the user field in the form before saving
             form.instance.user = user
-            data.save()
+            form.save()
             messages.success(request, 'Thank you! Your Service Application has been created.')
-            return redirect('user_service_applications')  # Update this line
-        # else:
-        #     print(form.errors)  # Add this line for debugging
-        #     messages.error(request, 'Form submission failed. Please check the form for errors.')
-
+            return redirect('user_service_applications')
+        else:
+            # Form is not valid, print form errors
+            print("Form errors:", form.errors)
     else:
         form = SubServiceForm(company)
 
@@ -234,41 +241,31 @@ def user_subService_dashboard(request):
         'form': form,
         'subservices': subservices,
     }
-
     return render(request, 'service/user_subService_dashboard.html', context)
 
 @login_required(login_url='admin_login')
 def admin_subService_dashboard(request):
-    # Ensure the user is an admin
     if not request.user.is_admin:
         messages.error(request, 'You do not have permission to access the admin dashboard.')
-        return redirect('login')  # Redirect to a suitable page for non-admin users
-    
+        return redirect('login')
+
     # Update existing records with a default value for 'approval'
     SubService.objects.filter(approval='').update(approval='Pending')
-    
+
     title = "Admin Service Applications"
     user = Account.objects.get(id=request.user.id)
     company = Company.objects.get(id=1)
-    
+
     # Retrieve and order user service applications by 'approval' (descending) and 'created_date' (ascending).
     user_service_applications = SubService.objects.all().order_by('-approval', 'created_date')
 
-    if request.method == 'POST':
-        form = SubServiceForm(company, request.POST)
-        if form.is_valid():
-            return redirect('admin_service_applications')  # Update this line
-
-    else:
-        form = SubServiceForm(company)
-
     context = {
-        'form': form,
         'title': title,
         'user_service_applications': user_service_applications,
     }
 
     return render(request, 'service/admin_subService_dashboard.html', context)
+
 
 @login_required(login_url='admin_login')
 def update_admin_subService(request, id):
@@ -305,6 +302,9 @@ def update_admin_subService(request, id):
             data.duration = form.cleaned_data['duration']
             data.rate = form.cleaned_data['rate']
             data.target = form.cleaned_data['target']
+            # data.created_date = form.cleaned_data['created_date']
+            # Set the user field in the form before saving
+            form.instance.user = user
             form.save()
             messages.success(request, 'Service Application updated successfully.')
             return redirect('admin_service_applications')  # Redirect to the appropriate page after updating
@@ -445,12 +445,12 @@ def update_type_dashboard(request, service_id, app_id):
             data.duration = form.cleaned_data['duration']
             data.rate = form.cleaned_data['rate']
             data.target = form.cleaned_data['target']
+            # Set the user field in the form before saving
+            form.instance.user = user
             form.save()
             messages.success(request, 'Dashboard updated successfully.')
             # Redirect to the 'type-dashboard' page for the specific service ID after updating.
-            # Redirect to the 'type-dashboard' page for the specific service ID after updating.
             return redirect('type-dashboard', id=service.id)
-
 
     context = {
         'form': form,
@@ -487,8 +487,8 @@ def clients_table(request):
     # Get the Company object with the id equal to 1 from the database
     company = Company.objects.get(id=1)
 
-    # Fetch all users excluding admin and super admin
-    users = Account.objects.filter(~Q(is_admin=True) & ~Q(is_superadmin=True))
+    # Fetch all users excluding admin and super admin, ordering by some field (e.g., first_name)
+    users = Account.objects.filter(~Q(is_admin=True) & ~Q(is_superadmin=True)).order_by('first_name')
 
     # Collect user data for the table
     users_data = []
@@ -525,3 +525,87 @@ def get_user_subservice_abbr(user):
     # Join the set of abbreviations into a string, or return 'None' if the set is empty
     return ', '.join(subservice_abbr_set) if subservice_abbr_set else 'None'
 
+@login_required(login_url = 'admin_login')
+def subservice_type_dashboard(request):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    title = "SubService Type"
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all Service objects associated with the specified company (e.g., Goldridge) from the database
+    services = Service.objects.filter(company=company)
+    # Filter subservice types based on selected services
+    subservice_types = SubServiceType.objects.filter(service__in=services)
+
+    if request.method == 'POST':
+        form = SubServiceTypeForm(company, request.POST)
+        if form.is_valid():
+            data = SubServiceType()
+            data.company = form.cleaned_data['company']
+            data.service = form.cleaned_data['service']
+            data.type = form.cleaned_data['type']
+            data.abbr = form.cleaned_data['abbr']
+            data.description = form.cleaned_data['description']
+            data.save()
+            messages.success(request, 'Thank you! Your SubService Type has been created.')
+            return redirect('subservice-type-dashboard')
+        else:
+            # Print or log form errors for debugging
+            print(form.errors)
+    else:
+        form = SubServiceTypeForm(company)
+
+    context = {
+        'title': title,
+        'form': form,
+        'subservice_types': subservice_types,
+    }
+
+    return render(request, 'service/subservice_type_dashboard.html', context)
+
+@login_required(login_url = 'admin_login')
+def update_subservice_type(request, id):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    title = "Update SubService Type"
+    # Get the Company object with the id equal to 1 from the database
+    company = Company.objects.get(id=1)
+    # Retrieve all Service objects associated with the specified company (e.g., Goldridge) from the database
+    services = Service.objects.filter(company=company)
+    # Filter subservice types based on selected services
+    subservice_types = SubServiceType.objects.filter(service__in=services)
+
+    updated_st = get_object_or_404(subservice_types, id=id)
+    form = SubServiceTypeForm(company, request.POST or None,  instance=updated_st)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'SubService Type updated successfully.')
+            return redirect('subservice-type-dashboard')
+
+    context = {
+        'title': title,
+        'form': form,
+        'subservice_types': subservice_types,
+        'updated_st': updated_st,
+    }
+
+    return render(request, 'service/subservice_type_dashboard.html', context)
+
+@login_required(login_url = 'admin_login')
+def delete_subservice_type(request, id):
+    # Ensure the user is an admin
+    if not request.user.is_admin:
+        messages.error(request, 'You do not have permission to access the admin dashboard.')
+        return redirect('login')  # Redirect to a suitable page for non-admin users
+    
+    deleted_subservice_type = SubServiceType.objects.get(id=id)
+    deleted_subservice_type.delete()
+    return redirect('subservice-type-dashboard')

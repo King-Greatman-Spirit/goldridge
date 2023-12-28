@@ -89,29 +89,34 @@
     {% if faqquestions.all %}
     <div class="text-box padding-3 border">
       <div class=" bmargin">
-          <div class="table-responsive">
-            <table class="table table-style-3" id="table" data-toggle="table" style="width:100%" data-search="true" data-pagination="true" data-response-handler="responseHandler">
+        <div class="cd__main table-wrapper">
+            <!-- Your table -->
+            <table
+              class="table table-striped"
+              id="example"
+              style="width:100%"
+            >
               <thead>
-                  <tr class="primary">
-                      <th scope="col" data-field="category">Faq Question</th>
-                      <th scope="col" data-field="category">Faq Category</th>
-                      <th scope="col" data-field="Edit">Edit</th>
-                      <th scope="col" data-field="Delete">Delete</th>
+                <tr>
+                <th data-label="Faq Question">Faq Question</th>
+                <th data-label="Faq Category">Faq Category</th>
+                <th data-label="Edit">Edit</th>
+                <th data-label="Delete">Delete</th>
                   </tr>
               </thead>
               <tbody>
                 {% for question in faqquestions %}
                   <tr>
-                    <td scope="row">{{ question.question }}</td>
+                    <td>{{ question.question }}</td>
                       <td>{{ question.category }}</td>
-                      <td  scope="row">
+                      <td>
                         <a title="Edit" href="{{ question.update_url }}" class="btn btn-warning btn-small btn-round" style=>
                           <span title="Edit">
                             <i class="fa fa-pencil fa-sm" aria-hidden="true"></i>
                           </span>
                         </a>
                       </td>
-                      <td  scope="row">
+                      <td>
                         <a title="Delete" href="{{ question.delete_url }}" class="btn btn-danger btn-small btn-round">
                           <span>
                             <i class="fa fa-trash fa-sm" aria-hidden="true"></i>
