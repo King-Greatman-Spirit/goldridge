@@ -46,7 +46,7 @@ Looking forward to hearing from you.
 Best regards,  
 Unye-Awaji Greatman Justus  
 [GitHub Profile](https://github.com/King-Greatman-Spirit)  
-[LinkedIn Profile](https://www.linkedin.com/in/king-greatman-spirit)  
+[LinkedIn Profile](https://www.linkedin.com/in/greatman-pydev/)
 
 ---
 
