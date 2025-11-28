@@ -1,10 +1,4 @@
-### Email Draft
-
-Subject: Application for Hardcore Software Engineer Role - GoldRidge Project Submission
-
-Dear Hiring Team,  
-
-I am writing to express my interest in the opportunity to join your team in building the Everything App. I am excited to showcase my technical capabilities through a project that I believe demonstrates my skills and ability to tackle complex challenges effectively.
+### GoldRidge Multi-Purpose Corporation Web Application
 
 **Project Title:** GoldRidge Multi-Purpose Corporation Web Application  
 **Repository Link:** [GitHub - GoldRidge Project](https://github.com/King-Greatman-Spirit/goldridge)  
