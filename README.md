@@ -149,5 +149,3 @@ This project is licensed under the MIT License.
 
 Thank you for considering GoldRidge for your review!
 ```  
-
-Let me know if you need further adjustments!
